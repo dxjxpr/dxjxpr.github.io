@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="环境说明 操作系统：CentOS Linux release 7.9.2009 (Core) 本次安装MySQL版本：8.0.26 连接工具：xshell、xftp（或者其他连接/上传工具） 从腾讯云买的服务器，按量计费，临时用下，经济实惠（如果哪天有空写写服务器购买吧） 开始 1、查看centos7中是否有MariaDB，MariaDB与MySQL关系请自行查阅 rpm -qa | grep mariadb 2、如果有MariaDB，需要将 步骤1 中查询到的mairadb全部卸载，否则MySQL安装会出现问题 rpm -e &ndash;nodeps 软件名 3、查看本机是否已经安装过MySQL rpm -qa | grep -i mysql 4、如果安装过MySQL，请确定是否有数据需要备份（如果有需要备份的数据请自行查阅相关操作进行备份，否则数据丢失概不负责） 如果没有安装过MySQL，请跳转步骤6 5、卸载MySQL 将步骤3中查询到的mysql安装包全部卸载 rpm -e &ndash;nodeps 软件名 查找mysql文件，并将其删除 find / -name mysql whereis mysql 将find命令和whereis命令查询到的mysql文件全部删除 rm -rf 查询到的mysql路径 删除mysql配置文件 rm /etc/my.cnf 确认是否全部删除mysql rpm -qa | grep -i mysql 6、MySQL官网下载适用于centos7的mysql安装包 查询服务器是x86_64架构还是arm架构 uname -m 或者是 arch # 我的服务器是x86_64的 这里可以下载直接通过浏览器下载下来，然后通过ftp上传到所要安装的服务器中 或者是复制这个tar包的链接，然后通过wget命令下载，操作如下 wget 文件的网络地址">
+<title>CentOS7安装mysql8教程</title>
+
+<link rel='canonical' href='https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/'>
+
+<link rel="stylesheet" href="/scss/style.min.0304c6baf04e01a8fe70693791cb744d56a3578a3120a8796cefc66825aa39c7.css"><meta property='og:title' content="CentOS7安装mysql8教程">
+<meta property='og:description' content="环境说明 操作系统：CentOS Linux release 7.9.2009 (Core) 本次安装MySQL版本：8.0.26 连接工具：xshell、xftp（或者其他连接/上传工具） 从腾讯云买的服务器，按量计费，临时用下，经济实惠（如果哪天有空写写服务器购买吧） 开始 1、查看centos7中是否有MariaDB，MariaDB与MySQL关系请自行查阅 rpm -qa | grep mariadb 2、如果有MariaDB，需要将 步骤1 中查询到的mairadb全部卸载，否则MySQL安装会出现问题 rpm -e &ndash;nodeps 软件名 3、查看本机是否已经安装过MySQL rpm -qa | grep -i mysql 4、如果安装过MySQL，请确定是否有数据需要备份（如果有需要备份的数据请自行查阅相关操作进行备份，否则数据丢失概不负责） 如果没有安装过MySQL，请跳转步骤6 5、卸载MySQL 将步骤3中查询到的mysql安装包全部卸载 rpm -e &ndash;nodeps 软件名 查找mysql文件，并将其删除 find / -name mysql whereis mysql 将find命令和whereis命令查询到的mysql文件全部删除 rm -rf 查询到的mysql路径 删除mysql配置文件 rm /etc/my.cnf 确认是否全部删除mysql rpm -qa | grep -i mysql 6、MySQL官网下载适用于centos7的mysql安装包 查询服务器是x86_64架构还是arm架构 uname -m 或者是 arch # 我的服务器是x86_64的 这里可以下载直接通过浏览器下载下来，然后通过ftp上传到所要安装的服务器中 或者是复制这个tar包的链接，然后通过wget命令下载，操作如下 wget 文件的网络地址">
+<meta property='og:url' content='https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/'>
+<meta property='og:site_name' content='I&#39;m R'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2021-07-27T21:06:14&#43;08:00'/><meta property='article:modified_time' content='2021-07-27T21:06:14&#43;08:00'/><meta property='og:image' content='https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/mysql.jpg' />
+<meta name="twitter:title" content="CentOS7安装mysql8教程">
+<meta name="twitter:description" content="环境说明 操作系统：CentOS Linux release 7.9.2009 (Core) 本次安装MySQL版本：8.0.26 连接工具：xshell、xftp（或者其他连接/上传工具） 从腾讯云买的服务器，按量计费，临时用下，经济实惠（如果哪天有空写写服务器购买吧） 开始 1、查看centos7中是否有MariaDB，MariaDB与MySQL关系请自行查阅 rpm -qa | grep mariadb 2、如果有MariaDB，需要将 步骤1 中查询到的mairadb全部卸载，否则MySQL安装会出现问题 rpm -e &ndash;nodeps 软件名 3、查看本机是否已经安装过MySQL rpm -qa | grep -i mysql 4、如果安装过MySQL，请确定是否有数据需要备份（如果有需要备份的数据请自行查阅相关操作进行备份，否则数据丢失概不负责） 如果没有安装过MySQL，请跳转步骤6 5、卸载MySQL 将步骤3中查询到的mysql安装包全部卸载 rpm -e &ndash;nodeps 软件名 查找mysql文件，并将其删除 find / -name mysql whereis mysql 将find命令和whereis命令查询到的mysql文件全部删除 rm -rf 查询到的mysql路径 删除mysql配置文件 rm /etc/my.cnf 确认是否全部删除mysql rpm -qa | grep -i mysql 6、MySQL官网下载适用于centos7的mysql安装包 查询服务器是x86_64架构还是arm架构 uname -m 或者是 arch # 我的服务器是x86_64的 这里可以下载直接通过浏览器下载下来，然后通过ftp上传到所要安装的服务器中 或者是复制这个tar包的链接，然后通过wget命令下载，操作如下 wget 文件的网络地址"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/mysql.jpg' />
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+  
+
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu6242866133400980960.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🏃‍➡️</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">I&#39;m R</a></h1>
+            <h2 class="site-description">B What U Wanna B! Just Do It!</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/dxjxpr'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1723043422785" class="icon" viewBox="0 0 1049 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4723" xmlns:xlink="http://www.w3.org/1999/xlink" width="204.8828125" height="200"><path d="M524.979332 0C234.676191 0 0 234.676191 0 524.979332c0 232.068678 150.366597 428.501342 358.967656 498.035028 26.075132 5.215026 35.636014-11.299224 35.636014-25.205961 0-12.168395-0.869171-53.888607-0.869171-97.347161-146.020741 31.290159-176.441729-62.580318-176.441729-62.580318-23.467619-60.841976-58.234462-76.487055-58.234463-76.487055-47.804409-32.15933 3.476684-32.15933 3.476685-32.15933 53.019436 3.476684 80.83291 53.888607 80.83291 53.888607 46.935238 79.963739 122.553122 57.365291 152.97411 43.458554 4.345855-33.897672 18.252593-57.365291 33.028501-70.402857-116.468925-12.168395-239.022047-57.365291-239.022047-259.012982 0-57.365291 20.860106-104.300529 53.888607-140.805715-5.215026-13.037566-23.467619-66.926173 5.215027-139.067372 0 0 44.327725-13.906737 144.282399 53.888607 41.720212-11.299224 86.917108-17.383422 131.244833-17.383422s89.524621 6.084198 131.244833 17.383422C756.178839 203.386032 800.506564 217.29277 800.506564 217.29277c28.682646 72.1412 10.430053 126.029806 5.215026 139.067372 33.897672 36.505185 53.888607 83.440424 53.888607 140.805715 0 201.64769-122.553122 245.975415-239.891218 259.012982 19.121764 16.514251 35.636014 47.804409 35.636015 97.347161 0 70.402857-0.869171 126.898978-0.869172 144.282399 0 13.906737 9.560882 30.420988 35.636015 25.205961 208.601059-69.533686 358.967656-265.96635 358.967655-498.035028C1049.958663 234.676191 814.413301 0 524.979332 0z" fill="#191717" p-id="4724"></path><path d="M199.040177 753.571326c-0.869171 2.607513-5.215026 3.476684-8.691711 1.738342s-6.084198-5.215026-4.345855-7.82254c0.869171-2.607513 5.215026-3.476684 8.691711-1.738342s5.215026 5.215026 4.345855 7.82254z m-6.953369-4.345856M219.900283 777.038945c-2.607513 2.607513-7.82254 0.869171-10.430053-2.607514-3.476684-3.476684-4.345855-8.691711-1.738342-11.299224 2.607513-2.607513 6.953369-0.869171 10.430053 2.607514 3.476684 4.345855 4.345855 9.560882 1.738342 11.299224z m-5.215026-5.215027M240.760389 807.459932c-3.476684 2.607513-8.691711 0-11.299224-4.345855-3.476684-4.345855-3.476684-10.430053 0-12.168395 3.476684-2.607513 8.691711 0 11.299224 4.345855 3.476684 4.345855 3.476684 9.560882 0 12.168395z m0 0M269.443034 837.011749c-2.607513 3.476684-8.691711 2.607513-13.906737-1.738342-4.345855-4.345855-6.084198-10.430053-2.607513-13.037566 2.607513-3.476684 8.691711-2.607513 13.906737 1.738342 4.345855 3.476684 5.215026 9.560882 2.607513 13.037566z m0 0M308.555733 853.526c-0.869171 4.345855-6.953369 6.084198-13.037566 4.345855-6.084198-1.738342-9.560882-6.953369-8.691711-10.430053 0.869171-4.345855 6.953369-6.084198 13.037566-4.345855 6.084198 1.738342 9.560882 6.084198 8.691711 10.430053z m0 0M351.145116 857.002684c0 4.345855-5.215026 7.82254-11.299224 7.82254-6.084198 0-11.299224-3.476684-11.299224-7.82254s5.215026-7.82254 11.299224-7.82254c6.084198 0 11.299224 3.476684 11.299224 7.82254z m0 0M391.126986 850.049315c0.869171 4.345855-3.476684 8.691711-9.560882 9.560882-6.084198 0.869171-11.299224-1.738342-12.168395-6.084197-0.869171-4.345855 3.476684-8.691711 9.560881-9.560882 6.084198-0.869171 11.299224 1.738342 12.168396 6.084197z m0 0" fill="#191717" p-id="4725"></path></svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/">
+                <img src="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/mysql_hu10317103323202179953.jpg"
+                        srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/mysql_hu10317103323202179953.jpg 800w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/mysql_hu13101901374972182274.jpg 1600w"
+                        width="800" 
+                        height="500" 
+                        loading="lazy"
+                        alt="Featured image of post CentOS7安装mysql8教程" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/">CentOS7安装mysql8教程</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jul 27, 2021</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    2 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h1 id="环境说明">环境说明
+</h1><ul>
+<li>操作系统：CentOS Linux release 7.9.2009 (Core)</li>
+<li>本次安装MySQL版本：8.0.26</li>
+<li>连接工具：xshell、xftp（或者其他连接/上传工具）</li>
+<li>从腾讯云买的服务器，按量计费，临时用下，经济实惠（如果哪天有空写写服务器购买吧）</li>
+</ul>
+<h1 id="开始">开始
+</h1><p>1、<strong>查看centos7中是否有<code>MariaDB</code>，<code>MariaDB</code>与<code>MySQL</code>关系请自行查阅</strong></p>
+<blockquote>
+<p>rpm -qa | grep mariadb</p>
+</blockquote>
+<p><img src="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/5dbd0cce202441c0a19df6a14a50b37d.png"
+	width="1108"
+	height="256"
+	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/5dbd0cce202441c0a19df6a14a50b37d_hu13895288146001787928.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/5dbd0cce202441c0a19df6a14a50b37d_hu17488146640750903960.png 1024w"
+	loading="lazy"
+	
+		alt="在这里插入图片描述"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="432"
+		data-flex-basis="1038px"
+	
+>
+2、<strong>如果有<code>MariaDB</code>，需要将 <code>步骤1</code> 中查询到的<code>mairadb</code>全部卸载，否则<code>MySQL</code>安装会出现问题</strong></p>
+<blockquote>
+<p>rpm -e &ndash;nodeps 软件名</p>
+</blockquote>
+<p><img src="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/d6c01d167bdd45a2837506e8143060f6.png"
+	width="1521"
+	height="163"
+	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/d6c01d167bdd45a2837506e8143060f6_hu9691795427806618590.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/d6c01d167bdd45a2837506e8143060f6_hu4156579029780132438.png 1024w"
+	loading="lazy"
+	
+		alt="在这里插入图片描述"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="933"
+		data-flex-basis="2239px"
+	
+>
+3、<strong>查看本机是否已经安装过<code>MySQL</code></strong></p>
+<blockquote>
+<p>rpm -qa | grep -i mysql</p>
+</blockquote>
+<p><img src="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/acec7cdafa264a4ca521ed19aa096a63.png"
+	width="1022"
+	height="214"
+	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/acec7cdafa264a4ca521ed19aa096a63_hu10794008393004109569.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/acec7cdafa264a4ca521ed19aa096a63_hu12496300618945815826.png 1024w"
+	loading="lazy"
+	
+		alt="在这里插入图片描述"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="477"
+		data-flex-basis="1146px"
+	
+>
+4、<strong>如果安装过<code>MySQL</code>，请确定是否有数据需要备份（<font color='red'>如果有需要备份的数据请自行查阅相关操作进行备份，否则数据丢失概不负责</font>）</strong></p>
+<p>  <strong>如果没有安装过<code>MySQL</code>，请跳转步骤6</strong></p>
+<p>5、<strong>卸载<code>MySQL</code></strong></p>
+<ul>
+<li>将步骤3中查询到的mysql安装包全部卸载</li>
+</ul>
+<blockquote>
+<p>rpm -e &ndash;nodeps 软件名</p>
+</blockquote>
+<ul>
+<li>查找mysql文件，并将其删除</li>
+</ul>
+<blockquote>
+<p>find / -name mysql
+whereis mysql</p>
+</blockquote>
+<p>  将<code>find</code>命令和<code>whereis</code>命令查询到的mysql文件全部删除</p>
+<blockquote>
+<p>rm -rf 查询到的mysql路径</p>
+</blockquote>
+<p>  删除mysql配置文件</p>
+<blockquote>
+<p>rm /etc/my.cnf</p>
+</blockquote>
+<ul>
+<li>确认是否全部删除mysql</li>
+</ul>
+<blockquote>
+<p>rpm -qa | grep -i mysql</p>
+</blockquote>
+<p>6、<strong><a class="link" href="https://www.mysql.com/"  target="_blank" rel="noopener"
+    >MySQL官网</a>下载适用于centos7的mysql安装包</strong>
+<img src="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/da834284b8bd4a5ebcc8a85623c84f7c.png"
+	width="1920"
+	height="896"
+	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/da834284b8bd4a5ebcc8a85623c84f7c_hu495114374628347799.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/da834284b8bd4a5ebcc8a85623c84f7c_hu6204235486643495659.png 1024w"
+	loading="lazy"
+	
+		alt="在这里插入图片描述"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="214"
+		data-flex-basis="514px"
+	
+>
+<img src="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/a022ed2d90894343b77edbc0c77cf8a2.png"
+	width="1920"
+	height="821"
+	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/a022ed2d90894343b77edbc0c77cf8a2_hu17319307972049778914.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/a022ed2d90894343b77edbc0c77cf8a2_hu5887136749730145028.png 1024w"
+	loading="lazy"
+	
+		alt="在这里插入图片描述"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="233"
+		data-flex-basis="561px"
+	
+>
+<img src="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/8e15db4bc90e4284a8b6f1a0ff4f3fe1.png"
+	width="1607"
+	height="779"
+	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/8e15db4bc90e4284a8b6f1a0ff4f3fe1_hu8950794701804123253.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/8e15db4bc90e4284a8b6f1a0ff4f3fe1_hu2732341320480352947.png 1024w"
+	loading="lazy"
+	
+		alt="在这里插入图片描述"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="206"
+		data-flex-basis="495px"
+	
+>
+查询服务器是x86_64架构还是arm架构</p>
+<blockquote>
+<p>uname -m
+或者是
+arch
+# 我的服务器是x86_64的</p>
+</blockquote>
+<p><img src="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/8f55107c93e14828b386f9e418344008.png"
+	width="979"
+	height="288"
+	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/8f55107c93e14828b386f9e418344008_hu6724740749116346970.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/8f55107c93e14828b386f9e418344008_hu5397362713831787988.png 1024w"
+	loading="lazy"
+	
+		alt="在这里插入图片描述"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="339"
+		data-flex-basis="815px"
+	
+></p>
+<p><img src="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/9f04e5246506423ab42a82a9d74e6fbc.png"
+	width="1919"
+	height="873"
+	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/9f04e5246506423ab42a82a9d74e6fbc_hu11495007406620533820.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/9f04e5246506423ab42a82a9d74e6fbc_hu14635875110194632598.png 1024w"
+	loading="lazy"
+	
+		alt="在这里插入图片描述"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="219"
+		data-flex-basis="527px"
+	
+></p>
+<p><img src="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/badd195d3252421595eeb2c9151425b1.png"
+	width="1230"
+	height="789"
+	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/badd195d3252421595eeb2c9151425b1_hu14185685883199399021.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/badd195d3252421595eeb2c9151425b1_hu16572607534012469190.png 1024w"
+	loading="lazy"
+	
+		alt="在这里插入图片描述"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="155"
+		data-flex-basis="374px"
+	
+></p>
+<ul>
+<li>这里可以下载直接通过浏览器下载下来，然后通过ftp上传到所要安装的服务器中</li>
+<li>或者是复制这个<code>tar</code>包的链接，然后通过<code>wget</code>命令下载，操作如下</li>
+</ul>
+<blockquote>
+<p>wget  文件的网络地址</p>
+</blockquote>
+<p>比如我这里下载的地址是</p>
+<blockquote>
+<p>wget  <a class="link" href="https://cdn.mysql.com//Downloads/MySQL-8.0/mysql-8.0.26-1.el7.x86_64.rpm-bundle.tar"  target="_blank" rel="noopener"
+    >https://cdn.mysql.com//Downloads/MySQL-8.0/mysql-8.0.26-1.el7.x86_64.rpm-bundle.tar</a></p>
+</blockquote>
+<p><img src="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/4bd9695e6fb743b0987af3c82bf696b0.png"
+	width="1547"
+	height="578"
+	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/4bd9695e6fb743b0987af3c82bf696b0_hu1225348355545214436.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/4bd9695e6fb743b0987af3c82bf696b0_hu14095640571435145544.png 1024w"
+	loading="lazy"
+	
+		alt="在这里插入图片描述"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="267"
+		data-flex-basis="642px"
+	
+></p>
+<p><img src="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/c4f2a53cb1de441a81f6ee459f4bd5a4.png"
+	width="1895"
+	height="562"
+	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/c4f2a53cb1de441a81f6ee459f4bd5a4_hu3592072233234968284.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/c4f2a53cb1de441a81f6ee459f4bd5a4_hu5101454549480280103.png 1024w"
+	loading="lazy"
+	
+		alt="在这里插入图片描述"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="337"
+		data-flex-basis="809px"
+	
+></p>
+<ul>
+<li>无论是通过<code>xftp</code>工具还是<code>wget</code>命令，将MySQL的<code>tar</code>包传到centos的某个目录下（比如home目录下），这里演示的是上传到<code>root</code>用户的home目录下
+<img src="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/50d5ebd167bc4285ba1a3e18573c9ae1.png"
+	width="1893"
+	height="746"
+	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/50d5ebd167bc4285ba1a3e18573c9ae1_hu9523193133467951419.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/50d5ebd167bc4285ba1a3e18573c9ae1_hu9094786919484292589.png 1024w"
+	loading="lazy"
+	
+		alt="在这里插入图片描述"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="253"
+		data-flex-basis="609px"
+	
+></li>
+</ul>
+<p>7、<strong>解压tar包</strong>
+在解压之前，建议先创建一个空的目录，因为这个tar包解压后多个rpm包会直接放到当前目录。因为我的tar包是在<code>root</code>用户的home目录下，所以直接在这个目录下创建了一个mysql的目录。这个目录无所谓！</p>
+<blockquote>
+<p>mkdir mysql
+<img src="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/8cc8b5dfaebc477e8fd0d80cd9745c52.png"
+	width="1164"
+	height="382"
+	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/8cc8b5dfaebc477e8fd0d80cd9745c52_hu10947724890258558264.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/8cc8b5dfaebc477e8fd0d80cd9745c52_hu7538690454289309275.png 1024w"
+	loading="lazy"
+	
+		alt="在这里插入图片描述"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="304"
+		data-flex-basis="731px"
+	
+></p>
+</blockquote>
+<p>解压该tar包</p>
+<blockquote>
+<p>tar -xvf mysql的tar包全名  -C 解压到指定目录
+# 说明：-C参数，后面跟的是目录，意思是将压缩包解压缩后存放到指定的目录下。</p>
+<p># 这里就指定到刚才创建的mysql目录下</p>
+</blockquote>
+<p><img src="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/7e1ec434fb4243d2907e93de5cb3ff75.png"
+	width="1784"
+	height="536"
+	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/7e1ec434fb4243d2907e93de5cb3ff75_hu16574330306657965308.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/7e1ec434fb4243d2907e93de5cb3ff75_hu11764867483628900876.png 1024w"
+	loading="lazy"
+	
+		alt="在这里插入图片描述"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="332"
+		data-flex-basis="798px"
+	
+>
+<img src="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/64e7badb5dc6477687d0f06978210611.png"
+	width="1660"
+	height="529"
+	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/64e7badb5dc6477687d0f06978210611_hu14909570136455928782.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/64e7badb5dc6477687d0f06978210611_hu11914455526928582601.png 1024w"
+	loading="lazy"
+	
+		alt="在这里插入图片描述"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="313"
+		data-flex-basis="753px"
+	
+>
+8、<strong>开始安装MySQL</strong></p>
+<ul>
+<li>rpm安装命令</li>
+</ul>
+<blockquote>
+<p>rpm -ivh xxx.rpm</p>
+</blockquote>
+<blockquote>
+<p># 这里选择的是全部安装
+# 安装顺序如下，否则会出现依赖问题
+mysql-community-common-8.0.26-1.el7.x86_64.rpm
+mysql-community-client-plugins-8.0.26-1.el7.x86_64.rpm
+mysql-community-embedded-compat-8.0.26-1.el7.x86_64.rpm
+mysql-community-libs-8.0.26-1.el7.x86_64.rpm
+mysql-community-libs-compat-8.0.26-1.el7.x86_64.rpm
+mysql-community-devel-8.0.26-1.el7.x86_64.rpm
+mysql-community-client-8.0.26-1.el7.x86_64.rpm
+mysql-community-server-8.0.26-1.el7.x86_64.rpm
+mysql-community-test-8.0.26-1.el7.x86_64.rpm</p>
+</blockquote>
+<ul>
+<li>以上安装rpm时可能会出现centos的动态库缺失等情况，这里记录下几种错误情况</li>
+</ul>
+<blockquote>
+<ul>
+<li>
+<p>情况1：
+[root@VM-0-14-centos mysql]# rpm -ivh mysql-community-embedded-compat-8.0.26-1.el7.x86_64.rpm
+<font color='red'>warning: mysql-community-embedded-compat-8.0.26-1.el7.x86_64.rpm: Header V3 DSA/SHA256 Signature, key ID 5072e1f5: NOKEY
+error: Failed dependencies:
+libnuma.so.1()(64bit) is needed by mysql-community-embedded-compat-8.0.26-1.el7.x86_64
+libnuma.so.1(libnuma_1.1)(64bit) is needed by mysql-community-embedded-compat-8.0.26-1.el7.x86_64
+libnuma.so.1(libnuma_1.2)(64bit) is needed by mysql-community-embedded-compat-8.0.26-1.el7.x86_64</font></p>
+</li>
+<li>
+<p>解决方式：</p>
+<ul>
+<li>yum -y install numactl</li>
+</ul>
+</li>
+<li>
+<p>情况2
+<font color='red'>[root@VM-0-14-centos mysql]# rpm -ivh mysql-community-devel-8.0.26-1.el7.x86_64.rpm
+warning: mysql-community-devel-8.0.26-1.el7.x86_64.rpm: Header V3 DSA/SHA256 Signature, key ID 5072e1f5: NOKEY
+error: Failed dependencies:
+pkgconfig(openssl) is needed by mysql-community-devel-8.0.26-1.el7.x86_64</font></p>
+</li>
+<li>
+<p>解决方式</p>
+<ul>
+<li>yum install openssl-devel</li>
+</ul>
+</li>
+<li>
+<p>情况3
+<font color='red'>[root@VM-0-14-centos mysql]# rpm -ivh mysql-community-test-8.0.26-1.el7.x86_64.rpm
+warning: mysql-community-test-8.0.26-1.el7.x86_64.rpm: Header V3 DSA/SHA256 Signature, key ID 5072e1f5: NOKEY
+error: Failed dependencies:
+perl(Data::Dumper) is needed by mysql-community-test-8.0.26-1.el7.x86_64</font></p>
+</li>
+<li>
+<p>解决方式</p>
+<ul>
+<li>yum -y install autoconf</li>
+</ul>
+</li>
+<li>
+<p>情况4
+<font color='red'>[root@VM-0-14-centos mysql]# rpm -ivh mysql-community-test-8.0.26-1.el7.x86_64.rpm
+warning: mysql-community-test-8.0.26-1.el7.x86_64.rpm: Header V3 DSA/SHA256 Signature, key ID 5072e1f5: NOKEY
+error: Failed dependencies:
+perl(JSON) is needed by mysql-community-test-8.0.26-1.el7.x86_64</font></p>
+</li>
+<li>
+<p>解决方式</p>
+<ul>
+<li>yum install perl-JSON.noarch -y</li>
+<li>yum install perl.x86_64 perl-devel.x86_64 -y</li>
+</ul>
+</li>
+<li>
+<p>情况5
+<font color='red'>[root@VM-0-14-centos mysql]# rpm -ivh mysql-community-test-8.0.26-1.el7.x86_64.rpm
+warning: mysql-community-test-8.0.26-1.el7.x86_64.rpm: Header V3 DSA/SHA256 Signature, key ID 5072e1f5: NOKEY
+error: Failed dependencies:
+perl(Test::More) is needed by mysql-community-test-8.0.26-1.el7.x86_64</font></p>
+</li>
+<li>
+<p>解决方式：</p>
+<ul>
+<li>到 <a class="link" href="https://pkgs.org/download/perl%28Test::More%29"  target="_blank" rel="noopener"
+    >https://pkgs.org/download/perl(Test::More)</a>，打开centos7的下拉框，找到CentOS x86_64下对应的rpm，然后打开这个rpm连接，在<code>Download</code>对应的部分找<code>Binary Package</code>，后面有对应的rpm下载连接，下载下来进行安装即可</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<p>9、<strong>初始化数据库</strong></p>
+<blockquote>
+<p>mysqld &ndash;initialize &ndash;console</p>
+</blockquote>
+<p>10、<strong>目录授权，否则可能会启动失败</strong></p>
+<blockquote>
+<p>chown -R mysql:mysql /var/lib/mysql/</p>
+</blockquote>
+<p>11、<strong>启动mysql</strong></p>
+<blockquote>
+<p>systemctl start mysqld</p>
+</blockquote>
+<ul>
+<li>对应的重启、关闭mysql命令如下</li>
+</ul>
+<blockquote>
+<p>systemctl stop mysqld
+systemctl restart mysqld</p>
+</blockquote>
+<p>12、<strong>查询mysql状态</strong></p>
+<blockquote>
+<p>systemctl status mysqld</p>
+</blockquote>
+<p><img src="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/dc9dd40507424492bc07103110d06e42.png"
+	width="1919"
+	height="607"
+	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/dc9dd40507424492bc07103110d06e42_hu6577227169046704584.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/dc9dd40507424492bc07103110d06e42_hu2463054485687122167.png 1024w"
+	loading="lazy"
+	
+		alt="在这里插入图片描述"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="316"
+		data-flex-basis="758px"
+	
+></p>
+<p>13、<strong>查询mysql的临时密码</strong></p>
+<blockquote>
+<p>cat /var/log/mysqld.log | grep password</p>
+</blockquote>
+<p><img src="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/0195743babce4169a3cb3bfde6320f99.png"
+	width="1900"
+	height="357"
+	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/0195743babce4169a3cb3bfde6320f99_hu423817825034180079.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/0195743babce4169a3cb3bfde6320f99_hu6187081308475177786.png 1024w"
+	loading="lazy"
+	
+		alt="在这里插入图片描述"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="532"
+		data-flex-basis="1277px"
+	
+>
+14、<strong>使用临时密码登录mysql</strong></p>
+<blockquote>
+<p>mysql  -u root -p</p>
+</blockquote>
+<ul>
+<li>注意：linux下输入密码是不会回显（不是电脑坏了！），输入完毕后直接回车即可</li>
+</ul>
+<p><img src="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/e3355b85b6d54de9a4a78935ad9b9d41.png"
+	width="1516"
+	height="483"
+	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/e3355b85b6d54de9a4a78935ad9b9d41_hu15597415356221839218.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/e3355b85b6d54de9a4a78935ad9b9d41_hu317603578809890371.png 1024w"
+	loading="lazy"
+	
+		alt="在这里插入图片描述"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="313"
+		data-flex-basis="753px"
+	
+></p>
+<ul>
+<li>密码输入正确，回车后看到如下信息，则代表成功进入mysql</li>
+</ul>
+<p><img src="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/9a91be2de2184dbb887bac8ce41849cf.png"
+	width="1769"
+	height="617"
+	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/9a91be2de2184dbb887bac8ce41849cf_hu4743089053040846049.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/9a91be2de2184dbb887bac8ce41849cf_hu2060890587795556002.png 1024w"
+	loading="lazy"
+	
+		alt="在这里插入图片描述"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="286"
+		data-flex-basis="688px"
+	
+></p>
+<p>15、<strong>修改mysql的登录密码</strong></p>
+<blockquote>
+<p>alter user &lsquo;root&rsquo;@&rsquo;localhost&rsquo; identified  with mysql_native_password by &lsquo;你的密码&rsquo; ;</p>
+</blockquote>
+<ul>
+<li>注：mysql8对密码的强度有很高的要求，具体密码要求可使用以下命令查询</li>
+</ul>
+<blockquote>
+<p>SHOW VARIABLES LIKE &lsquo;validate_password%&rsquo;;</p>
+</blockquote>
+<p>最后重启下mysql即可</p>
+<p>16、<strong>mysql设置远程连接</strong>
+注：这个步骤根据实际需求而设定</p>
+<blockquote>
+<p>show databases ;
+use mysql ;</p>
+</blockquote>
+<p><img src="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/fd72829896684bed97e6399f130b6541.png"
+	width="1501"
+	height="732"
+	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/fd72829896684bed97e6399f130b6541_hu6529893882402397107.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/fd72829896684bed97e6399f130b6541_hu2810682970310523354.png 1024w"
+	loading="lazy"
+	
+		alt="在这里插入图片描述"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="205"
+		data-flex-basis="492px"
+	
+>
+查看可登录mysql的host</p>
+<blockquote>
+<p>select host, user from user;</p>
+</blockquote>
+<p><code>host</code>部分全部都是<code>localhost</code>，说明用户只能本地连接msyql服务
+<img src="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/ec197732dcd24d5f843b0f35772406cd.png"
+	width="1066"
+	height="505"
+	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/ec197732dcd24d5f843b0f35772406cd_hu17943254018971801668.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/ec197732dcd24d5f843b0f35772406cd_hu12224010015564572201.png 1024w"
+	loading="lazy"
+	
+		alt="在这里插入图片描述"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="211"
+		data-flex-basis="506px"
+	
+></p>
+<ul>
+<li>修改<code>root</code>用户的<code>host</code>值，并刷新mysql数据库</li>
+</ul>
+<blockquote>
+<p>update user set user.host=&rsquo;%&rsquo; where user.user=&lsquo;root&rsquo;;
+flush privileges;</p>
+</blockquote>
+<p><img src="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/5df7adbe22224823ada00da9c6815fbb.png"
+	width="1367"
+	height="799"
+	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/5df7adbe22224823ada00da9c6815fbb_hu16719418596397059002.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/5df7adbe22224823ada00da9c6815fbb_hu5477499815462968094.png 1024w"
+	loading="lazy"
+	
+		alt="在这里插入图片描述"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="171"
+		data-flex-basis="410px"
+	
+></p>
+<ul>
+<li>
+<p>在我的windows电脑上使用Navicat测试连接服务器上的mysql，看看是否能够远程连接
+<img src="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/a4b7d14eeb96479aa2a5017b79f7b530.png"
+	width="691"
+	height="821"
+	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/a4b7d14eeb96479aa2a5017b79f7b530_hu17494539699271265124.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/a4b7d14eeb96479aa2a5017b79f7b530_hu15173574666481031354.png 1024w"
+	loading="lazy"
+	
+		alt="在这里插入图片描述"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="84"
+		data-flex-basis="201px"
+	
+>
+17、其他情况说明</p>
+</li>
+<li>
+<p>连接失败的情况</p>
+<ul>
+<li>centos7的防火墙是否开启了3306的端口</li>
+<li>云服务器的出入站规则配置情况</li>
+</ul>
+</li>
+<li>
+<p>篇幅太长这里不再一一说明情况，如果遇到失败情况请自行查询</p>
+</li>
+</ul>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.body, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2024 dxjxpr All Rights Reserved
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.26.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

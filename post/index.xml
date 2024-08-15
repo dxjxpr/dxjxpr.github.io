@@ -1,0 +1,2057 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Posts on I&#39;m R</title>
+        <link>https://dxjxpr.github.io/post/</link>
+        <description>Recent content in Posts on I&#39;m R</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en</language>
+        <copyright>dxjxpr All Rights Reserved</copyright>
+        <lastBuildDate>Tue, 27 Jul 2021 21:06:14 +0800</lastBuildDate><atom:link href="https://dxjxpr.github.io/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>CentOS7安装mysql8教程</title>
+        <link>https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/</link>
+        <pubDate>Tue, 27 Jul 2021 21:06:14 +0800</pubDate>
+        
+        <guid>https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/</guid>
+        <description>&lt;img src="https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/mysql.jpg" alt="Featured image of post CentOS7安装mysql8教程" /&gt;&lt;h1 id=&#34;环境说明&#34;&gt;环境说明
+&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;操作系统：CentOS Linux release 7.9.2009 (Core)&lt;/li&gt;
+&lt;li&gt;本次安装MySQL版本：8.0.26&lt;/li&gt;
+&lt;li&gt;连接工具：xshell、xftp（或者其他连接/上传工具）&lt;/li&gt;
+&lt;li&gt;从腾讯云买的服务器，按量计费，临时用下，经济实惠（如果哪天有空写写服务器购买吧）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;开始&#34;&gt;开始
+&lt;/h1&gt;&lt;p&gt;1、&lt;strong&gt;查看centos7中是否有&lt;code&gt;MariaDB&lt;/code&gt;，&lt;code&gt;MariaDB&lt;/code&gt;与&lt;code&gt;MySQL&lt;/code&gt;关系请自行查阅&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;rpm -qa | grep mariadb&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/5dbd0cce202441c0a19df6a14a50b37d.png&#34;
+	width=&#34;1108&#34;
+	height=&#34;256&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/5dbd0cce202441c0a19df6a14a50b37d_hu13895288146001787928.png 480w, https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/5dbd0cce202441c0a19df6a14a50b37d_hu17488146640750903960.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;432&#34;
+		data-flex-basis=&#34;1038px&#34;
+	
+&gt;
+2、&lt;strong&gt;如果有&lt;code&gt;MariaDB&lt;/code&gt;，需要将 &lt;code&gt;步骤1&lt;/code&gt; 中查询到的&lt;code&gt;mairadb&lt;/code&gt;全部卸载，否则&lt;code&gt;MySQL&lt;/code&gt;安装会出现问题&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;rpm -e &amp;ndash;nodeps 软件名&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/d6c01d167bdd45a2837506e8143060f6.png&#34;
+	width=&#34;1521&#34;
+	height=&#34;163&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/d6c01d167bdd45a2837506e8143060f6_hu9691795427806618590.png 480w, https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/d6c01d167bdd45a2837506e8143060f6_hu4156579029780132438.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;933&#34;
+		data-flex-basis=&#34;2239px&#34;
+	
+&gt;
+3、&lt;strong&gt;查看本机是否已经安装过&lt;code&gt;MySQL&lt;/code&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;rpm -qa | grep -i mysql&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/acec7cdafa264a4ca521ed19aa096a63.png&#34;
+	width=&#34;1022&#34;
+	height=&#34;214&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/acec7cdafa264a4ca521ed19aa096a63_hu10794008393004109569.png 480w, https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/acec7cdafa264a4ca521ed19aa096a63_hu12496300618945815826.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;477&#34;
+		data-flex-basis=&#34;1146px&#34;
+	
+&gt;
+4、&lt;strong&gt;如果安装过&lt;code&gt;MySQL&lt;/code&gt;，请确定是否有数据需要备份（&lt;font color=&#39;red&#39;&gt;如果有需要备份的数据请自行查阅相关操作进行备份，否则数据丢失概不负责&lt;/font&gt;）&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;  &lt;strong&gt;如果没有安装过&lt;code&gt;MySQL&lt;/code&gt;，请跳转步骤6&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;5、&lt;strong&gt;卸载&lt;code&gt;MySQL&lt;/code&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;将步骤3中查询到的mysql安装包全部卸载&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;rpm -e &amp;ndash;nodeps 软件名&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;查找mysql文件，并将其删除&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;find / -name mysql
+whereis mysql&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;  将&lt;code&gt;find&lt;/code&gt;命令和&lt;code&gt;whereis&lt;/code&gt;命令查询到的mysql文件全部删除&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;rm -rf 查询到的mysql路径&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;  删除mysql配置文件&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;rm /etc/my.cnf&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;确认是否全部删除mysql&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;rpm -qa | grep -i mysql&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;6、&lt;strong&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.mysql.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;MySQL官网&lt;/a&gt;下载适用于centos7的mysql安装包&lt;/strong&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/da834284b8bd4a5ebcc8a85623c84f7c.png&#34;
+	width=&#34;1920&#34;
+	height=&#34;896&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/da834284b8bd4a5ebcc8a85623c84f7c_hu495114374628347799.png 480w, https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/da834284b8bd4a5ebcc8a85623c84f7c_hu6204235486643495659.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;214&#34;
+		data-flex-basis=&#34;514px&#34;
+	
+&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/a022ed2d90894343b77edbc0c77cf8a2.png&#34;
+	width=&#34;1920&#34;
+	height=&#34;821&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/a022ed2d90894343b77edbc0c77cf8a2_hu17319307972049778914.png 480w, https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/a022ed2d90894343b77edbc0c77cf8a2_hu5887136749730145028.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;233&#34;
+		data-flex-basis=&#34;561px&#34;
+	
+&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/8e15db4bc90e4284a8b6f1a0ff4f3fe1.png&#34;
+	width=&#34;1607&#34;
+	height=&#34;779&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/8e15db4bc90e4284a8b6f1a0ff4f3fe1_hu8950794701804123253.png 480w, https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/8e15db4bc90e4284a8b6f1a0ff4f3fe1_hu2732341320480352947.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;206&#34;
+		data-flex-basis=&#34;495px&#34;
+	
+&gt;
+查询服务器是x86_64架构还是arm架构&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;uname -m
+或者是
+arch
+# 我的服务器是x86_64的&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/8f55107c93e14828b386f9e418344008.png&#34;
+	width=&#34;979&#34;
+	height=&#34;288&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/8f55107c93e14828b386f9e418344008_hu6724740749116346970.png 480w, https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/8f55107c93e14828b386f9e418344008_hu5397362713831787988.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;339&#34;
+		data-flex-basis=&#34;815px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/9f04e5246506423ab42a82a9d74e6fbc.png&#34;
+	width=&#34;1919&#34;
+	height=&#34;873&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/9f04e5246506423ab42a82a9d74e6fbc_hu11495007406620533820.png 480w, https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/9f04e5246506423ab42a82a9d74e6fbc_hu14635875110194632598.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;219&#34;
+		data-flex-basis=&#34;527px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/badd195d3252421595eeb2c9151425b1.png&#34;
+	width=&#34;1230&#34;
+	height=&#34;789&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/badd195d3252421595eeb2c9151425b1_hu14185685883199399021.png 480w, https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/badd195d3252421595eeb2c9151425b1_hu16572607534012469190.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;155&#34;
+		data-flex-basis=&#34;374px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;这里可以下载直接通过浏览器下载下来，然后通过ftp上传到所要安装的服务器中&lt;/li&gt;
+&lt;li&gt;或者是复制这个&lt;code&gt;tar&lt;/code&gt;包的链接，然后通过&lt;code&gt;wget&lt;/code&gt;命令下载，操作如下&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;wget  文件的网络地址&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;比如我这里下载的地址是&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;wget  &lt;a class=&#34;link&#34; href=&#34;https://cdn.mysql.com//Downloads/MySQL-8.0/mysql-8.0.26-1.el7.x86_64.rpm-bundle.tar&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://cdn.mysql.com//Downloads/MySQL-8.0/mysql-8.0.26-1.el7.x86_64.rpm-bundle.tar&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/4bd9695e6fb743b0987af3c82bf696b0.png&#34;
+	width=&#34;1547&#34;
+	height=&#34;578&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/4bd9695e6fb743b0987af3c82bf696b0_hu1225348355545214436.png 480w, https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/4bd9695e6fb743b0987af3c82bf696b0_hu14095640571435145544.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;267&#34;
+		data-flex-basis=&#34;642px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/c4f2a53cb1de441a81f6ee459f4bd5a4.png&#34;
+	width=&#34;1895&#34;
+	height=&#34;562&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/c4f2a53cb1de441a81f6ee459f4bd5a4_hu3592072233234968284.png 480w, https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/c4f2a53cb1de441a81f6ee459f4bd5a4_hu5101454549480280103.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;337&#34;
+		data-flex-basis=&#34;809px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;无论是通过&lt;code&gt;xftp&lt;/code&gt;工具还是&lt;code&gt;wget&lt;/code&gt;命令，将MySQL的&lt;code&gt;tar&lt;/code&gt;包传到centos的某个目录下（比如home目录下），这里演示的是上传到&lt;code&gt;root&lt;/code&gt;用户的home目录下
+&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/50d5ebd167bc4285ba1a3e18573c9ae1.png&#34;
+	width=&#34;1893&#34;
+	height=&#34;746&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/50d5ebd167bc4285ba1a3e18573c9ae1_hu9523193133467951419.png 480w, https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/50d5ebd167bc4285ba1a3e18573c9ae1_hu9094786919484292589.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;253&#34;
+		data-flex-basis=&#34;609px&#34;
+	
+&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;7、&lt;strong&gt;解压tar包&lt;/strong&gt;
+在解压之前，建议先创建一个空的目录，因为这个tar包解压后多个rpm包会直接放到当前目录。因为我的tar包是在&lt;code&gt;root&lt;/code&gt;用户的home目录下，所以直接在这个目录下创建了一个mysql的目录。这个目录无所谓！&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;mkdir mysql
+&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/8cc8b5dfaebc477e8fd0d80cd9745c52.png&#34;
+	width=&#34;1164&#34;
+	height=&#34;382&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/8cc8b5dfaebc477e8fd0d80cd9745c52_hu10947724890258558264.png 480w, https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/8cc8b5dfaebc477e8fd0d80cd9745c52_hu7538690454289309275.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;304&#34;
+		data-flex-basis=&#34;731px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;解压该tar包&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;tar -xvf mysql的tar包全名  -C 解压到指定目录
+# 说明：-C参数，后面跟的是目录，意思是将压缩包解压缩后存放到指定的目录下。&lt;/p&gt;
+&lt;p&gt;# 这里就指定到刚才创建的mysql目录下&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/7e1ec434fb4243d2907e93de5cb3ff75.png&#34;
+	width=&#34;1784&#34;
+	height=&#34;536&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/7e1ec434fb4243d2907e93de5cb3ff75_hu16574330306657965308.png 480w, https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/7e1ec434fb4243d2907e93de5cb3ff75_hu11764867483628900876.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;332&#34;
+		data-flex-basis=&#34;798px&#34;
+	
+&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/64e7badb5dc6477687d0f06978210611.png&#34;
+	width=&#34;1660&#34;
+	height=&#34;529&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/64e7badb5dc6477687d0f06978210611_hu14909570136455928782.png 480w, https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/64e7badb5dc6477687d0f06978210611_hu11914455526928582601.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;313&#34;
+		data-flex-basis=&#34;753px&#34;
+	
+&gt;
+8、&lt;strong&gt;开始安装MySQL&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;rpm安装命令&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;rpm -ivh xxx.rpm&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;# 这里选择的是全部安装
+# 安装顺序如下，否则会出现依赖问题
+mysql-community-common-8.0.26-1.el7.x86_64.rpm
+mysql-community-client-plugins-8.0.26-1.el7.x86_64.rpm
+mysql-community-embedded-compat-8.0.26-1.el7.x86_64.rpm
+mysql-community-libs-8.0.26-1.el7.x86_64.rpm
+mysql-community-libs-compat-8.0.26-1.el7.x86_64.rpm
+mysql-community-devel-8.0.26-1.el7.x86_64.rpm
+mysql-community-client-8.0.26-1.el7.x86_64.rpm
+mysql-community-server-8.0.26-1.el7.x86_64.rpm
+mysql-community-test-8.0.26-1.el7.x86_64.rpm&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;以上安装rpm时可能会出现centos的动态库缺失等情况，这里记录下几种错误情况&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;情况1：
+[root@VM-0-14-centos mysql]# rpm -ivh mysql-community-embedded-compat-8.0.26-1.el7.x86_64.rpm
+&lt;font color=&#39;red&#39;&gt;warning: mysql-community-embedded-compat-8.0.26-1.el7.x86_64.rpm: Header V3 DSA/SHA256 Signature, key ID 5072e1f5: NOKEY
+error: Failed dependencies:
+libnuma.so.1()(64bit) is needed by mysql-community-embedded-compat-8.0.26-1.el7.x86_64
+libnuma.so.1(libnuma_1.1)(64bit) is needed by mysql-community-embedded-compat-8.0.26-1.el7.x86_64
+libnuma.so.1(libnuma_1.2)(64bit) is needed by mysql-community-embedded-compat-8.0.26-1.el7.x86_64&lt;/font&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;解决方式：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;yum -y install numactl&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;情况2
+&lt;font color=&#39;red&#39;&gt;[root@VM-0-14-centos mysql]# rpm -ivh mysql-community-devel-8.0.26-1.el7.x86_64.rpm
+warning: mysql-community-devel-8.0.26-1.el7.x86_64.rpm: Header V3 DSA/SHA256 Signature, key ID 5072e1f5: NOKEY
+error: Failed dependencies:
+pkgconfig(openssl) is needed by mysql-community-devel-8.0.26-1.el7.x86_64&lt;/font&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;解决方式&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;yum install openssl-devel&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;情况3
+&lt;font color=&#39;red&#39;&gt;[root@VM-0-14-centos mysql]# rpm -ivh mysql-community-test-8.0.26-1.el7.x86_64.rpm
+warning: mysql-community-test-8.0.26-1.el7.x86_64.rpm: Header V3 DSA/SHA256 Signature, key ID 5072e1f5: NOKEY
+error: Failed dependencies:
+perl(Data::Dumper) is needed by mysql-community-test-8.0.26-1.el7.x86_64&lt;/font&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;解决方式&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;yum -y install autoconf&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;情况4
+&lt;font color=&#39;red&#39;&gt;[root@VM-0-14-centos mysql]# rpm -ivh mysql-community-test-8.0.26-1.el7.x86_64.rpm
+warning: mysql-community-test-8.0.26-1.el7.x86_64.rpm: Header V3 DSA/SHA256 Signature, key ID 5072e1f5: NOKEY
+error: Failed dependencies:
+perl(JSON) is needed by mysql-community-test-8.0.26-1.el7.x86_64&lt;/font&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;解决方式&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;yum install perl-JSON.noarch -y&lt;/li&gt;
+&lt;li&gt;yum install perl.x86_64 perl-devel.x86_64 -y&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;情况5
+&lt;font color=&#39;red&#39;&gt;[root@VM-0-14-centos mysql]# rpm -ivh mysql-community-test-8.0.26-1.el7.x86_64.rpm
+warning: mysql-community-test-8.0.26-1.el7.x86_64.rpm: Header V3 DSA/SHA256 Signature, key ID 5072e1f5: NOKEY
+error: Failed dependencies:
+perl(Test::More) is needed by mysql-community-test-8.0.26-1.el7.x86_64&lt;/font&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;解决方式：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;到 &lt;a class=&#34;link&#34; href=&#34;https://pkgs.org/download/perl%28Test::More%29&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://pkgs.org/download/perl(Test::More)&lt;/a&gt;，打开centos7的下拉框，找到CentOS x86_64下对应的rpm，然后打开这个rpm连接，在&lt;code&gt;Download&lt;/code&gt;对应的部分找&lt;code&gt;Binary Package&lt;/code&gt;，后面有对应的rpm下载连接，下载下来进行安装即可&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;9、&lt;strong&gt;初始化数据库&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;mysqld &amp;ndash;initialize &amp;ndash;console&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;10、&lt;strong&gt;目录授权，否则可能会启动失败&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;chown -R mysql:mysql /var/lib/mysql/&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;11、&lt;strong&gt;启动mysql&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;systemctl start mysqld&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;对应的重启、关闭mysql命令如下&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;systemctl stop mysqld
+systemctl restart mysqld&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;12、&lt;strong&gt;查询mysql状态&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;systemctl status mysqld&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/dc9dd40507424492bc07103110d06e42.png&#34;
+	width=&#34;1919&#34;
+	height=&#34;607&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/dc9dd40507424492bc07103110d06e42_hu6577227169046704584.png 480w, https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/dc9dd40507424492bc07103110d06e42_hu2463054485687122167.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;316&#34;
+		data-flex-basis=&#34;758px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;13、&lt;strong&gt;查询mysql的临时密码&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;cat /var/log/mysqld.log | grep password&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/0195743babce4169a3cb3bfde6320f99.png&#34;
+	width=&#34;1900&#34;
+	height=&#34;357&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/0195743babce4169a3cb3bfde6320f99_hu423817825034180079.png 480w, https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/0195743babce4169a3cb3bfde6320f99_hu6187081308475177786.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;532&#34;
+		data-flex-basis=&#34;1277px&#34;
+	
+&gt;
+14、&lt;strong&gt;使用临时密码登录mysql&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;mysql  -u root -p&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;注意：linux下输入密码是不会回显（不是电脑坏了！），输入完毕后直接回车即可&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/e3355b85b6d54de9a4a78935ad9b9d41.png&#34;
+	width=&#34;1516&#34;
+	height=&#34;483&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/e3355b85b6d54de9a4a78935ad9b9d41_hu15597415356221839218.png 480w, https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/e3355b85b6d54de9a4a78935ad9b9d41_hu317603578809890371.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;313&#34;
+		data-flex-basis=&#34;753px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;密码输入正确，回车后看到如下信息，则代表成功进入mysql&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/9a91be2de2184dbb887bac8ce41849cf.png&#34;
+	width=&#34;1769&#34;
+	height=&#34;617&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/9a91be2de2184dbb887bac8ce41849cf_hu4743089053040846049.png 480w, https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/9a91be2de2184dbb887bac8ce41849cf_hu2060890587795556002.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;286&#34;
+		data-flex-basis=&#34;688px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;15、&lt;strong&gt;修改mysql的登录密码&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;alter user &amp;lsquo;root&amp;rsquo;@&amp;rsquo;localhost&amp;rsquo; identified  with mysql_native_password by &amp;lsquo;你的密码&amp;rsquo; ;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;注：mysql8对密码的强度有很高的要求，具体密码要求可使用以下命令查询&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;SHOW VARIABLES LIKE &amp;lsquo;validate_password%&amp;rsquo;;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;最后重启下mysql即可&lt;/p&gt;
+&lt;p&gt;16、&lt;strong&gt;mysql设置远程连接&lt;/strong&gt;
+注：这个步骤根据实际需求而设定&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;show databases ;
+use mysql ;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/fd72829896684bed97e6399f130b6541.png&#34;
+	width=&#34;1501&#34;
+	height=&#34;732&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/fd72829896684bed97e6399f130b6541_hu6529893882402397107.png 480w, https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/fd72829896684bed97e6399f130b6541_hu2810682970310523354.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;205&#34;
+		data-flex-basis=&#34;492px&#34;
+	
+&gt;
+查看可登录mysql的host&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;select host, user from user;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;code&gt;host&lt;/code&gt;部分全部都是&lt;code&gt;localhost&lt;/code&gt;，说明用户只能本地连接msyql服务
+&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/ec197732dcd24d5f843b0f35772406cd.png&#34;
+	width=&#34;1066&#34;
+	height=&#34;505&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/ec197732dcd24d5f843b0f35772406cd_hu17943254018971801668.png 480w, https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/ec197732dcd24d5f843b0f35772406cd_hu12224010015564572201.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;211&#34;
+		data-flex-basis=&#34;506px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;修改&lt;code&gt;root&lt;/code&gt;用户的&lt;code&gt;host&lt;/code&gt;值，并刷新mysql数据库&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;update user set user.host=&amp;rsquo;%&amp;rsquo; where user.user=&amp;lsquo;root&amp;rsquo;;
+flush privileges;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/5df7adbe22224823ada00da9c6815fbb.png&#34;
+	width=&#34;1367&#34;
+	height=&#34;799&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/5df7adbe22224823ada00da9c6815fbb_hu16719418596397059002.png 480w, https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/5df7adbe22224823ada00da9c6815fbb_hu5477499815462968094.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;171&#34;
+		data-flex-basis=&#34;410px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;在我的windows电脑上使用Navicat测试连接服务器上的mysql，看看是否能够远程连接
+&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/a4b7d14eeb96479aa2a5017b79f7b530.png&#34;
+	width=&#34;691&#34;
+	height=&#34;821&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/a4b7d14eeb96479aa2a5017b79f7b530_hu17494539699271265124.png 480w, https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/a4b7d14eeb96479aa2a5017b79f7b530_hu15173574666481031354.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;84&#34;
+		data-flex-basis=&#34;201px&#34;
+	
+&gt;
+17、其他情况说明&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;连接失败的情况&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;centos7的防火墙是否开启了3306的端口&lt;/li&gt;
+&lt;li&gt;云服务器的出入站规则配置情况&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;篇幅太长这里不再一一说明情况，如果遇到失败情况请自行查询&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
+        <title>Markdown Syntax Guide</title>
+        <link>https://dxjxpr.github.io/p/markdown-syntax-guide/</link>
+        <pubDate>Mon, 11 Mar 2019 00:00:00 +0000</pubDate>
+        
+        <guid>https://dxjxpr.github.io/p/markdown-syntax-guide/</guid>
+        <description>&lt;img src="https://dxjxpr.github.io/p/markdown-syntax-guide/pawel-czerwinski-8uZPynIu-rQ-unsplash.jpg" alt="Featured image of post Markdown Syntax Guide" /&gt;&lt;p&gt;This article offers a sample of basic Markdown syntax that can be used in Hugo content files, also it shows whether basic HTML elements are decorated with CSS in a Hugo theme.&lt;/p&gt;
+&lt;h2 id=&#34;headings&#34;&gt;Headings
+&lt;/h2&gt;&lt;p&gt;The following HTML &lt;code&gt;&amp;lt;h1&amp;gt;&lt;/code&gt;—&lt;code&gt;&amp;lt;h6&amp;gt;&lt;/code&gt; elements represent six levels of section headings. &lt;code&gt;&amp;lt;h1&amp;gt;&lt;/code&gt; is the highest section level while &lt;code&gt;&amp;lt;h6&amp;gt;&lt;/code&gt; is the lowest.&lt;/p&gt;
+&lt;h1 id=&#34;h1&#34;&gt;H1
+&lt;/h1&gt;&lt;h2 id=&#34;h2&#34;&gt;H2
+&lt;/h2&gt;&lt;h3 id=&#34;h3&#34;&gt;H3
+&lt;/h3&gt;&lt;h4 id=&#34;h4&#34;&gt;H4
+&lt;/h4&gt;&lt;h5 id=&#34;h5&#34;&gt;H5
+&lt;/h5&gt;&lt;h6 id=&#34;h6&#34;&gt;H6
+&lt;/h6&gt;&lt;h2 id=&#34;paragraph&#34;&gt;Paragraph
+&lt;/h2&gt;&lt;p&gt;Xerum, quo qui aut unt expliquam qui dolut labo. Aque venitatiusda cum, voluptionse latur sitiae dolessi aut parist aut dollo enim qui voluptate ma dolestendit peritin re plis aut quas inctum laceat est volestemque commosa as cus endigna tectur, offic to cor sequas etum rerum idem sintibus eiur? Quianimin porecus evelectur, cum que nis nust voloribus ratem aut omnimi, sitatur? Quiatem. Nam, omnis sum am facea corem alique molestrunt et eos evelece arcillit ut aut eos eos nus, sin conecerem erum fuga. Ri oditatquam, ad quibus unda veliamenimin cusam et facea ipsamus es exerum sitate dolores editium rerore eost, temped molorro ratiae volorro te reribus dolorer sperchicium faceata tiustia prat.&lt;/p&gt;
+&lt;p&gt;Itatur? Quiatae cullecum rem ent aut odis in re eossequodi nonsequ idebis ne sapicia is sinveli squiatum, core et que aut hariosam ex eat.&lt;/p&gt;
+&lt;h2 id=&#34;blockquotes&#34;&gt;Blockquotes
+&lt;/h2&gt;&lt;p&gt;The blockquote element represents content that is quoted from another source, optionally with a citation which must be within a &lt;code&gt;footer&lt;/code&gt; or &lt;code&gt;cite&lt;/code&gt; element, and optionally with in-line changes such as annotations and abbreviations.&lt;/p&gt;
+&lt;h4 id=&#34;blockquote-without-attribution&#34;&gt;Blockquote without attribution
+&lt;/h4&gt;&lt;blockquote&gt;
+&lt;p&gt;Tiam, ad mint andaepu dandae nostion secatur sequo quae.
+&lt;strong&gt;Note&lt;/strong&gt; that you can use &lt;em&gt;Markdown syntax&lt;/em&gt; within a blockquote.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;blockquote-with-attribution&#34;&gt;Blockquote with attribution
+&lt;/h4&gt;&lt;blockquote&gt;
+&lt;p&gt;Don&amp;rsquo;t communicate by sharing memory, share memory by communicating.&lt;br&gt;
+— &lt;cite&gt;Rob Pike&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/cite&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;tables&#34;&gt;Tables
+&lt;/h2&gt;&lt;p&gt;Tables aren&amp;rsquo;t part of the core Markdown spec, but Hugo supports supports them out-of-the-box.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Name&lt;/th&gt;
+&lt;th&gt;Age&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Bob&lt;/td&gt;
+&lt;td&gt;27&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Alice&lt;/td&gt;
+&lt;td&gt;23&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h4 id=&#34;inline-markdown-within-tables&#34;&gt;Inline Markdown within tables
+&lt;/h4&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Italics&lt;/th&gt;
+&lt;th&gt;Bold&lt;/th&gt;
+&lt;th&gt;Code&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;em&gt;italics&lt;/em&gt;&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;bold&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;code&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;A&lt;/th&gt;
+&lt;th&gt;B&lt;/th&gt;
+&lt;th&gt;C&lt;/th&gt;
+&lt;th&gt;D&lt;/th&gt;
+&lt;th&gt;E&lt;/th&gt;
+&lt;th&gt;F&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit.&lt;/td&gt;
+&lt;td&gt;Phasellus ultricies, sapien non euismod aliquam, dui ligula tincidunt odio, at accumsan nulla sapien eget ex.&lt;/td&gt;
+&lt;td&gt;Proin eleifend dictum ipsum, non euismod ipsum pulvinar et. Vivamus sollicitudin, quam in pulvinar aliquam, metus elit pretium purus&lt;/td&gt;
+&lt;td&gt;Proin sit amet velit nec enim imperdiet vehicula.&lt;/td&gt;
+&lt;td&gt;Ut bibendum vestibulum quam, eu egestas turpis gravida nec&lt;/td&gt;
+&lt;td&gt;Sed scelerisque nec turpis vel viverra. Vivamus vitae pretium sapien&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&#34;code-blocks&#34;&gt;Code Blocks
+&lt;/h2&gt;&lt;h4 id=&#34;code-block-with-backticks&#34;&gt;Code block with backticks
+&lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;&amp;lt;!doctype html&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;html&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;lang&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;en&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;head&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;meta&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;charset&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;utf-8&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;title&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;Example HTML5 Document&lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;title&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;head&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;p&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;Test&lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;p&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;html&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h4 id=&#34;code-block-indented-with-four-spaces&#34;&gt;Code block indented with four spaces
+&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;&amp;lt;!doctype html&amp;gt;
+&amp;lt;html lang=&amp;quot;en&amp;quot;&amp;gt;
+&amp;lt;head&amp;gt;
+  &amp;lt;meta charset=&amp;quot;utf-8&amp;quot;&amp;gt;
+  &amp;lt;title&amp;gt;Example HTML5 Document&amp;lt;/title&amp;gt;
+&amp;lt;/head&amp;gt;
+&amp;lt;body&amp;gt;
+  &amp;lt;p&amp;gt;Test&amp;lt;/p&amp;gt;
+&amp;lt;/body&amp;gt;
+&amp;lt;/html&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&#34;code-block-with-hugos-internal-highlight-shortcode&#34;&gt;Code block with Hugo&amp;rsquo;s internal highlight shortcode
+&lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;&amp;lt;!doctype html&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;html&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;lang&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;en&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;head&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;meta&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;charset&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;utf-8&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;title&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;Example HTML5 Document&lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;title&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;head&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;p&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;Test&lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;p&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;html&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h4 id=&#34;diff-code-block&#34;&gt;Diff code block
+&lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-diff&#34; data-lang=&#34;diff&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;[dependencies.bevy]
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git = &amp;#34;https://github.com/bevyengine/bevy&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rev = &amp;#34;11f52b8c72fc3a568e8bb4a4cd1f3eb025ac2e13&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;gd&#34;&gt;- features = [&amp;#34;dynamic&amp;#34;]
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;gd&#34;&gt;&lt;/span&gt;&lt;span class=&#34;gi&#34;&gt;+ features = [&amp;#34;jpeg&amp;#34;, &amp;#34;dynamic&amp;#34;]
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;list-types&#34;&gt;List Types
+&lt;/h2&gt;&lt;h4 id=&#34;ordered-list&#34;&gt;Ordered List
+&lt;/h4&gt;&lt;ol&gt;
+&lt;li&gt;First item&lt;/li&gt;
+&lt;li&gt;Second item&lt;/li&gt;
+&lt;li&gt;Third item&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;unordered-list&#34;&gt;Unordered List
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;List item&lt;/li&gt;
+&lt;li&gt;Another item&lt;/li&gt;
+&lt;li&gt;And another item&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;nested-list&#34;&gt;Nested list
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;Fruit
+&lt;ul&gt;
+&lt;li&gt;Apple&lt;/li&gt;
+&lt;li&gt;Orange&lt;/li&gt;
+&lt;li&gt;Banana&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Dairy
+&lt;ul&gt;
+&lt;li&gt;Milk&lt;/li&gt;
+&lt;li&gt;Cheese&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;other-elements--abbr-sub-sup-kbd-mark&#34;&gt;Other Elements — abbr, sub, sup, kbd, mark
+&lt;/h2&gt;&lt;p&gt;&lt;abbr title=&#34;Graphics Interchange Format&#34;&gt;GIF&lt;/abbr&gt; is a bitmap image format.&lt;/p&gt;
+&lt;p&gt;H&lt;sub&gt;2&lt;/sub&gt;O&lt;/p&gt;
+&lt;p&gt;X&lt;sup&gt;n&lt;/sup&gt; + Y&lt;sup&gt;n&lt;/sup&gt; = Z&lt;sup&gt;n&lt;/sup&gt;&lt;/p&gt;
+&lt;p&gt;Press &lt;kbd&gt;CTRL&lt;/kbd&gt; + &lt;kbd&gt;ALT&lt;/kbd&gt; + &lt;kbd&gt;Delete&lt;/kbd&gt; to end the session.&lt;/p&gt;
+&lt;p&gt;Most &lt;mark&gt;salamanders&lt;/mark&gt; are nocturnal, and hunt for insects, worms, and other small creatures.&lt;/p&gt;
+&lt;h2 id=&#34;hyperlinked-image&#34;&gt;Hyperlinked image
+&lt;/h2&gt;&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://google.com&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;&lt;img src=&#34;https://www.google.com/images/branding/googlelogo/1x/googlelogo_light_color_272x92dp.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Google&#34;
+	
+	
+&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;div class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;
+&lt;p&gt;The above quote is excerpted from Rob Pike&amp;rsquo;s &lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=PAAkCSZUG1c&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;talk&lt;/a&gt; during Gopherfest, November 18, 2015.&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;</description>
+        </item>
+        <item>
+        <title>Navicat15激活教程</title>
+        <link>https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/</link>
+        <pubDate>Tue, 09 Oct 2018 15:44:34 +0800</pubDate>
+        
+        <guid>https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/</guid>
+        <description>&lt;img src="https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/navicat.png" alt="Featured image of post Navicat15激活教程" /&gt;&lt;h2 id=&#34;下载并安装navicat15&#34;&gt;下载并安装Navicat15
+&lt;/h2&gt;&lt;p&gt;1、到&lt;a class=&#34;link&#34; href=&#34;https://www.navicat.com.cn/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Navicat&lt;/a&gt;官网下载Navicat Premium 15版本
+&lt;img src=&#34;https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/70af2e2f73124a0c82397273e38758cf.png&#34;
+	width=&#34;1918&#34;
+	height=&#34;899&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/70af2e2f73124a0c82397273e38758cf_hu3742769412923427778.png 480w, https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/70af2e2f73124a0c82397273e38758cf_hu9526684915756601019.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;213&#34;
+		data-flex-basis=&#34;512px&#34;
+	
+&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/508bca363b484818bd0778bc191ec727.png&#34;
+	width=&#34;1920&#34;
+	height=&#34;889&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/508bca363b484818bd0778bc191ec727_hu8621631715447375846.png 480w, https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/508bca363b484818bd0778bc191ec727_hu9428781916101908910.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;215&#34;
+		data-flex-basis=&#34;518px&#34;
+	
+&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/5b7b545d2bad4639b0d7e02f53ff0899.png&#34;
+	width=&#34;1920&#34;
+	height=&#34;870&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/5b7b545d2bad4639b0d7e02f53ff0899_hu14093938940306339995.png 480w, https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/5b7b545d2bad4639b0d7e02f53ff0899_hu2698301357602067586.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;220&#34;
+		data-flex-basis=&#34;529px&#34;
+	
+&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/692e5ad6b93d4ef3b95fbadd5b193632.png&#34;
+	width=&#34;1230&#34;
+	height=&#34;789&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/692e5ad6b93d4ef3b95fbadd5b193632_hu10598853591664504728.png 480w, https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/692e5ad6b93d4ef3b95fbadd5b193632_hu3313180720482084910.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;155&#34;
+		data-flex-basis=&#34;374px&#34;
+	
+&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/98ecdc41a675414bade4cd058f6a3ea2.png&#34;
+	width=&#34;662&#34;
+	height=&#34;481&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/98ecdc41a675414bade4cd058f6a3ea2_hu14636506608418142208.png 480w, https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/98ecdc41a675414bade4cd058f6a3ea2_hu2250240555321757183.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;137&#34;
+		data-flex-basis=&#34;330px&#34;
+	
+&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/bf076147859c4acfa71b0b8f217083dd.png&#34;
+	width=&#34;666&#34;
+	height=&#34;473&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/bf076147859c4acfa71b0b8f217083dd_hu10449314692018591590.png 480w, https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/bf076147859c4acfa71b0b8f217083dd_hu11083977917522297375.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;140&#34;
+		data-flex-basis=&#34;337px&#34;
+	
+&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/8e1a2382b91c460a9caecd68ac9ffbb7.png&#34;
+	width=&#34;661&#34;
+	height=&#34;474&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/8e1a2382b91c460a9caecd68ac9ffbb7_hu8215097853527267673.png 480w, https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/8e1a2382b91c460a9caecd68ac9ffbb7_hu3874925125911314653.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;139&#34;
+		data-flex-basis=&#34;334px&#34;
+	
+&gt;
+&lt;strong&gt;然后一直下一步&lt;/strong&gt;
+&lt;strong&gt;点击安装&lt;/strong&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/3bc276771fd54cdeaaa160c87da3f5ac.png&#34;
+	width=&#34;666&#34;
+	height=&#34;493&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/3bc276771fd54cdeaaa160c87da3f5ac_hu4896332776903402378.png 480w, https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/3bc276771fd54cdeaaa160c87da3f5ac_hu9941337331762748231.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;135&#34;
+		data-flex-basis=&#34;324px&#34;
+	
+&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/a897ea3554ee4b03a366a4c4a8ae1744.png&#34;
+	width=&#34;665&#34;
+	height=&#34;471&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/a897ea3554ee4b03a366a4c4a8ae1744_hu17816352984603291425.png 480w, https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/a897ea3554ee4b03a366a4c4a8ae1744_hu7675784760024771251.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;141&#34;
+		data-flex-basis=&#34;338px&#34;
+	
+&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/1d312c8a0f5c4625a65f10387a954caa.png&#34;
+	width=&#34;669&#34;
+	height=&#34;480&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/1d312c8a0f5c4625a65f10387a954caa_hu6108228778530277227.png 480w, https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/1d312c8a0f5c4625a65f10387a954caa_hu12933702212608143584.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;139&#34;
+		data-flex-basis=&#34;334px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;激活navicat15&#34;&gt;激活Navicat15
+&lt;/h2&gt;&lt;p&gt;1、使用navicat15激活工具（&lt;strong&gt;激活工具链接见文章末尾&lt;/strong&gt;）
+双击&lt;code&gt;Navicat Keygen Patch v5.6.0 DFoX.exe&lt;/code&gt;，出现如下弹框
+&lt;img src=&#34;https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/c7f611ce4ebd4e6e8cccf6e70430780a.png&#34;
+	width=&#34;736&#34;
+	height=&#34;695&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/c7f611ce4ebd4e6e8cccf6e70430780a_hu10176347081989085888.png 480w, https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/c7f611ce4ebd4e6e8cccf6e70430780a_hu15324183029393226796.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;105&#34;
+		data-flex-basis=&#34;254px&#34;
+	
+&gt;
+2、点击&lt;code&gt;Patch&lt;/code&gt;按钮
+&lt;img src=&#34;https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/2a371f137eab4b28af7aac411d2e4751.png&#34;
+	width=&#34;753&#34;
+	height=&#34;716&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/2a371f137eab4b28af7aac411d2e4751_hu6177041913203526719.png 480w, https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/2a371f137eab4b28af7aac411d2e4751_hu4479320868295662949.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;105&#34;
+		data-flex-basis=&#34;252px&#34;
+	
+&gt;
+3、出现如下提示窗口，则证明该步骤ok。如果点击&lt;code&gt;Patch&lt;/code&gt;按钮后，弹出了资源管理器，在弹出的资源管理器中找到navicat的安装目录，并双击&lt;code&gt;navicat.exe&lt;/code&gt;，然后即可看到如下的提示信息
+&lt;img src=&#34;https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/d483df5a482b460fae19f1e5cc91b81e.png&#34;
+	width=&#34;725&#34;
+	height=&#34;689&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/d483df5a482b460fae19f1e5cc91b81e_hu12941173604150928141.png 480w, https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/d483df5a482b460fae19f1e5cc91b81e_hu18292887496732545126.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;105&#34;
+		data-flex-basis=&#34;252px&#34;
+	
+&gt;
+4、按照如图所示，点击&lt;code&gt;Generate&lt;/code&gt;按钮，然后会生成一个密钥，复制这个密钥
+&lt;img src=&#34;https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/d211b010a1c7479782a91a63724a7245.png&#34;
+	width=&#34;751&#34;
+	height=&#34;707&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/d211b010a1c7479782a91a63724a7245_hu16853331450829034206.png 480w, https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/d211b010a1c7479782a91a63724a7245_hu5574933430797862125.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;106&#34;
+		data-flex-basis=&#34;254px&#34;
+	
+&gt;
+5、打开Navicat软件
+&lt;img src=&#34;https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/7c9745d922434fe79c9d3506d3a993d7.png&#34;
+	width=&#34;687&#34;
+	height=&#34;474&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/7c9745d922434fe79c9d3506d3a993d7_hu11894866141172584380.png 480w, https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/7c9745d922434fe79c9d3506d3a993d7_hu16738215121819995672.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;144&#34;
+		data-flex-basis=&#34;347px&#34;
+	
+&gt;
+6、将刚才复制的密钥直接粘贴到这里
+&lt;img src=&#34;https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/1b3307b93bcf4079a2a4693be6702725.png&#34;
+	width=&#34;934&#34;
+	height=&#34;521&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/1b3307b93bcf4079a2a4693be6702725_hu10652021474602570488.png 480w, https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/1b3307b93bcf4079a2a4693be6702725_hu9270374321276070628.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;179&#34;
+		data-flex-basis=&#34;430px&#34;
+	
+&gt;
+7、点击&lt;code&gt;手动激活&lt;/code&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/06579ee8e9a641a7ae0f7fe95ff54dc6.png&#34;
+	width=&#34;775&#34;
+	height=&#34;190&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/06579ee8e9a641a7ae0f7fe95ff54dc6_hu4148625701081921520.png 480w, https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/06579ee8e9a641a7ae0f7fe95ff54dc6_hu5877901103947379676.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;407&#34;
+		data-flex-basis=&#34;978px&#34;
+	
+&gt;
+8、复制&lt;code&gt;请求码&lt;/code&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/71049409fb704e9f8646a9fa4d7bce74.png&#34;
+	width=&#34;737&#34;
+	height=&#34;669&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/71049409fb704e9f8646a9fa4d7bce74_hu2491531349052443072.png 480w, https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/71049409fb704e9f8646a9fa4d7bce74_hu14712046219276711919.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;110&#34;
+		data-flex-basis=&#34;264px&#34;
+	
+&gt;
+9、按照如下图所示，进行粘贴激活
+&lt;img src=&#34;https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/a5ccc554797b4f5e864c4a2a79919f8d.png&#34;
+	width=&#34;725&#34;
+	height=&#34;690&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/a5ccc554797b4f5e864c4a2a79919f8d_hu9038543980177136175.png 480w, https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/a5ccc554797b4f5e864c4a2a79919f8d_hu17643424441540247746.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;105&#34;
+		data-flex-basis=&#34;252px&#34;
+	
+&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/13ac9f191f834d55b84f29e08af9830d.png&#34;
+	width=&#34;1497&#34;
+	height=&#34;789&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/13ac9f191f834d55b84f29e08af9830d_hu13713467706978664900.png 480w, https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/13ac9f191f834d55b84f29e08af9830d_hu11335147701422470380.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;189&#34;
+		data-flex-basis=&#34;455px&#34;
+	
+&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/e7b06f154ebb43f1815995b966864d51.png&#34;
+	width=&#34;479&#34;
+	height=&#34;306&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/e7b06f154ebb43f1815995b966864d51_hu768918998153699515.png 480w, https://dxjxpr.github.io/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/e7b06f154ebb43f1815995b966864d51_hu16436356723549612399.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;156&#34;
+		data-flex-basis=&#34;375px&#34;
+	
+&gt;&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>U盘重装win10(三)重装系统</title>
+        <link>https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/</link>
+        <pubDate>Mon, 08 Oct 2018 19:57:34 +0800</pubDate>
+        
+        <guid>https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/</guid>
+        <description>&lt;img src="https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/windows10_03.jpg" alt="Featured image of post U盘重装win10(三)重装系统" /&gt;&lt;p&gt;&lt;font color= red size = 6&gt;友情提示：数据无价，谨慎操作（会出事的）&lt;/font&gt;
+&lt;font color= red size = 5&gt;
+看完再进行操作，如果是新手最好有人在旁边指导！！！
+看完再进行操作，如果是新手最好有人在旁边指导！！！
+看完再进行操作，如果是新手最好有人在旁边指导！！！
+重要的事情说三遍	！！！&lt;/font&gt;
+&lt;/br&gt;&lt;/p&gt;
+&lt;h2 id=&#34;重装系统&#34;&gt;重装系统
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;&lt;font color = red size = 6&gt;如果你还需要的话，请先将系统所要安装到的分区数据备份出来，后面会格式化该分区（删除）&lt;/font&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;  系统盘刻录好之后，就要进入电脑的BIOS界面了，U盘插上之后，就不要去动了，直到系统装好之后再拔掉，如何进入BIOS？在你电脑开机（重启/开机），出现电脑图标的时候，按下BIOS快捷键，常见BIOS的快捷键有DEL、ESC、F2、F10、F11、F12，可根据自己的电脑品牌在网上搜下&lt;/strong&gt;
+&lt;/br&gt;
+&lt;strong&gt;比如联想的，等出现下面的图标后按下联想的BIOS快捷键，其他牌子的电脑类比下&lt;/strong&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172607545.png&#34;
+	width=&#34;553&#34;
+	height=&#34;315&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172607545_hu12589186089638212348.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172607545_hu7076276910964119092.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;175&#34;
+		data-flex-basis=&#34;421px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;  然后进入到下面的蓝色页面，这是我电脑的BIOS，每个电脑的BIOS界面可能不太一样，比如Dell新版BIOS是白色的文字页面，了解下就行（问题不大，找到系统启动顺序就行，BIOS里面会有说明信息），我这里是通过上下左右按键来移动，使用enter还确认，使用esc来退出，在boot菜单下，选择系统启动方式，还记得上面说的mbr+legacy模式（旧）和gpt+uefi模式（新）吗？看到下面的U盘选项前面有个UEFI了吗，因为我电脑磁盘分区表格式是gpt格式的，所以就选择uefi启动，如果是mbr的话，找到前面不带uefi的U盘选项（注：我这里没有那个选项）；有的电脑主板是会有单独的启动方式选项，然后根据磁盘分区表来选择legacy还是uefi方式即可，具体情况需要看你电脑的主板了。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;  然后将U盘调整到第一个选项，有的是使用+/-，有的是使用F5/F6来调整，具体需要看你的BIOS怎么调整，一般来说右边会有英文说明，我这里是使用回车来调整，最后按下F10保存BIOS设置（注一般是F10，有的电脑不是）&lt;/strong&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172620957.png&#34;
+	width=&#34;553&#34;
+	height=&#34;415&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172620957_hu10598253383371189935.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172620957_hu4305810969685981387.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;133&#34;
+		data-flex-basis=&#34;319px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;F10保存并退出BIOS&lt;/strong&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172625104.png&#34;
+	width=&#34;553&#34;
+	height=&#34;415&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172625104_hu2924402274494638108.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172625104_hu2174321325888138183.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;133&#34;
+		data-flex-basis=&#34;319px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;  第二种进入U盘的方式是先进入到BIOS的菜单选项，再找到U盘启动项，直接回车就行了，然后就是等着重启了，看到没有？我这里有两个U盘选项，一个不带UEFI的（搭配mbr分区表格式），一个带（搭配gpt分区表格式），我这里肯定是选择带UEFI的选项了（因为我电脑磁盘的分区表格式是gpt呀！），你需要根据你电脑磁盘分区表格式来选择了，哈？不知道自己电脑分区表格式？&lt;a class=&#34;link&#34; href=&#34;https://blog.csdn.net/Silence_R/article/details/82951718&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;请看这里&lt;/a&gt;&lt;/strong&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/2018100617451677.png&#34;
+	width=&#34;553&#34;
+	height=&#34;415&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/2018100617451677_hu6556304806551899933.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/2018100617451677_hu11348048422408394039.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;133&#34;
+		data-flex-basis=&#34;319px&#34;
+	
+&gt;
+&lt;strong&gt;然后读取U盘信息，进入系统盘&lt;/strong&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172630178.png&#34;
+	width=&#34;554&#34;
+	height=&#34;308&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172630178_hu14891233160467670339.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172630178_hu16802711512362514491.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;179&#34;
+		data-flex-basis=&#34;431px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;很好，已经进来了，下面的界面选择默认，直接点击下一步即可&lt;/strong&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172634247.png&#34;
+	width=&#34;553&#34;
+	height=&#34;415&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172634247_hu13524873403093337413.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172634247_hu7805007561166788298.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;133&#34;
+		data-flex-basis=&#34;319px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;点击现在安装&lt;/strong&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172638849.png&#34;
+	width=&#34;553&#34;
+	height=&#34;415&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172638849_hu14648594542083088171.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172638849_hu986865515383245055.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;133&#34;
+		data-flex-basis=&#34;319px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;安装程序正在启动，等待几秒就好了&lt;/strong&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172643516.png&#34;
+	width=&#34;553&#34;
+	height=&#34;414&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172643516_hu740765175305732999.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172643516_hu13636683057781827148.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;133&#34;
+		data-flex-basis=&#34;320px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;这里要输入密钥，选择下方的选项：我没有密钥，先跳过这一步，装好系统后再来激活&lt;/strong&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172647866.png&#34;
+	width=&#34;553&#34;
+	height=&#34;415&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172647866_hu12640532556248475623.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172647866_hu11508653480087468860.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;133&#34;
+		data-flex-basis=&#34;319px&#34;
+	
+&gt;
+&lt;strong&gt;win10的系统镜像一般包含好几种系统版本来供选择，看自己选择，我这里选择专业版&lt;/strong&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172655108.png&#34;
+	width=&#34;553&#34;
+	height=&#34;415&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172655108_hu10210931709701040860.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172655108_hu11936034137911491066.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;133&#34;
+		data-flex-basis=&#34;319px&#34;
+	
+&gt;
+&lt;strong&gt;签订协议，点击下一步继续&lt;/strong&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/2018100617265937.png&#34;
+	width=&#34;553&#34;
+	height=&#34;415&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/2018100617265937_hu3802608892563221422.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/2018100617265937_hu8156888221493342062.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;133&#34;
+		data-flex-basis=&#34;319px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;font color = red size = 4 f&gt;注意：这里涉及到磁盘了！！！谨慎操作！！！不小心的话会把磁盘里的文件删了，搞明白了再进行操作&lt;/font&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;因为我们要重装系统，所以选择第二个自定义选项，自己来设置系统磁盘的大小&lt;/strong&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172708692.png&#34;
+	width=&#34;553&#34;
+	height=&#34;415&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172708692_hu14931240484894320157.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172708692_hu12095110458495642094.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;133&#34;
+		data-flex-basis=&#34;319px&#34;
+	
+&gt;
+&lt;strong&gt;点击自定义后会出现你现在电脑上所有的分区（下图)&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;font color=red size =5&gt;这里很重要！！！很重要！！！很重要！！！看清楚再点击！！！&lt;/font&gt;
+&lt;strong&gt;先说下系统磁盘的大小划分，一般来说系统会占用掉30G左右的磁盘空间，然后肯定不能只分30G，因为系统需要安装各种软件，而有的软件是只能安装到C盘的（系统盘），比如说谷歌浏览器什么的，所以一般就给系统分60G往上，当然你磁盘空间大的话，可以多划分，这个具体如何划分需要根据磁盘大小和你电脑用途来选择&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;因为我这里有两块磁盘，所以上面会显示两个驱动器号（0和1），同一个驱动号可能有多个分区，就是你windows上显示的C、D、E&amp;hellip;.盘，在我电脑里驱动器0代表的是机械硬盘，驱动器1代表的是固态硬盘，注意如果你也有多块硬盘的话，驱动器0不一定代表的是机械硬盘，具体代表的是什么硬盘是和你电脑硬盘的安装顺序有关系，这里要看清楚再选择！！！别搞错了！！！&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;在这里 我想将系统装在固态硬盘当中，那么我就去对带驱动器1的分区进行操作，选择好你要安装的地方，然后将这块分区删除，如果电脑里面没有其他系统的话，或者没有必要的话，将该窗口上显示的msr分区、esp分区、恢复分区都给删除了，删除后，该窗口上会出现一个名为：   “未分区的空间 ”      的分区，如果你电脑本身就有未分区的空间，那么在你进行删除之后，可能会和你电脑本来就有的      未分区空间      合并到一起（&lt;font color = red &gt; 至于是否合并与物理磁盘顺序有关&lt;/font&gt;），这个注意下，然后点击该未分区的空间，显示成高亮之后，点击下一步，然后就是开始安装系统了&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;注：如果该步骤在点击下一步的时候提示安装不了系统，可能是系统的原因，也有可能是磁盘的原因，或者是系统启动方式错误等其他错误原因，如果遇到问题请自行百度，这里只讲日常（正常）操作！！！&lt;/strong&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172717880.png&#34;
+	width=&#34;553&#34;
+	height=&#34;415&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172717880_hu3908816706552376094.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172717880_hu12741181950462711296.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;133&#34;
+		data-flex-basis=&#34;319px&#34;
+	
+&gt;
+&lt;strong&gt;下面这个步骤就需要等待了，时间长短不一，一般几分钟就好了，这个时候就不用管了，等着它安装好就行了&lt;/strong&gt;
+&lt;font color = red size = 2&gt; 注：此时不要强制关机&lt;/font&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172725630.png&#34;
+	width=&#34;554&#34;
+	height=&#34;409&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172725630_hu12983071663255022417.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172725630_hu2488173136012354990.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;135&#34;
+		data-flex-basis=&#34;325px&#34;
+	
+&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172730215.png&#34;
+	width=&#34;554&#34;
+	height=&#34;400&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172730215_hu10674884982441336687.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172730215_hu14269316605350297391.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;138&#34;
+		data-flex-basis=&#34;332px&#34;
+	
+&gt;
+&lt;strong&gt;安装好之后就会有下面的界面，你可以选择等10秒钟自动重启，或者是点击立即重启，等电脑黑屏之后，将U盘拔掉，不要拔早了，可能会造成系统损坏（会安装失败的）；也不要迟拔，因为迟拔的话，可能还会进入到安装界面，因为U盘设置的是第一启动项！！！如果是迟拔的话，将那个安装页面关了，把U盘拔掉就行&lt;/strong&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172737233.png&#34;
+	width=&#34;554&#34;
+	height=&#34;412&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172737233_hu10066005074531943041.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172737233_hu4221028876667993646.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;134&#34;
+		data-flex-basis=&#34;322px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;U盘拔掉之后，就等着它重启，注：这个过程，电脑可能会启动多次，正常操作，不用担心，下面就是根据系统提示信息来进行操作了&lt;/strong&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172741766.png&#34;
+	width=&#34;554&#34;
+	height=&#34;418&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172741766_hu9593153943902626124.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172741766_hu8236465475227293846.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;132&#34;
+		data-flex-basis=&#34;318px&#34;
+	
+&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172745949.png&#34;
+	width=&#34;554&#34;
+	height=&#34;411&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172745949_hu7683117098658845071.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172745949_hu7896212160468827819.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;134&#34;
+		data-flex-basis=&#34;323px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;下面的密钥依旧选择跳过，选择以后再说，如果提示联网的话，不要联网！不要联网！不要联网！网线拔了，也不要去连接WiFi，把网断掉
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172751903.png&#34;
+	width=&#34;554&#34;
+	height=&#34;416&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172751903_hu18380246429966595610.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172751903_hu15215563665074878863.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;133&#34;
+		data-flex-basis=&#34;319px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;这个可以选择自定义，或者是默认的设置，看个人喜好，这里选择的是默认设置&lt;/strong&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172755877.png&#34;
+	width=&#34;554&#34;
+	height=&#34;416&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172755877_hu5034154079671010361.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172755877_hu4385458461318298379.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;133&#34;
+		data-flex-basis=&#34;319px&#34;
+	
+&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172802864.png&#34;
+	width=&#34;554&#34;
+	height=&#34;321&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172802864_hu7895227910125772072.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172802864_hu14799412224281429890.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;172&#34;
+		data-flex-basis=&#34;414px&#34;
+	
+&gt;
+&lt;strong&gt;下面就是创建账户了，如果不想创建账户，直接点击下一步，系统默认的账户是Administrator（管理员），或者是你只想创建一个账户而不设置密码的话，就输入一个账户名字就行了，然后点击下一步，这样就没有密码了&lt;/strong&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/2018100617280775.png&#34;
+	width=&#34;554&#34;
+	height=&#34;303&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/2018100617280775_hu768847332246327939.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/2018100617280775_hu9433177741535793291.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;182&#34;
+		data-flex-basis=&#34;438px&#34;
+	
+&gt;
+&lt;strong&gt;下面就是系统自己的事情了，会进行一系列的配置&lt;/strong&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172810389.png&#34;
+	width=&#34;553&#34;
+	height=&#34;372&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172810389_hu13478813418212724736.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172810389_hu1360043599460496461.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;148&#34;
+		data-flex-basis=&#34;356px&#34;
+	
+&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172827968.png&#34;
+	width=&#34;554&#34;
+	height=&#34;440&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172827968_hu16053076584077959246.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172827968_hu13198612342153404463.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;125&#34;
+		data-flex-basis=&#34;302px&#34;
+	
+&gt;
+&lt;strong&gt;等待后的结果就是下面这个样子。是不是感觉很纯净？这样系统就算是装好了，接着就需要自己进行系统的配置了，比如屏幕分辨率、个性化、磁盘划分、安装各种软件等等，所以装系统并不费时间，费时间的是装好后的操作&lt;/strong&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172833143.png&#34;
+	width=&#34;553&#34;
+	height=&#34;311&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172833143_hu13295236496869367345.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172833143_hu7164595804577201064.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;177&#34;
+		data-flex-basis=&#34;426px&#34;
+	
+&gt;&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>U盘重装win10(二)刻录系统盘</title>
+        <link>https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%BA%8C%E5%88%BB%E5%BD%95%E7%B3%BB%E7%BB%9F%E7%9B%98/</link>
+        <pubDate>Sun, 07 Oct 2018 21:47:48 +0800</pubDate>
+        
+        <guid>https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%BA%8C%E5%88%BB%E5%BD%95%E7%B3%BB%E7%BB%9F%E7%9B%98/</guid>
+        <description>&lt;img src="https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%BA%8C%E5%88%BB%E5%BD%95%E7%B3%BB%E7%BB%9F%E7%9B%98/windows10_02.jpg" alt="Featured image of post U盘重装win10(二)刻录系统盘" /&gt;&lt;h2 id=&#34;刻录系统&#34;&gt;刻录系统
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;使用刻录工具，这里用的是UltraISO（软碟通）&lt;a class=&#34;link&#34; href=&#34;https://cn.ultraiso.net/xiazai.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;官网下载&lt;/a&gt;，或者使用其他刻录软件&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;注：这个软件下载好之后，可以不用激活，直接点右下角的继续试用就行，如果想激活的话，附激活账号：
+用户名：王涛
+注册码：7C81-1689-4046-626F&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;先将U盘中的数据备份出来，后面要格式化U盘&lt;/strong&gt;
+&lt;strong&gt;启动ultraISO&lt;/strong&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%BA%8C%E5%88%BB%E5%BD%95%E7%B3%BB%E7%BB%9F%E7%9B%98/20181006170858958.png&#34;
+	width=&#34;335&#34;
+	height=&#34;276&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%BA%8C%E5%88%BB%E5%BD%95%E7%B3%BB%E7%BB%9F%E7%9B%98/20181006170858958_hu13710807830731936980.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%BA%8C%E5%88%BB%E5%BD%95%E7%B3%BB%E7%BB%9F%E7%9B%98/20181006170858958_hu17627936655057912259.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;121&#34;
+		data-flex-basis=&#34;291px&#34;
+	
+&gt;
+选择系统镜像
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%BA%8C%E5%88%BB%E5%BD%95%E7%B3%BB%E7%BB%9F%E7%9B%98/20181006170908177.png&#34;
+	width=&#34;554&#34;
+	height=&#34;397&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%BA%8C%E5%88%BB%E5%BD%95%E7%B3%BB%E7%BB%9F%E7%9B%98/20181006170908177_hu16651832828398744826.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%BA%8C%E5%88%BB%E5%BD%95%E7%B3%BB%E7%BB%9F%E7%9B%98/20181006170908177_hu13618879228259374525.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;139&#34;
+		data-flex-basis=&#34;334px&#34;
+	
+&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%BA%8C%E5%88%BB%E5%BD%95%E7%B3%BB%E7%BB%9F%E7%9B%98/20181006170912974.png&#34;
+	width=&#34;554&#34;
+	height=&#34;399&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%BA%8C%E5%88%BB%E5%BD%95%E7%B3%BB%E7%BB%9F%E7%9B%98/20181006170912974_hu12362190794437446195.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%BA%8C%E5%88%BB%E5%BD%95%E7%B3%BB%E7%BB%9F%E7%9B%98/20181006170912974_hu14078983333438753611.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;138&#34;
+		data-flex-basis=&#34;333px&#34;
+	
+&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%BA%8C%E5%88%BB%E5%BD%95%E7%B3%BB%E7%BB%9F%E7%9B%98/20181006170916608.png&#34;
+	width=&#34;554&#34;
+	height=&#34;312&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%BA%8C%E5%88%BB%E5%BD%95%E7%B3%BB%E7%BB%9F%E7%9B%98/20181006170916608_hu3007615315656922178.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%BA%8C%E5%88%BB%E5%BD%95%E7%B3%BB%E7%BB%9F%E7%9B%98/20181006170916608_hu8489966971738394748.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;177&#34;
+		data-flex-basis=&#34;426px&#34;
+	
+&gt;
+&lt;strong&gt;这样系统就加载到ultraISO里了&lt;/strong&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%BA%8C%E5%88%BB%E5%BD%95%E7%B3%BB%E7%BB%9F%E7%9B%98/20181006170919592.png&#34;
+	width=&#34;554&#34;
+	height=&#34;394&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%BA%8C%E5%88%BB%E5%BD%95%E7%B3%BB%E7%BB%9F%E7%9B%98/20181006170919592_hu14628515901963193472.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%BA%8C%E5%88%BB%E5%BD%95%E7%B3%BB%E7%BB%9F%E7%9B%98/20181006170919592_hu16052146182480177093.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;140&#34;
+		data-flex-basis=&#34;337px&#34;
+	
+&gt;
+&lt;strong&gt;然后选择刻录（写入硬盘映像）&lt;/strong&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%BA%8C%E5%88%BB%E5%BD%95%E7%B3%BB%E7%BB%9F%E7%9B%98/20181006170931261.png&#34;
+	width=&#34;554&#34;
+	height=&#34;398&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%BA%8C%E5%88%BB%E5%BD%95%E7%B3%BB%E7%BB%9F%E7%9B%98/20181006170931261_hu10296378903425646366.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%BA%8C%E5%88%BB%E5%BD%95%E7%B3%BB%E7%BB%9F%E7%9B%98/20181006170931261_hu2767703953576178778.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;139&#34;
+		data-flex-basis=&#34;334px&#34;
+	
+&gt;
+&lt;strong&gt;这里选择你所要刻录的U盘（会显示你U盘的名字，我U盘是金士顿，所以上面的名字是Kingston），刻录校验可选可不选
+然后把根据图片提示步骤，先将U盘格式化，再选择写入，如果是3.0的U盘的话，一般小于10分钟，如果是2.0的话，可能会稍微久一点，这个对装系统没什么影响&lt;/strong&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%BA%8C%E5%88%BB%E5%BD%95%E7%B3%BB%E7%BB%9F%E7%9B%98/20181006171038265.png&#34;
+	width=&#34;549&#34;
+	height=&#34;506&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%BA%8C%E5%88%BB%E5%BD%95%E7%B3%BB%E7%BB%9F%E7%9B%98/20181006171038265_hu8498675565002546072.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%BA%8C%E5%88%BB%E5%BD%95%E7%B3%BB%E7%BB%9F%E7%9B%98/20181006171038265_hu6404983460802828970.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;108&#34;
+		data-flex-basis=&#34;260px&#34;
+	
+&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%BA%8C%E5%88%BB%E5%BD%95%E7%B3%BB%E7%BB%9F%E7%9B%98/20181006171042871.png&#34;
+	width=&#34;293&#34;
+	height=&#34;571&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%BA%8C%E5%88%BB%E5%BD%95%E7%B3%BB%E7%BB%9F%E7%9B%98/20181006171042871_hu11589774866550179145.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%BA%8C%E5%88%BB%E5%BD%95%E7%B3%BB%E7%BB%9F%E7%9B%98/20181006171042871_hu7031223975228569625.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;51&#34;
+		data-flex-basis=&#34;123px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%BA%8C%E5%88%BB%E5%BD%95%E7%B3%BB%E7%BB%9F%E7%9B%98/20181006171047616.png&#34;
+	width=&#34;431&#34;
+	height=&#34;576&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%BA%8C%E5%88%BB%E5%BD%95%E7%B3%BB%E7%BB%9F%E7%9B%98/20181006171047616_hu3742006546611954364.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%BA%8C%E5%88%BB%E5%BD%95%E7%B3%BB%E7%BB%9F%E7%9B%98/20181006171047616_hu5476701060919006692.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;74&#34;
+		data-flex-basis=&#34;179px&#34;
+	
+&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%BA%8C%E5%88%BB%E5%BD%95%E7%B3%BB%E7%BB%9F%E7%9B%98/20181006171053766.png&#34;
+	width=&#34;397&#34;
+	height=&#34;574&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%BA%8C%E5%88%BB%E5%BD%95%E7%B3%BB%E7%BB%9F%E7%9B%98/20181006171053766_hu2520360568851932829.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%BA%8C%E5%88%BB%E5%BD%95%E7%B3%BB%E7%BB%9F%E7%9B%98/20181006171053766_hu7411014207647087995.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;69&#34;
+		data-flex-basis=&#34;165px&#34;
+	
+&gt;
+&lt;strong&gt;然后就是开始刻录，刻录过程不要动U盘，否则可能会造成系统的刻录失败（ultraISO可能会提醒可能不会）&lt;/strong&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%BA%8C%E5%88%BB%E5%BD%95%E7%B3%BB%E7%BB%9F%E7%9B%98/20181006171102391.png&#34;
+	width=&#34;549&#34;
+	height=&#34;506&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%BA%8C%E5%88%BB%E5%BD%95%E7%B3%BB%E7%BB%9F%E7%9B%98/20181006171102391_hu971874075705436351.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%BA%8C%E5%88%BB%E5%BD%95%E7%B3%BB%E7%BB%9F%E7%9B%98/20181006171102391_hu1141890425295653786.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;108&#34;
+		data-flex-basis=&#34;260px&#34;
+	
+&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%BA%8C%E5%88%BB%E5%BD%95%E7%B3%BB%E7%BB%9F%E7%9B%98/20181006171105636.png&#34;
+	width=&#34;549&#34;
+	height=&#34;506&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%BA%8C%E5%88%BB%E5%BD%95%E7%B3%BB%E7%BB%9F%E7%9B%98/20181006171105636_hu9959564379469816222.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%BA%8C%E5%88%BB%E5%BD%95%E7%B3%BB%E7%BB%9F%E7%9B%98/20181006171105636_hu14222515850972527561.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;108&#34;
+		data-flex-basis=&#34;260px&#34;
+	
+&gt;
+&lt;strong&gt;刻录好的U盘内容，看到U盘的名字变成了CCCOMA_X64F了没？刻录系统会改变U盘的名字，所以上面在格式化U盘的时候，U盘的名字不用换，但需要一个名字&lt;/strong&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%BA%8C%E5%88%BB%E5%BD%95%E7%B3%BB%E7%BB%9F%E7%9B%98/20181006171113850.png&#34;
+	width=&#34;554&#34;
+	height=&#34;247&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%BA%8C%E5%88%BB%E5%BD%95%E7%B3%BB%E7%BB%9F%E7%9B%98/20181006171113850_hu5577931813168510677.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%BA%8C%E5%88%BB%E5%BD%95%E7%B3%BB%E7%BB%9F%E7%9B%98/20181006171113850_hu1570591330577820539.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;224&#34;
+		data-flex-basis=&#34;538px&#34;
+	
+&gt;
+&lt;strong&gt;下面就是开始装系统了&lt;/strong&gt;&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>U盘重装win10(一)下载系统镜像</title>
+        <link>https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/</link>
+        <pubDate>Sat, 06 Oct 2018 19:57:34 +0800</pubDate>
+        
+        <guid>https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/</guid>
+        <description>&lt;img src="https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/windows10_01.jpeg" alt="Featured image of post U盘重装win10(一)下载系统镜像" /&gt;&lt;h2 id=&#34;装系统准备&#34;&gt;装系统准备：
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;一个不小于8G的U盘
+一个下载好的win10系统镜像（后缀式为.iso）
+下载工具：迅雷或者百度云盘
+刻录工具：UltraISO（软碟通，最好是从官网下载），或者其他刻录软件
+磁盘工具：diskgenius，或其他磁盘工具都可以&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id=&#34;检查电脑参数&#34;&gt;检查电脑参数
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;首先需要去知道自己电脑里面的一些参数，这里用DiskGenius软件来检测，需要可到&lt;a class=&#34;link&#34; href=&#34;http://www.diskgenius.cn/download.php&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;官网下载&lt;/a&gt;&lt;/strong&gt;
+&lt;strong&gt;以我电脑为例，我电脑是64位的，所以这里下载的是64位，根据自己电脑来选择&lt;/strong&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/20181006160454163.png&#34;
+	width=&#34;1558&#34;
+	height=&#34;674&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/20181006160454163_hu7806694479653692523.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/20181006160454163_hu4079575686701050720.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;231&#34;
+		data-flex-basis=&#34;554px&#34;
+	
+&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/20181006160506515.png&#34;
+	width=&#34;554&#34;
+	height=&#34;331&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/20181006160506515_hu16907621072555992231.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/20181006160506515_hu121865704352808464.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;167&#34;
+		data-flex-basis=&#34;401px&#34;
+	
+&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/20181006160517308.png&#34;
+	width=&#34;554&#34;
+	height=&#34;398&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/20181006160517308_hu16219855382747853797.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/20181006160517308_hu11270450581795375888.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;139&#34;
+		data-flex-basis=&#34;334px&#34;
+	
+&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/20181006160525236.png&#34;
+	width=&#34;553&#34;
+	height=&#34;405&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/20181006160525236_hu10269102860775710107.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/20181006160525236_hu548051197943243933.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;136&#34;
+		data-flex-basis=&#34;327px&#34;
+	
+&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/20181006160533137.png&#34;
+	width=&#34;554&#34;
+	height=&#34;408&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/20181006160533137_hu9600356262621821122.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/20181006160533137_hu15857630435004172125.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;135&#34;
+		data-flex-basis=&#34;325px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;font color=red size=6 &gt;&lt;strong&gt;上面的分区表类型很重要！后面装的时候用的到&lt;/strong&gt;&lt;/font&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;font color=red size=6 &gt;如果你所要装系统磁盘的分区表格式是mbr，那么在重装系统的时候方式就要选择legacy
+如果是上面的gpt格式，那么启动方式就选择uefi
+不要搞错了，如果不匹配的话，可能装不上系统，或者装上了以后在更新系统的时候，系统是更新不了的，这里先这么选，不懂也没事，不要搞错就行了
+下面看看就行，如果会的话，可以绕过，关乎数据安全！（数据无价，谨慎操作！！！）
+&lt;/font&gt;
+&lt;font color=red size = 6&gt;附加：mbr+legacy模式（旧）是传统启动方式，相对于gpt+uefi模式（新），系统启动时间可能相对慢点，还有磁盘的主分区数量  等其他的区别。
+如果想转换的话，可以在重装系统选择磁盘界面可以转换（具体操作请百度），警告：要转换的磁盘会被格式化，这里的格式化是整个磁盘，不是某个分区！！！数据会全部丢失！！！&lt;/font&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id=&#34;下载系统镜像&#34;&gt;下载系统镜像
+&lt;/h2&gt;&lt;p&gt;百度&lt;a class=&#34;link&#34; href=&#34;https://msdn.itellyou.cn/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;msdn&lt;/a&gt;，从这个网站下载镜像系统
+注：这个网站不仅有各种系统镜像，还有其他微软的软件，比如vb、vs、office等等，有需要可以从这里下载，下载方式和下载系统镜像一样一样的
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/20181006162953164.png&#34;
+	width=&#34;554&#34;
+	height=&#34;361&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/20181006162953164_hu8449148828568667714.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/20181006162953164_hu889970739533513273.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;153&#34;
+		data-flex-basis=&#34;368px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;这里的操作系统有win7、win8、win8.1、win10等等
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/20181006162959873.png&#34;
+	width=&#34;553&#34;
+	height=&#34;273&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/20181006162959873_hu6833679108541074525.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/20181006162959873_hu12859772974679861773.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;202&#34;
+		data-flex-basis=&#34;486px&#34;
+	
+&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/20181006163003718.png&#34;
+	width=&#34;554&#34;
+	height=&#34;272&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/20181006163003718_hu3938324042064362600.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/20181006163003718_hu11056090442500819255.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;203&#34;
+		data-flex-basis=&#34;488px&#34;
+	
+&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/20181006163007947.png&#34;
+	width=&#34;553&#34;
+	height=&#34;271&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/20181006163007947_hu6404925674246410489.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/20181006163007947_hu13812620138204174526.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;204&#34;
+		data-flex-basis=&#34;489px&#34;
+	
+&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/2018100616301133.png&#34;
+	width=&#34;554&#34;
+	height=&#34;241&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/2018100616301133_hu14263134063857066826.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/2018100616301133_hu15078099810254657482.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;229&#34;
+		data-flex-basis=&#34;551px&#34;
+	
+&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/2018100616302130.png&#34;
+	width=&#34;553&#34;
+	height=&#34;285&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/2018100616302130_hu16646310846649462646.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/2018100616302130_hu13623661062647007959.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;194&#34;
+		data-flex-basis=&#34;465px&#34;
+	
+&gt;
+&lt;strong&gt;可以使用迅雷来下载系统镜像，只需要复制下载链接后打开迅雷，就会自动弹出下载页面了，选择你要存放的位置&lt;/strong&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/20181006163031851.png&#34;
+	width=&#34;553&#34;
+	height=&#34;295&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/20181006163031851_hu2780244050080911972.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/20181006163031851_hu14573204530436612516.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;187&#34;
+		data-flex-basis=&#34;449px&#34;
+	
+&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/20181006163036237.png&#34;
+	width=&#34;553&#34;
+	height=&#34;295&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/20181006163036237_hu12093881942286303660.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/20181006163036237_hu12373603143731157799.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;187&#34;
+		data-flex-basis=&#34;449px&#34;
+	
+&gt;
+&lt;strong&gt;如果不想用迅雷的话，也可以用百度云盘（这个我想都应该有的吧？）
+复制下载链接后，选择离线下载，保存到百度网盘上，然后再下载下来&lt;/strong&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/20181006163046552.png&#34;
+	width=&#34;553&#34;
+	height=&#34;342&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/20181006163046552_hu7281474667836213561.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/20181006163046552_hu12951204781294352996.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;161&#34;
+		data-flex-basis=&#34;388px&#34;
+	
+&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/20181006163052647.png&#34;
+	width=&#34;552&#34;
+	height=&#34;276&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/20181006163052647_hu7226068017109760433.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/20181006163052647_hu8192348884598393577.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;200&#34;
+		data-flex-basis=&#34;480px&#34;
+	
+&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/20181006163059261.png&#34;
+	width=&#34;552&#34;
+	height=&#34;390&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/20181006163059261_hu11563385011268256440.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/20181006163059261_hu16380675580018579772.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;141&#34;
+		data-flex-basis=&#34;339px&#34;
+	
+&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/20181006163106519.png&#34;
+	width=&#34;553&#34;
+	height=&#34;342&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/20181006163106519_hu8581734287589755842.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/20181006163106519_hu15157965247153065152.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;161&#34;
+		data-flex-basis=&#34;388px&#34;
+	
+&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/20181006163113809.png&#34;
+	width=&#34;554&#34;
+	height=&#34;354&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/20181006163113809_hu16458809428071171346.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/20181006163113809_hu1514591840536161402.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;156&#34;
+		data-flex-basis=&#34;375px&#34;
+	
+&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/20181006163124550.png&#34;
+	width=&#34;554&#34;
+	height=&#34;338&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/20181006163124550_hu15779106504968567664.png 480w, https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%80%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F/20181006163124550_hu3267095507533804864.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;163&#34;
+		data-flex-basis=&#34;393px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;系统镜像已经有了，那么下面就是把U盘插电脑上，开始刻系统盘了&lt;/strong&gt;&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

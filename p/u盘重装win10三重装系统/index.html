@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="友情提示：数据无价，谨慎操作（会出事的） 看完再进行操作，如果是新手最好有人在旁边指导！！！ 看完再进行操作，如果是新手最好有人在旁边指导！！！ 看完再进行操作，如果是新手最好有人在旁边指导！！！ 重要的事情说三遍\t！！！ 重装系统 如果你还需要的话，请先将系统所要安装到的分区数据备份出来，后面会格式化该分区（删除） 系统盘刻录好之后，就要进入电脑的BIOS界面了，U盘插上之后，就不要去动了，直到系统装好之后再拔掉，如何进入BIOS？在你电脑开机（重启/开机），出现电脑图标的时候，按下BIOS快捷键，常见BIOS的快捷键有DEL、ESC、F2、F10、F11、F12，可根据自己的电脑品牌在网上搜下 比如联想的，等出现下面的图标后按下联想的BIOS快捷键，其他牌子的电脑类比下 然后进入到下面的蓝色页面，这是我电脑的BIOS，每个电脑的BIOS界面可能不太一样，比如Dell新版BIOS是白色的文字页面，了解下就行（问题不大，找到系统启动顺序就行，BIOS里面会有说明信息），我这里是通过上下左右按键来移动，使用enter还确认，使用esc来退出，在boot菜单下，选择系统启动方式，还记得上面说的mbr+legacy模式（旧）和gpt+uefi模式（新）吗？看到下面的U盘选项前面有个UEFI了吗，因为我电脑磁盘分区表格式是gpt格式的，所以就选择uefi启动，如果是mbr的话，找到前面不带uefi的U盘选项（注：我这里没有那个选项）；有的电脑主板是会有单独的启动方式选项，然后根据磁盘分区表来选择legacy还是uefi方式即可，具体情况需要看你电脑的主板了。 然后将U盘调整到第一个选项，有的是使用+/-，有的是使用F5/F6来调整，具体需要看你的BIOS怎么调整，一般来说右边会有英文说明，我这里是使用回车来调整，最后按下F10保存BIOS设置（注一般是F10，有的电脑不是） F10保存并退出BIOS 第二种进入U盘的方式是先进入到BIOS的菜单选项，再找到U盘启动项，直接回车就行了，然后就是等着重启了，看到没有？我这里有两个U盘选项，一个不带UEFI的（搭配mbr分区表格式），一个带（搭配gpt分区表格式），我这里肯定是选择带UEFI的选项了（因为我电脑磁盘的分区表格式是gpt呀！），你需要根据你电脑磁盘分区表格式来选择了，哈？不知道自己电脑分区表格式？请看这里 然后读取U盘信息，进入系统盘 很好，已经进来了，下面的界面选择默认，直接点击下一步即可 点击现在安装 安装程序正在启动，等待几秒就好了 这里要输入密钥，选择下方的选项：我没有密钥，先跳过这一步，装好系统后再来激活 win10的系统镜像一般包含好几种系统版本来供选择，看自己选择，我这里选择专业版 签订协议，点击下一步继续 注意：这里涉及到磁盘了！！！谨慎操作！！！不小心的话会把磁盘里的文件删了，搞明白了再进行操作 因为我们要重装系统，所以选择第二个自定义选项，自己来设置系统磁盘的大小 点击自定义后会出现你现在电脑上所有的分区（下图) 这里很重要！！！很重要！！！很重要！！！看清楚再点击！！！ 先说下系统磁盘的大小划分，一般来说系统会占用掉30G左右的磁盘空间，然后肯定不能只分30G，因为系统需要安装各种软件，而有的软件是只能安装到C盘的（系统盘），比如说谷歌浏览器什么的，所以一般就给系统分60G往上，当然你磁盘空间大的话，可以多划分，这个具体如何划分需要根据磁盘大小和你电脑用途来选择 因为我这里有两块磁盘，所以上面会显示两个驱动器号（0和1），同一个驱动号可能有多个分区，就是你windows上显示的C、D、E&hellip;.盘，在我电脑里驱动器0代表的是机械硬盘，驱动器1代表的是固态硬盘，注意如果你也有多块硬盘的话，驱动器0不一定代表的是机械硬盘，具体代表的是什么硬盘是和你电脑硬盘的安装顺序有关系，这里要看清楚再选择！！！别搞错了！！！ 在这里 我想将系统装在固态硬盘当中，那么我就去对带驱动器1的分区进行操作，选择好你要安装的地方，然后将这块分区删除，如果电脑里面没有其他系统的话，或者没有必要的话，将该窗口上显示的msr分区、esp分区、恢复分区都给删除了，删除后，该窗口上会出现一个名为： “未分区的空间 ” 的分区，如果你电脑本身就有未分区的空间，那么在你进行删除之后，可能会和你电脑本来就有的 未分区空间 合并到一起（ 至于是否合并与物理磁盘顺序有关），这个注意下，然后点击该未分区的空间，显示成高亮之后，点击下一步，然后就是开始安装系统了 注：如果该步骤在点击下一步的时候提示安装不了系统，可能是系统的原因，也有可能是磁盘的原因，或者是系统启动方式错误等其他错误原因，如果遇到问题请自行百度，这里只讲日常（正常）操作！！！ 下面这个步骤就需要等待了，时间长短不一，一般几分钟就好了，这个时候就不用管了，等着它安装好就行了 注：此时不要强制关机 安装好之后就会有下面的界面，你可以选择等10秒钟自动重启，或者是点击立即重启，等电脑黑屏之后，将U盘拔掉，不要拔早了，可能会造成系统损坏（会安装失败的）；也不要迟拔，因为迟拔的话，可能还会进入到安装界面，因为U盘设置的是第一启动项！！！如果是迟拔的话，将那个安装页面关了，把U盘拔掉就行 U盘拔掉之后，就等着它重启，注：这个过程，电脑可能会启动多次，正常操作，不用担心，下面就是根据系统提示信息来进行操作了 下面的密钥依旧选择跳过，选择以后再说，如果提示联网的话，不要联网！不要联网！不要联网！网线拔了，也不要去连接WiFi，把网断掉 这个可以选择自定义，或者是默认的设置，看个人喜好，这里选择的是默认设置 下面就是创建账户了，如果不想创建账户，直接点击下一步，系统默认的账户是Administrator（管理员），或者是你只想创建一个账户而不设置密码的话，就输入一个账户名字就行了，然后点击下一步，这样就没有密码了 下面就是系统自己的事情了，会进行一系列的配置 等待后的结果就是下面这个样子。是不是感觉很纯净？这样系统就算是装好了，接着就需要自己进行系统的配置了，比如屏幕分辨率、个性化、磁盘划分、安装各种软件等等，所以装系统并不费时间，费时间的是装好后的操作 ">
+<title>U盘重装win10(三)重装系统</title>
+
+<link rel='canonical' href='https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/'>
+
+<link rel="stylesheet" href="/scss/style.min.0304c6baf04e01a8fe70693791cb744d56a3578a3120a8796cefc66825aa39c7.css"><meta property='og:title' content="U盘重装win10(三)重装系统">
+<meta property='og:description' content="友情提示：数据无价，谨慎操作（会出事的） 看完再进行操作，如果是新手最好有人在旁边指导！！！ 看完再进行操作，如果是新手最好有人在旁边指导！！！ 看完再进行操作，如果是新手最好有人在旁边指导！！！ 重要的事情说三遍\t！！！ 重装系统 如果你还需要的话，请先将系统所要安装到的分区数据备份出来，后面会格式化该分区（删除） 系统盘刻录好之后，就要进入电脑的BIOS界面了，U盘插上之后，就不要去动了，直到系统装好之后再拔掉，如何进入BIOS？在你电脑开机（重启/开机），出现电脑图标的时候，按下BIOS快捷键，常见BIOS的快捷键有DEL、ESC、F2、F10、F11、F12，可根据自己的电脑品牌在网上搜下 比如联想的，等出现下面的图标后按下联想的BIOS快捷键，其他牌子的电脑类比下 然后进入到下面的蓝色页面，这是我电脑的BIOS，每个电脑的BIOS界面可能不太一样，比如Dell新版BIOS是白色的文字页面，了解下就行（问题不大，找到系统启动顺序就行，BIOS里面会有说明信息），我这里是通过上下左右按键来移动，使用enter还确认，使用esc来退出，在boot菜单下，选择系统启动方式，还记得上面说的mbr+legacy模式（旧）和gpt+uefi模式（新）吗？看到下面的U盘选项前面有个UEFI了吗，因为我电脑磁盘分区表格式是gpt格式的，所以就选择uefi启动，如果是mbr的话，找到前面不带uefi的U盘选项（注：我这里没有那个选项）；有的电脑主板是会有单独的启动方式选项，然后根据磁盘分区表来选择legacy还是uefi方式即可，具体情况需要看你电脑的主板了。 然后将U盘调整到第一个选项，有的是使用+/-，有的是使用F5/F6来调整，具体需要看你的BIOS怎么调整，一般来说右边会有英文说明，我这里是使用回车来调整，最后按下F10保存BIOS设置（注一般是F10，有的电脑不是） F10保存并退出BIOS 第二种进入U盘的方式是先进入到BIOS的菜单选项，再找到U盘启动项，直接回车就行了，然后就是等着重启了，看到没有？我这里有两个U盘选项，一个不带UEFI的（搭配mbr分区表格式），一个带（搭配gpt分区表格式），我这里肯定是选择带UEFI的选项了（因为我电脑磁盘的分区表格式是gpt呀！），你需要根据你电脑磁盘分区表格式来选择了，哈？不知道自己电脑分区表格式？请看这里 然后读取U盘信息，进入系统盘 很好，已经进来了，下面的界面选择默认，直接点击下一步即可 点击现在安装 安装程序正在启动，等待几秒就好了 这里要输入密钥，选择下方的选项：我没有密钥，先跳过这一步，装好系统后再来激活 win10的系统镜像一般包含好几种系统版本来供选择，看自己选择，我这里选择专业版 签订协议，点击下一步继续 注意：这里涉及到磁盘了！！！谨慎操作！！！不小心的话会把磁盘里的文件删了，搞明白了再进行操作 因为我们要重装系统，所以选择第二个自定义选项，自己来设置系统磁盘的大小 点击自定义后会出现你现在电脑上所有的分区（下图) 这里很重要！！！很重要！！！很重要！！！看清楚再点击！！！ 先说下系统磁盘的大小划分，一般来说系统会占用掉30G左右的磁盘空间，然后肯定不能只分30G，因为系统需要安装各种软件，而有的软件是只能安装到C盘的（系统盘），比如说谷歌浏览器什么的，所以一般就给系统分60G往上，当然你磁盘空间大的话，可以多划分，这个具体如何划分需要根据磁盘大小和你电脑用途来选择 因为我这里有两块磁盘，所以上面会显示两个驱动器号（0和1），同一个驱动号可能有多个分区，就是你windows上显示的C、D、E&hellip;.盘，在我电脑里驱动器0代表的是机械硬盘，驱动器1代表的是固态硬盘，注意如果你也有多块硬盘的话，驱动器0不一定代表的是机械硬盘，具体代表的是什么硬盘是和你电脑硬盘的安装顺序有关系，这里要看清楚再选择！！！别搞错了！！！ 在这里 我想将系统装在固态硬盘当中，那么我就去对带驱动器1的分区进行操作，选择好你要安装的地方，然后将这块分区删除，如果电脑里面没有其他系统的话，或者没有必要的话，将该窗口上显示的msr分区、esp分区、恢复分区都给删除了，删除后，该窗口上会出现一个名为： “未分区的空间 ” 的分区，如果你电脑本身就有未分区的空间，那么在你进行删除之后，可能会和你电脑本来就有的 未分区空间 合并到一起（ 至于是否合并与物理磁盘顺序有关），这个注意下，然后点击该未分区的空间，显示成高亮之后，点击下一步，然后就是开始安装系统了 注：如果该步骤在点击下一步的时候提示安装不了系统，可能是系统的原因，也有可能是磁盘的原因，或者是系统启动方式错误等其他错误原因，如果遇到问题请自行百度，这里只讲日常（正常）操作！！！ 下面这个步骤就需要等待了，时间长短不一，一般几分钟就好了，这个时候就不用管了，等着它安装好就行了 注：此时不要强制关机 安装好之后就会有下面的界面，你可以选择等10秒钟自动重启，或者是点击立即重启，等电脑黑屏之后，将U盘拔掉，不要拔早了，可能会造成系统损坏（会安装失败的）；也不要迟拔，因为迟拔的话，可能还会进入到安装界面，因为U盘设置的是第一启动项！！！如果是迟拔的话，将那个安装页面关了，把U盘拔掉就行 U盘拔掉之后，就等着它重启，注：这个过程，电脑可能会启动多次，正常操作，不用担心，下面就是根据系统提示信息来进行操作了 下面的密钥依旧选择跳过，选择以后再说，如果提示联网的话，不要联网！不要联网！不要联网！网线拔了，也不要去连接WiFi，把网断掉 这个可以选择自定义，或者是默认的设置，看个人喜好，这里选择的是默认设置 下面就是创建账户了，如果不想创建账户，直接点击下一步，系统默认的账户是Administrator（管理员），或者是你只想创建一个账户而不设置密码的话，就输入一个账户名字就行了，然后点击下一步，这样就没有密码了 下面就是系统自己的事情了，会进行一系列的配置 等待后的结果就是下面这个样子。是不是感觉很纯净？这样系统就算是装好了，接着就需要自己进行系统的配置了，比如屏幕分辨率、个性化、磁盘划分、安装各种软件等等，所以装系统并不费时间，费时间的是装好后的操作 ">
+<meta property='og:url' content='https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/'>
+<meta property='og:site_name' content='I&#39;m R'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2018-10-08T19:57:34&#43;08:00'/><meta property='article:modified_time' content='2018-10-08T19:57:34&#43;08:00'/><meta property='og:image' content='https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/windows10_03.jpg' />
+<meta name="twitter:title" content="U盘重装win10(三)重装系统">
+<meta name="twitter:description" content="友情提示：数据无价，谨慎操作（会出事的） 看完再进行操作，如果是新手最好有人在旁边指导！！！ 看完再进行操作，如果是新手最好有人在旁边指导！！！ 看完再进行操作，如果是新手最好有人在旁边指导！！！ 重要的事情说三遍\t！！！ 重装系统 如果你还需要的话，请先将系统所要安装到的分区数据备份出来，后面会格式化该分区（删除） 系统盘刻录好之后，就要进入电脑的BIOS界面了，U盘插上之后，就不要去动了，直到系统装好之后再拔掉，如何进入BIOS？在你电脑开机（重启/开机），出现电脑图标的时候，按下BIOS快捷键，常见BIOS的快捷键有DEL、ESC、F2、F10、F11、F12，可根据自己的电脑品牌在网上搜下 比如联想的，等出现下面的图标后按下联想的BIOS快捷键，其他牌子的电脑类比下 然后进入到下面的蓝色页面，这是我电脑的BIOS，每个电脑的BIOS界面可能不太一样，比如Dell新版BIOS是白色的文字页面，了解下就行（问题不大，找到系统启动顺序就行，BIOS里面会有说明信息），我这里是通过上下左右按键来移动，使用enter还确认，使用esc来退出，在boot菜单下，选择系统启动方式，还记得上面说的mbr+legacy模式（旧）和gpt+uefi模式（新）吗？看到下面的U盘选项前面有个UEFI了吗，因为我电脑磁盘分区表格式是gpt格式的，所以就选择uefi启动，如果是mbr的话，找到前面不带uefi的U盘选项（注：我这里没有那个选项）；有的电脑主板是会有单独的启动方式选项，然后根据磁盘分区表来选择legacy还是uefi方式即可，具体情况需要看你电脑的主板了。 然后将U盘调整到第一个选项，有的是使用+/-，有的是使用F5/F6来调整，具体需要看你的BIOS怎么调整，一般来说右边会有英文说明，我这里是使用回车来调整，最后按下F10保存BIOS设置（注一般是F10，有的电脑不是） F10保存并退出BIOS 第二种进入U盘的方式是先进入到BIOS的菜单选项，再找到U盘启动项，直接回车就行了，然后就是等着重启了，看到没有？我这里有两个U盘选项，一个不带UEFI的（搭配mbr分区表格式），一个带（搭配gpt分区表格式），我这里肯定是选择带UEFI的选项了（因为我电脑磁盘的分区表格式是gpt呀！），你需要根据你电脑磁盘分区表格式来选择了，哈？不知道自己电脑分区表格式？请看这里 然后读取U盘信息，进入系统盘 很好，已经进来了，下面的界面选择默认，直接点击下一步即可 点击现在安装 安装程序正在启动，等待几秒就好了 这里要输入密钥，选择下方的选项：我没有密钥，先跳过这一步，装好系统后再来激活 win10的系统镜像一般包含好几种系统版本来供选择，看自己选择，我这里选择专业版 签订协议，点击下一步继续 注意：这里涉及到磁盘了！！！谨慎操作！！！不小心的话会把磁盘里的文件删了，搞明白了再进行操作 因为我们要重装系统，所以选择第二个自定义选项，自己来设置系统磁盘的大小 点击自定义后会出现你现在电脑上所有的分区（下图) 这里很重要！！！很重要！！！很重要！！！看清楚再点击！！！ 先说下系统磁盘的大小划分，一般来说系统会占用掉30G左右的磁盘空间，然后肯定不能只分30G，因为系统需要安装各种软件，而有的软件是只能安装到C盘的（系统盘），比如说谷歌浏览器什么的，所以一般就给系统分60G往上，当然你磁盘空间大的话，可以多划分，这个具体如何划分需要根据磁盘大小和你电脑用途来选择 因为我这里有两块磁盘，所以上面会显示两个驱动器号（0和1），同一个驱动号可能有多个分区，就是你windows上显示的C、D、E&hellip;.盘，在我电脑里驱动器0代表的是机械硬盘，驱动器1代表的是固态硬盘，注意如果你也有多块硬盘的话，驱动器0不一定代表的是机械硬盘，具体代表的是什么硬盘是和你电脑硬盘的安装顺序有关系，这里要看清楚再选择！！！别搞错了！！！ 在这里 我想将系统装在固态硬盘当中，那么我就去对带驱动器1的分区进行操作，选择好你要安装的地方，然后将这块分区删除，如果电脑里面没有其他系统的话，或者没有必要的话，将该窗口上显示的msr分区、esp分区、恢复分区都给删除了，删除后，该窗口上会出现一个名为： “未分区的空间 ” 的分区，如果你电脑本身就有未分区的空间，那么在你进行删除之后，可能会和你电脑本来就有的 未分区空间 合并到一起（ 至于是否合并与物理磁盘顺序有关），这个注意下，然后点击该未分区的空间，显示成高亮之后，点击下一步，然后就是开始安装系统了 注：如果该步骤在点击下一步的时候提示安装不了系统，可能是系统的原因，也有可能是磁盘的原因，或者是系统启动方式错误等其他错误原因，如果遇到问题请自行百度，这里只讲日常（正常）操作！！！ 下面这个步骤就需要等待了，时间长短不一，一般几分钟就好了，这个时候就不用管了，等着它安装好就行了 注：此时不要强制关机 安装好之后就会有下面的界面，你可以选择等10秒钟自动重启，或者是点击立即重启，等电脑黑屏之后，将U盘拔掉，不要拔早了，可能会造成系统损坏（会安装失败的）；也不要迟拔，因为迟拔的话，可能还会进入到安装界面，因为U盘设置的是第一启动项！！！如果是迟拔的话，将那个安装页面关了，把U盘拔掉就行 U盘拔掉之后，就等着它重启，注：这个过程，电脑可能会启动多次，正常操作，不用担心，下面就是根据系统提示信息来进行操作了 下面的密钥依旧选择跳过，选择以后再说，如果提示联网的话，不要联网！不要联网！不要联网！网线拔了，也不要去连接WiFi，把网断掉 这个可以选择自定义，或者是默认的设置，看个人喜好，这里选择的是默认设置 下面就是创建账户了，如果不想创建账户，直接点击下一步，系统默认的账户是Administrator（管理员），或者是你只想创建一个账户而不设置密码的话，就输入一个账户名字就行了，然后点击下一步，这样就没有密码了 下面就是系统自己的事情了，会进行一系列的配置 等待后的结果就是下面这个样子。是不是感觉很纯净？这样系统就算是装好了，接着就需要自己进行系统的配置了，比如屏幕分辨率、个性化、磁盘划分、安装各种软件等等，所以装系统并不费时间，费时间的是装好后的操作 "><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://dxjxpr.github.io/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/windows10_03.jpg' />
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+  
+
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu6242866133400980960.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🏃‍➡️</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">I&#39;m R</a></h1>
+            <h2 class="site-description">B What U Wanna B! Just Do It!</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/dxjxpr'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1723043422785" class="icon" viewBox="0 0 1049 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4723" xmlns:xlink="http://www.w3.org/1999/xlink" width="204.8828125" height="200"><path d="M524.979332 0C234.676191 0 0 234.676191 0 524.979332c0 232.068678 150.366597 428.501342 358.967656 498.035028 26.075132 5.215026 35.636014-11.299224 35.636014-25.205961 0-12.168395-0.869171-53.888607-0.869171-97.347161-146.020741 31.290159-176.441729-62.580318-176.441729-62.580318-23.467619-60.841976-58.234462-76.487055-58.234463-76.487055-47.804409-32.15933 3.476684-32.15933 3.476685-32.15933 53.019436 3.476684 80.83291 53.888607 80.83291 53.888607 46.935238 79.963739 122.553122 57.365291 152.97411 43.458554 4.345855-33.897672 18.252593-57.365291 33.028501-70.402857-116.468925-12.168395-239.022047-57.365291-239.022047-259.012982 0-57.365291 20.860106-104.300529 53.888607-140.805715-5.215026-13.037566-23.467619-66.926173 5.215027-139.067372 0 0 44.327725-13.906737 144.282399 53.888607 41.720212-11.299224 86.917108-17.383422 131.244833-17.383422s89.524621 6.084198 131.244833 17.383422C756.178839 203.386032 800.506564 217.29277 800.506564 217.29277c28.682646 72.1412 10.430053 126.029806 5.215026 139.067372 33.897672 36.505185 53.888607 83.440424 53.888607 140.805715 0 201.64769-122.553122 245.975415-239.891218 259.012982 19.121764 16.514251 35.636014 47.804409 35.636015 97.347161 0 70.402857-0.869171 126.898978-0.869172 144.282399 0 13.906737 9.560882 30.420988 35.636015 25.205961 208.601059-69.533686 358.967656-265.96635 358.967655-498.035028C1049.958663 234.676191 814.413301 0 524.979332 0z" fill="#191717" p-id="4724"></path><path d="M199.040177 753.571326c-0.869171 2.607513-5.215026 3.476684-8.691711 1.738342s-6.084198-5.215026-4.345855-7.82254c0.869171-2.607513 5.215026-3.476684 8.691711-1.738342s5.215026 5.215026 4.345855 7.82254z m-6.953369-4.345856M219.900283 777.038945c-2.607513 2.607513-7.82254 0.869171-10.430053-2.607514-3.476684-3.476684-4.345855-8.691711-1.738342-11.299224 2.607513-2.607513 6.953369-0.869171 10.430053 2.607514 3.476684 4.345855 4.345855 9.560882 1.738342 11.299224z m-5.215026-5.215027M240.760389 807.459932c-3.476684 2.607513-8.691711 0-11.299224-4.345855-3.476684-4.345855-3.476684-10.430053 0-12.168395 3.476684-2.607513 8.691711 0 11.299224 4.345855 3.476684 4.345855 3.476684 9.560882 0 12.168395z m0 0M269.443034 837.011749c-2.607513 3.476684-8.691711 2.607513-13.906737-1.738342-4.345855-4.345855-6.084198-10.430053-2.607513-13.037566 2.607513-3.476684 8.691711-2.607513 13.906737 1.738342 4.345855 3.476684 5.215026 9.560882 2.607513 13.037566z m0 0M308.555733 853.526c-0.869171 4.345855-6.953369 6.084198-13.037566 4.345855-6.084198-1.738342-9.560882-6.953369-8.691711-10.430053 0.869171-4.345855 6.953369-6.084198 13.037566-4.345855 6.084198 1.738342 9.560882 6.084198 8.691711 10.430053z m0 0M351.145116 857.002684c0 4.345855-5.215026 7.82254-11.299224 7.82254-6.084198 0-11.299224-3.476684-11.299224-7.82254s5.215026-7.82254 11.299224-7.82254c6.084198 0 11.299224 3.476684 11.299224 7.82254z m0 0M391.126986 850.049315c0.869171 4.345855-3.476684 8.691711-9.560882 9.560882-6.084198 0.869171-11.299224-1.738342-12.168395-6.084197-0.869171-4.345855 3.476684-8.691711 9.560881-9.560882 6.084198-0.869171 11.299224 1.738342 12.168396 6.084197z m0 0" fill="#191717" p-id="4725"></path></svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#重装系统">重装系统</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/">
+                <img src="/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/windows10_03_hu15704656379353788538.jpg"
+                        srcset="/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/windows10_03_hu15704656379353788538.jpg 800w, /p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/windows10_03_hu3413223665778954739.jpg 1600w"
+                        width="800" 
+                        height="450" 
+                        loading="lazy"
+                        alt="Featured image of post U盘重装win10(三)重装系统" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/">U盘重装win10(三)重装系统</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Oct 08, 2018</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    1 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <p><font color= red size = 6>友情提示：数据无价，谨慎操作（会出事的）</font>
+<font color= red size = 5>
+看完再进行操作，如果是新手最好有人在旁边指导！！！
+看完再进行操作，如果是新手最好有人在旁边指导！！！
+看完再进行操作，如果是新手最好有人在旁边指导！！！
+重要的事情说三遍	！！！</font>
+</br></p>
+<h2 id="重装系统">重装系统
+</h2><p><strong><font color = red size = 6>如果你还需要的话，请先将系统所要安装到的分区数据备份出来，后面会格式化该分区（删除）</font></strong></p>
+<p><strong>  系统盘刻录好之后，就要进入电脑的BIOS界面了，U盘插上之后，就不要去动了，直到系统装好之后再拔掉，如何进入BIOS？在你电脑开机（重启/开机），出现电脑图标的时候，按下BIOS快捷键，常见BIOS的快捷键有DEL、ESC、F2、F10、F11、F12，可根据自己的电脑品牌在网上搜下</strong>
+</br>
+<strong>比如联想的，等出现下面的图标后按下联想的BIOS快捷键，其他牌子的电脑类比下</strong>
+<img src="/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172607545.png"
+	width="553"
+	height="315"
+	srcset="/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172607545_hu12589186089638212348.png 480w, /p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172607545_hu7076276910964119092.png 1024w"
+	loading="lazy"
+	
+		alt="在这里插入图片描述"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="175"
+		data-flex-basis="421px"
+	
+></p>
+<p><strong>  然后进入到下面的蓝色页面，这是我电脑的BIOS，每个电脑的BIOS界面可能不太一样，比如Dell新版BIOS是白色的文字页面，了解下就行（问题不大，找到系统启动顺序就行，BIOS里面会有说明信息），我这里是通过上下左右按键来移动，使用enter还确认，使用esc来退出，在boot菜单下，选择系统启动方式，还记得上面说的mbr+legacy模式（旧）和gpt+uefi模式（新）吗？看到下面的U盘选项前面有个UEFI了吗，因为我电脑磁盘分区表格式是gpt格式的，所以就选择uefi启动，如果是mbr的话，找到前面不带uefi的U盘选项（注：我这里没有那个选项）；有的电脑主板是会有单独的启动方式选项，然后根据磁盘分区表来选择legacy还是uefi方式即可，具体情况需要看你电脑的主板了。</strong></p>
+<p><strong>  然后将U盘调整到第一个选项，有的是使用+/-，有的是使用F5/F6来调整，具体需要看你的BIOS怎么调整，一般来说右边会有英文说明，我这里是使用回车来调整，最后按下F10保存BIOS设置（注一般是F10，有的电脑不是）</strong>
+<img src="/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172620957.png"
+	width="553"
+	height="415"
+	srcset="/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172620957_hu10598253383371189935.png 480w, /p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172620957_hu4305810969685981387.png 1024w"
+	loading="lazy"
+	
+		alt="在这里插入图片描述"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="133"
+		data-flex-basis="319px"
+	
+></p>
+<p><strong>F10保存并退出BIOS</strong>
+<img src="/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172625104.png"
+	width="553"
+	height="415"
+	srcset="/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172625104_hu2924402274494638108.png 480w, /p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172625104_hu2174321325888138183.png 1024w"
+	loading="lazy"
+	
+		alt="在这里插入图片描述"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="133"
+		data-flex-basis="319px"
+	
+></p>
+<p><strong>  第二种进入U盘的方式是先进入到BIOS的菜单选项，再找到U盘启动项，直接回车就行了，然后就是等着重启了，看到没有？我这里有两个U盘选项，一个不带UEFI的（搭配mbr分区表格式），一个带（搭配gpt分区表格式），我这里肯定是选择带UEFI的选项了（因为我电脑磁盘的分区表格式是gpt呀！），你需要根据你电脑磁盘分区表格式来选择了，哈？不知道自己电脑分区表格式？<a class="link" href="https://blog.csdn.net/Silence_R/article/details/82951718"  target="_blank" rel="noopener"
+    >请看这里</a></strong>
+<img src="/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/2018100617451677.png"
+	width="553"
+	height="415"
+	srcset="/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/2018100617451677_hu6556304806551899933.png 480w, /p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/2018100617451677_hu11348048422408394039.png 1024w"
+	loading="lazy"
+	
+		alt="在这里插入图片描述"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="133"
+		data-flex-basis="319px"
+	
+>
+<strong>然后读取U盘信息，进入系统盘</strong>
+<img src="/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172630178.png"
+	width="554"
+	height="308"
+	srcset="/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172630178_hu14891233160467670339.png 480w, /p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172630178_hu16802711512362514491.png 1024w"
+	loading="lazy"
+	
+		alt="在这里插入图片描述"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="179"
+		data-flex-basis="431px"
+	
+></p>
+<p><strong>很好，已经进来了，下面的界面选择默认，直接点击下一步即可</strong>
+<img src="/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172634247.png"
+	width="553"
+	height="415"
+	srcset="/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172634247_hu13524873403093337413.png 480w, /p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172634247_hu7805007561166788298.png 1024w"
+	loading="lazy"
+	
+		alt="在这里插入图片描述"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="133"
+		data-flex-basis="319px"
+	
+></p>
+<p><strong>点击现在安装</strong>
+<img src="/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172638849.png"
+	width="553"
+	height="415"
+	srcset="/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172638849_hu14648594542083088171.png 480w, /p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172638849_hu986865515383245055.png 1024w"
+	loading="lazy"
+	
+		alt="在这里插入图片描述"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="133"
+		data-flex-basis="319px"
+	
+></p>
+<p><strong>安装程序正在启动，等待几秒就好了</strong>
+<img src="/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172643516.png"
+	width="553"
+	height="414"
+	srcset="/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172643516_hu740765175305732999.png 480w, /p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172643516_hu13636683057781827148.png 1024w"
+	loading="lazy"
+	
+		alt="在这里插入图片描述"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="133"
+		data-flex-basis="320px"
+	
+></p>
+<p><strong>这里要输入密钥，选择下方的选项：我没有密钥，先跳过这一步，装好系统后再来激活</strong>
+<img src="/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172647866.png"
+	width="553"
+	height="415"
+	srcset="/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172647866_hu12640532556248475623.png 480w, /p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172647866_hu11508653480087468860.png 1024w"
+	loading="lazy"
+	
+		alt="在这里插入图片描述"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="133"
+		data-flex-basis="319px"
+	
+>
+<strong>win10的系统镜像一般包含好几种系统版本来供选择，看自己选择，我这里选择专业版</strong>
+<img src="/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172655108.png"
+	width="553"
+	height="415"
+	srcset="/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172655108_hu10210931709701040860.png 480w, /p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172655108_hu11936034137911491066.png 1024w"
+	loading="lazy"
+	
+		alt="在这里插入图片描述"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="133"
+		data-flex-basis="319px"
+	
+>
+<strong>签订协议，点击下一步继续</strong>
+<img src="/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/2018100617265937.png"
+	width="553"
+	height="415"
+	srcset="/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/2018100617265937_hu3802608892563221422.png 480w, /p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/2018100617265937_hu8156888221493342062.png 1024w"
+	loading="lazy"
+	
+		alt="在这里插入图片描述"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="133"
+		data-flex-basis="319px"
+	
+></p>
+<p><font color = red size = 4 f>注意：这里涉及到磁盘了！！！谨慎操作！！！不小心的话会把磁盘里的文件删了，搞明白了再进行操作</font></p>
+<p><strong>因为我们要重装系统，所以选择第二个自定义选项，自己来设置系统磁盘的大小</strong>
+<img src="/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172708692.png"
+	width="553"
+	height="415"
+	srcset="/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172708692_hu14931240484894320157.png 480w, /p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172708692_hu12095110458495642094.png 1024w"
+	loading="lazy"
+	
+		alt="在这里插入图片描述"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="133"
+		data-flex-basis="319px"
+	
+>
+<strong>点击自定义后会出现你现在电脑上所有的分区（下图)</strong></p>
+<p><font color=red size =5>这里很重要！！！很重要！！！很重要！！！看清楚再点击！！！</font>
+<strong>先说下系统磁盘的大小划分，一般来说系统会占用掉30G左右的磁盘空间，然后肯定不能只分30G，因为系统需要安装各种软件，而有的软件是只能安装到C盘的（系统盘），比如说谷歌浏览器什么的，所以一般就给系统分60G往上，当然你磁盘空间大的话，可以多划分，这个具体如何划分需要根据磁盘大小和你电脑用途来选择</strong></p>
+<p><strong>因为我这里有两块磁盘，所以上面会显示两个驱动器号（0和1），同一个驱动号可能有多个分区，就是你windows上显示的C、D、E&hellip;.盘，在我电脑里驱动器0代表的是机械硬盘，驱动器1代表的是固态硬盘，注意如果你也有多块硬盘的话，驱动器0不一定代表的是机械硬盘，具体代表的是什么硬盘是和你电脑硬盘的安装顺序有关系，这里要看清楚再选择！！！别搞错了！！！</strong></p>
+<p><strong>在这里 我想将系统装在固态硬盘当中，那么我就去对带驱动器1的分区进行操作，选择好你要安装的地方，然后将这块分区删除，如果电脑里面没有其他系统的话，或者没有必要的话，将该窗口上显示的msr分区、esp分区、恢复分区都给删除了，删除后，该窗口上会出现一个名为：   “未分区的空间 ”      的分区，如果你电脑本身就有未分区的空间，那么在你进行删除之后，可能会和你电脑本来就有的      未分区空间      合并到一起（<font color = red > 至于是否合并与物理磁盘顺序有关</font>），这个注意下，然后点击该未分区的空间，显示成高亮之后，点击下一步，然后就是开始安装系统了</strong></p>
+<p><strong>注：如果该步骤在点击下一步的时候提示安装不了系统，可能是系统的原因，也有可能是磁盘的原因，或者是系统启动方式错误等其他错误原因，如果遇到问题请自行百度，这里只讲日常（正常）操作！！！</strong>
+<img src="/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172717880.png"
+	width="553"
+	height="415"
+	srcset="/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172717880_hu3908816706552376094.png 480w, /p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172717880_hu12741181950462711296.png 1024w"
+	loading="lazy"
+	
+		alt="在这里插入图片描述"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="133"
+		data-flex-basis="319px"
+	
+>
+<strong>下面这个步骤就需要等待了，时间长短不一，一般几分钟就好了，这个时候就不用管了，等着它安装好就行了</strong>
+<font color = red size = 2> 注：此时不要强制关机</font>
+<img src="/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172725630.png"
+	width="554"
+	height="409"
+	srcset="/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172725630_hu12983071663255022417.png 480w, /p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172725630_hu2488173136012354990.png 1024w"
+	loading="lazy"
+	
+		alt="在这里插入图片描述"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="135"
+		data-flex-basis="325px"
+	
+>
+<img src="/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172730215.png"
+	width="554"
+	height="400"
+	srcset="/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172730215_hu10674884982441336687.png 480w, /p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172730215_hu14269316605350297391.png 1024w"
+	loading="lazy"
+	
+		alt="在这里插入图片描述"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="138"
+		data-flex-basis="332px"
+	
+>
+<strong>安装好之后就会有下面的界面，你可以选择等10秒钟自动重启，或者是点击立即重启，等电脑黑屏之后，将U盘拔掉，不要拔早了，可能会造成系统损坏（会安装失败的）；也不要迟拔，因为迟拔的话，可能还会进入到安装界面，因为U盘设置的是第一启动项！！！如果是迟拔的话，将那个安装页面关了，把U盘拔掉就行</strong>
+<img src="/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172737233.png"
+	width="554"
+	height="412"
+	srcset="/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172737233_hu10066005074531943041.png 480w, /p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172737233_hu4221028876667993646.png 1024w"
+	loading="lazy"
+	
+		alt="在这里插入图片描述"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="134"
+		data-flex-basis="322px"
+	
+></p>
+<p><strong>U盘拔掉之后，就等着它重启，注：这个过程，电脑可能会启动多次，正常操作，不用担心，下面就是根据系统提示信息来进行操作了</strong>
+<img src="/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172741766.png"
+	width="554"
+	height="418"
+	srcset="/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172741766_hu9593153943902626124.png 480w, /p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172741766_hu8236465475227293846.png 1024w"
+	loading="lazy"
+	
+		alt="在这里插入图片描述"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="132"
+		data-flex-basis="318px"
+	
+>
+<img src="/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172745949.png"
+	width="554"
+	height="411"
+	srcset="/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172745949_hu7683117098658845071.png 480w, /p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172745949_hu7896212160468827819.png 1024w"
+	loading="lazy"
+	
+		alt="在这里插入图片描述"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="134"
+		data-flex-basis="323px"
+	
+></p>
+<p>下面的密钥依旧选择跳过，选择以后再说，如果提示联网的话，不要联网！不要联网！不要联网！网线拔了，也不要去连接WiFi，把网断掉
+<img src="/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172751903.png"
+	width="554"
+	height="416"
+	srcset="/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172751903_hu18380246429966595610.png 480w, /p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172751903_hu15215563665074878863.png 1024w"
+	loading="lazy"
+	
+		alt="在这里插入图片描述"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="133"
+		data-flex-basis="319px"
+	
+></p>
+<p><strong>这个可以选择自定义，或者是默认的设置，看个人喜好，这里选择的是默认设置</strong>
+<img src="/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172755877.png"
+	width="554"
+	height="416"
+	srcset="/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172755877_hu5034154079671010361.png 480w, /p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172755877_hu4385458461318298379.png 1024w"
+	loading="lazy"
+	
+		alt="在这里插入图片描述"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="133"
+		data-flex-basis="319px"
+	
+>
+<img src="/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172802864.png"
+	width="554"
+	height="321"
+	srcset="/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172802864_hu7895227910125772072.png 480w, /p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172802864_hu14799412224281429890.png 1024w"
+	loading="lazy"
+	
+		alt="在这里插入图片描述"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="172"
+		data-flex-basis="414px"
+	
+>
+<strong>下面就是创建账户了，如果不想创建账户，直接点击下一步，系统默认的账户是Administrator（管理员），或者是你只想创建一个账户而不设置密码的话，就输入一个账户名字就行了，然后点击下一步，这样就没有密码了</strong>
+<img src="/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/2018100617280775.png"
+	width="554"
+	height="303"
+	srcset="/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/2018100617280775_hu768847332246327939.png 480w, /p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/2018100617280775_hu9433177741535793291.png 1024w"
+	loading="lazy"
+	
+		alt="在这里插入图片描述"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="182"
+		data-flex-basis="438px"
+	
+>
+<strong>下面就是系统自己的事情了，会进行一系列的配置</strong>
+<img src="/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172810389.png"
+	width="553"
+	height="372"
+	srcset="/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172810389_hu13478813418212724736.png 480w, /p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172810389_hu1360043599460496461.png 1024w"
+	loading="lazy"
+	
+		alt="在这里插入图片描述"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="148"
+		data-flex-basis="356px"
+	
+>
+<img src="/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172827968.png"
+	width="554"
+	height="440"
+	srcset="/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172827968_hu16053076584077959246.png 480w, /p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172827968_hu13198612342153404463.png 1024w"
+	loading="lazy"
+	
+		alt="在这里插入图片描述"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="125"
+		data-flex-basis="302px"
+	
+>
+<strong>等待后的结果就是下面这个样子。是不是感觉很纯净？这样系统就算是装好了，接着就需要自己进行系统的配置了，比如屏幕分辨率、个性化、磁盘划分、安装各种软件等等，所以装系统并不费时间，费时间的是装好后的操作</strong>
+<img src="/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172833143.png"
+	width="553"
+	height="311"
+	srcset="/p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172833143_hu13295236496869367345.png 480w, /p/u%E7%9B%98%E9%87%8D%E8%A3%85win10%E4%B8%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/20181006172833143_hu7164595804577201064.png 1024w"
+	loading="lazy"
+	
+		alt="在这里插入图片描述"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="177"
+		data-flex-basis="426px"
+	
+></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.body, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2024 dxjxpr All Rights Reserved
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.26.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
