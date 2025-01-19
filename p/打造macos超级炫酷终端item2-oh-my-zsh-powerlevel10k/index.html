@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="使用iTerm2 + oh-my-zsh + Powerlevel10k打造macOs潮流又实用的Terminal保姆级教学\n[TOC]\n一、先展示最终效果图 顺便跑个彩色小火车给大家快乐下（命令：sl | lolcat）\n下面我们开始今天的安装教程\n二、安装iTem2终端 首先到到iTem2的官网https://iterm2.com/downloads.html下载安装包，下载下来的安装包是一个.zip的压缩文件，进行解压，解压后，双击进行安装，或者可以直接将该应用程序放入到Applications目录下，然后就可以在Lauchpad里看到iTem的图标，点击即可启动\niTem2的功能丰富，更加全面的可以查看官方文档：https://iterm2.com/documentation.html\n至于配色、字体大小、窗口大小等配置信息，可以在设置中，自行进行配置\n三、安装oh-my-zsh配置框架 oh-my-zsh是一个管理zsh配置的开源框架，该框架插件生态丰富，比如代码高亮、代码提示等，还有很多主体（此次的主题就是Powerlevel10k主题）\n首先需要下载安装zsh的shell，执行以下命令，并将zsh设置为默认的shell\n1 2 brew update brew install zsh 查看当前shell\n1 echo $SHELL 如果当前shell不是zsh，将shell切换成zsh\n1 chsh -s /bin/zsh 安装oh-my-zsh，官网：https://ohmyz.sh/#install\n执行以下命令：\n1 2 3 4 5 6 sh -c &#34;$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)&#34; # 或者 sh -c &#34;$(wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)&#34; # 两个安装命令选择一个即可，个人一般使用第一个，这个无所谓 安装完成后，可以看到如下的oh-my-zsh的彩色图标，同时可以看到光标前面的提示符变成了向右的箭头，这里默认的主题是robbyrussell，主题的配置信息都是~/.zshrc配置文件中\n">
+<title>打造macOs超级炫酷终端item2&#43;oh-my-zsh&#43;Powerlevel10k</title>
+
+<link rel='canonical' href='https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/'>
+
+<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="打造macOs超级炫酷终端item2+oh-my-zsh+Powerlevel10k">
+<meta property='og:description' content="使用iTerm2 + oh-my-zsh + Powerlevel10k打造macOs潮流又实用的Terminal保姆级教学\n[TOC]\n一、先展示最终效果图 顺便跑个彩色小火车给大家快乐下（命令：sl | lolcat）\n下面我们开始今天的安装教程\n二、安装iTem2终端 首先到到iTem2的官网https://iterm2.com/downloads.html下载安装包，下载下来的安装包是一个.zip的压缩文件，进行解压，解压后，双击进行安装，或者可以直接将该应用程序放入到Applications目录下，然后就可以在Lauchpad里看到iTem的图标，点击即可启动\niTem2的功能丰富，更加全面的可以查看官方文档：https://iterm2.com/documentation.html\n至于配色、字体大小、窗口大小等配置信息，可以在设置中，自行进行配置\n三、安装oh-my-zsh配置框架 oh-my-zsh是一个管理zsh配置的开源框架，该框架插件生态丰富，比如代码高亮、代码提示等，还有很多主体（此次的主题就是Powerlevel10k主题）\n首先需要下载安装zsh的shell，执行以下命令，并将zsh设置为默认的shell\n1 2 brew update brew install zsh 查看当前shell\n1 echo $SHELL 如果当前shell不是zsh，将shell切换成zsh\n1 chsh -s /bin/zsh 安装oh-my-zsh，官网：https://ohmyz.sh/#install\n执行以下命令：\n1 2 3 4 5 6 sh -c &#34;$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)&#34; # 或者 sh -c &#34;$(wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)&#34; # 两个安装命令选择一个即可，个人一般使用第一个，这个无所谓 安装完成后，可以看到如下的oh-my-zsh的彩色图标，同时可以看到光标前面的提示符变成了向右的箭头，这里默认的主题是robbyrussell，主题的配置信息都是~/.zshrc配置文件中\n">
+<meta property='og:url' content='https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/'>
+<meta property='og:site_name' content='I&#39;m R'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-01-19T21:30:00&#43;08:00'/><meta property='article:modified_time' content='2025-01-19T21:30:00&#43;08:00'/><meta property='og:image' content='https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/oh-my-zsh.png' />
+<meta name="twitter:title" content="打造macOs超级炫酷终端item2+oh-my-zsh+Powerlevel10k">
+<meta name="twitter:description" content="使用iTerm2 + oh-my-zsh + Powerlevel10k打造macOs潮流又实用的Terminal保姆级教学\n[TOC]\n一、先展示最终效果图 顺便跑个彩色小火车给大家快乐下（命令：sl | lolcat）\n下面我们开始今天的安装教程\n二、安装iTem2终端 首先到到iTem2的官网https://iterm2.com/downloads.html下载安装包，下载下来的安装包是一个.zip的压缩文件，进行解压，解压后，双击进行安装，或者可以直接将该应用程序放入到Applications目录下，然后就可以在Lauchpad里看到iTem的图标，点击即可启动\niTem2的功能丰富，更加全面的可以查看官方文档：https://iterm2.com/documentation.html\n至于配色、字体大小、窗口大小等配置信息，可以在设置中，自行进行配置\n三、安装oh-my-zsh配置框架 oh-my-zsh是一个管理zsh配置的开源框架，该框架插件生态丰富，比如代码高亮、代码提示等，还有很多主体（此次的主题就是Powerlevel10k主题）\n首先需要下载安装zsh的shell，执行以下命令，并将zsh设置为默认的shell\n1 2 brew update brew install zsh 查看当前shell\n1 echo $SHELL 如果当前shell不是zsh，将shell切换成zsh\n1 chsh -s /bin/zsh 安装oh-my-zsh，官网：https://ohmyz.sh/#install\n执行以下命令：\n1 2 3 4 5 6 sh -c &#34;$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)&#34; # 或者 sh -c &#34;$(wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)&#34; # 两个安装命令选择一个即可，个人一般使用第一个，这个无所谓 安装完成后，可以看到如下的oh-my-zsh的彩色图标，同时可以看到光标前面的提示符变成了向右的箭头，这里默认的主题是robbyrussell，主题的配置信息都是~/.zshrc配置文件中\n"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/oh-my-zsh.png' />
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu6242866133400980960.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🏃‍➡️</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">I&#39;m R</a></h1>
+            <h2 class="site-description">B What U Wanna B! Just Do It!</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/dxjxpr'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1723043422785" class="icon" viewBox="0 0 1049 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4723" xmlns:xlink="http://www.w3.org/1999/xlink" width="204.8828125" height="200"><path d="M524.979332 0C234.676191 0 0 234.676191 0 524.979332c0 232.068678 150.366597 428.501342 358.967656 498.035028 26.075132 5.215026 35.636014-11.299224 35.636014-25.205961 0-12.168395-0.869171-53.888607-0.869171-97.347161-146.020741 31.290159-176.441729-62.580318-176.441729-62.580318-23.467619-60.841976-58.234462-76.487055-58.234463-76.487055-47.804409-32.15933 3.476684-32.15933 3.476685-32.15933 53.019436 3.476684 80.83291 53.888607 80.83291 53.888607 46.935238 79.963739 122.553122 57.365291 152.97411 43.458554 4.345855-33.897672 18.252593-57.365291 33.028501-70.402857-116.468925-12.168395-239.022047-57.365291-239.022047-259.012982 0-57.365291 20.860106-104.300529 53.888607-140.805715-5.215026-13.037566-23.467619-66.926173 5.215027-139.067372 0 0 44.327725-13.906737 144.282399 53.888607 41.720212-11.299224 86.917108-17.383422 131.244833-17.383422s89.524621 6.084198 131.244833 17.383422C756.178839 203.386032 800.506564 217.29277 800.506564 217.29277c28.682646 72.1412 10.430053 126.029806 5.215026 139.067372 33.897672 36.505185 53.888607 83.440424 53.888607 140.805715 0 201.64769-122.553122 245.975415-239.891218 259.012982 19.121764 16.514251 35.636014 47.804409 35.636015 97.347161 0 70.402857-0.869171 126.898978-0.869172 144.282399 0 13.906737 9.560882 30.420988 35.636015 25.205961 208.601059-69.533686 358.967656-265.96635 358.967655-498.035028C1049.958663 234.676191 814.413301 0 524.979332 0z" fill="#191717" p-id="4724"></path><path d="M199.040177 753.571326c-0.869171 2.607513-5.215026 3.476684-8.691711 1.738342s-6.084198-5.215026-4.345855-7.82254c0.869171-2.607513 5.215026-3.476684 8.691711-1.738342s5.215026 5.215026 4.345855 7.82254z m-6.953369-4.345856M219.900283 777.038945c-2.607513 2.607513-7.82254 0.869171-10.430053-2.607514-3.476684-3.476684-4.345855-8.691711-1.738342-11.299224 2.607513-2.607513 6.953369-0.869171 10.430053 2.607514 3.476684 4.345855 4.345855 9.560882 1.738342 11.299224z m-5.215026-5.215027M240.760389 807.459932c-3.476684 2.607513-8.691711 0-11.299224-4.345855-3.476684-4.345855-3.476684-10.430053 0-12.168395 3.476684-2.607513 8.691711 0 11.299224 4.345855 3.476684 4.345855 3.476684 9.560882 0 12.168395z m0 0M269.443034 837.011749c-2.607513 3.476684-8.691711 2.607513-13.906737-1.738342-4.345855-4.345855-6.084198-10.430053-2.607513-13.037566 2.607513-3.476684 8.691711-2.607513 13.906737 1.738342 4.345855 3.476684 5.215026 9.560882 2.607513 13.037566z m0 0M308.555733 853.526c-0.869171 4.345855-6.953369 6.084198-13.037566 4.345855-6.084198-1.738342-9.560882-6.953369-8.691711-10.430053 0.869171-4.345855 6.953369-6.084198 13.037566-4.345855 6.084198 1.738342 9.560882 6.084198 8.691711 10.430053z m0 0M351.145116 857.002684c0 4.345855-5.215026 7.82254-11.299224 7.82254-6.084198 0-11.299224-3.476684-11.299224-7.82254s5.215026-7.82254 11.299224-7.82254c6.084198 0 11.299224 3.476684 11.299224 7.82254z m0 0M391.126986 850.049315c0.869171 4.345855-3.476684 8.691711-9.560882 9.560882-6.084198 0.869171-11.299224-1.738342-12.168395-6.084197-0.869171-4.345855 3.476684-8.691711 9.560881-9.560882 6.084198-0.869171 11.299224 1.738342 12.168396 6.084197z m0 0" fill="#191717" p-id="4725"></path></svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/">
+                <img src="/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/oh-my-zsh_hu13831528778242643527.png"
+                        srcset="/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/oh-my-zsh_hu13831528778242643527.png 800w, /p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/oh-my-zsh_hu16149543456632682918.png 1600w"
+                        width="800" 
+                        height="486" 
+                        loading="lazy"
+                        alt="Featured image of post 打造macOs超级炫酷终端item2&#43;oh-my-zsh&#43;Powerlevel10k" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/">打造macOs超级炫酷终端item2&#43;oh-my-zsh&#43;Powerlevel10k</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jan 19, 2025</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    1 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <p>使用<code>iTerm2 + oh-my-zsh + Powerlevel10k</code>打造<code>macOs</code>潮流又实用的<code>Terminal</code>保姆级教学</p>
+<p>[TOC]</p>
+<h1 id="一先展示最终效果图">一、先展示最终效果图
+</h1><p><img src="/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250117212756057.png"
+	width="1145"
+	height="781"
+	srcset="/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250117212756057_hu3486661148178607650.png 480w, /p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250117212756057_hu16254783828306976763.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250117212756057"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="146"
+		data-flex-basis="351px"
+	
+></p>
+<p>顺便跑个彩色小火车给大家快乐下（命令：sl | lolcat）</p>
+<p><img src="/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119191517123.png"
+	width="1145"
+	height="779"
+	srcset="/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119191517123_hu14428692391593826127.png 480w, /p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119191517123_hu3310712549508999670.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250119191517123"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="146"
+		data-flex-basis="352px"
+	
+></p>
+<p>下面我们开始今天的安装教程</p>
+<h1 id="二安装item2终端">二、安装iTem2终端
+</h1><p>首先到到<code>iTem2</code>的官网<code>https://iterm2.com/downloads.html</code>下载安装包，下载下来的安装包是一个<code>.zip</code>的压缩文件，进行解压，解压后，双击进行安装，或者可以直接将该应用程序放入到<code>Applications</code>目录下，然后就可以在<code>Lauchpad</code>里看到<code>iTem</code>的图标，点击即可启动</p>
+<p><img src="/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250117215230259.png"
+	width="2560"
+	height="1329"
+	srcset="/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250117215230259_hu1597910458610774308.png 480w, /p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250117215230259_hu3646119340400808739.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250117215230259"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="192"
+		data-flex-basis="462px"
+	
+></p>
+<p><code>iTem2</code>的功能丰富，更加全面的可以查看官方文档：<code>https://iterm2.com/documentation.html</code></p>
+<p>至于配色、字体大小、窗口大小等配置信息，可以在设置中，自行进行配置</p>
+<h1 id="三安装oh-my-zsh配置框架">三、安装oh-my-zsh配置框架
+</h1><p><code>oh-my-zsh</code>是一个管理<code>zsh</code>配置的开源框架，该框架插件生态丰富，比如代码高亮、代码提示等，还有很多主体（此次的主题就是<code>Powerlevel10k</code>主题）</p>
+<p>首先需要下载安装<code>zsh</code>的shell，执行以下命令，并将zsh设置为默认的shell</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">brew update
+</span></span><span class="line"><span class="cl">brew install zsh
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>查看当前shell</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">echo</span> <span class="nv">$SHELL</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果当前shell不是zsh，将shell切换成zsh</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">chsh -s /bin/zsh
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>安装<code>oh-my-zsh</code>，官网：<code>https://ohmyz.sh/#install</code></p>
+<p>执行以下命令：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sh -c <span class="s2">&#34;</span><span class="k">$(</span>curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh<span class="k">)</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 或者</span>
+</span></span><span class="line"><span class="cl">sh -c <span class="s2">&#34;</span><span class="k">$(</span>wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -<span class="k">)</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 两个安装命令选择一个即可，个人一般使用第一个，这个无所谓</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>安装完成后，可以看到如下的<code>oh-my-zsh</code>的彩色图标，同时可以看到光标前面的提示符变成了向右的箭头，这里默认的主题是<code>robbyrussell</code>，主题的配置信息都是<code>~/.zshrc</code>配置文件中</p>
+<p><img src="/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119193513535.png"
+	width="1145"
+	height="778"
+	srcset="/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119193513535_hu13912256538062865540.png 480w, /p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119193513535_hu1309866104303192077.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250119193513535"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="147"
+		data-flex-basis="353px"
+	
+></p>
+<h1 id="四安装插件">四、安装插件
+</h1><p>安装<code>oh-my-zsh</code>后，建议安装定制的插件，这里介绍两个<a class="link" href="https://github.com/zsh-users/zsh-autosuggestions"  target="_blank" rel="noopener"
+    >zsh-autosuggestions</a>和<a class="link" href="https://github.com/zsh-users/zsh-syntax-highlighting"  target="_blank" rel="noopener"
+    >zsh-syntax-highlighting</a></p>
+<ul>
+<li>zsh-autosuggestions
+该插件在用户键入时，是根据命令行历史和完整命令名推荐余下的输入</li>
+<li>zsh-syntax-highlighting
+此插件对zsh提示符后的输入自动匹配语法高亮，可以让用户在实际命令运行前审核输入行，以便及时发现和改正语法错误。</li>
+</ul>
+<p>安装方式，是将插件从github上克隆到<code>~/.oh-my-zsh/custom/plugins</code>目录下，然后编辑<code>~/.zshrc</code>文件，找到<code>plugins=(git)</code>那一行，将所安装的插件，放入到插件列表中，同时为了保证语法高亮的效果<code>zsh-syntax-highlighting</code>插件必须置于插件列表的最后一项，如下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nv">plugins</span><span class="o">=(</span>
+</span></span><span class="line"><span class="cl">  git
+</span></span><span class="line"><span class="cl">  zsh-autosuggestions
+</span></span><span class="line"><span class="cl">  zsh-syntax-highlighting
+</span></span><span class="line"><span class="cl"><span class="o">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后退出item2终端，重新启动才能生效</p>
+<h1 id="五配置powerlevel10k主题">五、配置Powerlevel10k主题
+</h1><p><a class="link" href="https://github.com/romkatv/powerlevel10k"  target="_blank" rel="noopener"
+    >powerlevel10k</a>是为zsh定制而做的主题，有以下主要特征</p>
+<ul>
+<li>界面美观</li>
+<li>即时反馈</li>
+<li>集成git</li>
+<li>及其他特点</li>
+</ul>
+<p>在<code>oh-my-zsh</code>环境下的安装很简单，直接从github源克隆powerlevel10k仓库到<code>~/.oh-my-zsh/custom/themes</code>目录下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">git clone --depth<span class="o">=</span><span class="m">1</span> https://github.com/romkatv/powerlevel10k.git <span class="si">${</span><span class="nv">ZSH_CUSTOM</span><span class="k">:-</span><span class="nv">$HOME</span><span class="p">/.oh-my-zsh/custom</span><span class="si">}</span>/themes/powerlevel10k
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>中国大陆地区也可以使用gitee上的官方镜像加速下载</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">git clone --depth<span class="o">=</span><span class="m">1</span> https://gitee.com/romkatv/powerlevel10k.git <span class="si">${</span><span class="nv">ZSH_CUSTOM</span><span class="k">:-</span><span class="nv">$HOME</span><span class="p">/.oh-my-zsh/custom</span><span class="si">}</span>/themes/powerlevel10k
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>编辑<code>.zshrc</code>文件，将主题更改为<code>powerlevel10k</code>，找到<code>ZSH_THEME=&quot;robbyrussell&quot;</code>那一行，然后将<code>robbyrussell</code>更换为<code>powerlevel10k/powerlevel10k</code>，如下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nv">ZSH_THEME</span><span class="o">=</span><span class="s2">&#34;powerlevel10k/powerlevel10k&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>安装完成后，执行命令<code>source ~/.zshrc</code>或者是退出iTem2重启一下，然后就会自动触发Powerlevel10k配置向导（Configuration Wizard），然后跟随提示，一步步进行配置，以下是根据个人喜好进行的配置，仅供参考学习，大体流程如下</p>
+<p>在配置powerlevel10k之前，可能会提示你：询问是否安装推荐的字体（<strong>Meslo Nerd Font</strong>），然后选择安装，安装完成后需要重启item2，然后重启，重新进入powerlevel10k的配置流程</p>
+<p>1、问：这看起来像钻石（旋转的正方形）吗？</p>
+<p>答：y</p>
+<p><img src="/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119200703620.png"
+	width="1145"
+	height="780"
+	srcset="/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119200703620_hu4324006367475201995.png 480w, /p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119200703620_hu6381034331710834420.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250119200703620"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="146"
+		data-flex-basis="352px"
+	
+></p>
+<p>2、问：这看起来像一把锁吗？</p>
+<p>答：y</p>
+<p><img src="/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119200926840.png"
+	width="1145"
+	height="781"
+	srcset="/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119200926840_hu8081811710160574723.png 480w, /p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119200926840_hu10677362315495903983.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250119200926840"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="146"
+		data-flex-basis="351px"
+	
+></p>
+<p>3、问：这看起来像一个向上的箭头吗？</p>
+<p>答：y</p>
+<p><img src="/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119201036973.png"
+	width="1145"
+	height="781"
+	srcset="/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119201036973_hu8942191278373269511.png 480w, /p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119201036973_hu4751672148913990569.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250119201036973"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="146"
+		data-flex-basis="351px"
+	
+></p>
+<p>4、问：向下的箭头指向什么数字？</p>
+<p>答：1</p>
+<p><img src="/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119201115418.png"
+	width="1145"
+	height="780"
+	srcset="/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119201115418_hu17730690965367965528.png 480w, /p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119201115418_hu17640283056349483993.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250119201115418"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="146"
+		data-flex-basis="352px"
+	
+></p>
+<p>5、问：所有这些图标都适合十字吗？</p>
+<p>答：y</p>
+<p><img src="/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119201309249.png"
+	width="1145"
+	height="781"
+	srcset="/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119201309249_hu8524559943189534851.png 480w, /p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119201309249_hu15927848262685592717.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250119201309249"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="146"
+		data-flex-basis="351px"
+	
+></p>
+<p>6、选择一个提示风格，个人比较喜欢（3）Rainbow，所以这里就选择3，你可根据你的喜好选择，这里就输入：3</p>
+<p>然后回车</p>
+<p><img src="/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119201324058.png"
+	width="1145"
+	height="778"
+	srcset="/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119201324058_hu4798411218261114663.png 480w, /p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119201324058_hu13508744101108127841.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250119201324058"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="147"
+		data-flex-basis="353px"
+	
+></p>
+<p>7、字符集的选择，(1)  Unicode.这里就输入1，然后回车</p>
+<p><img src="/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119203323513.png"
+	width="1117"
+	height="808"
+	srcset="/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119203323513_hu18405893866962827458.png 480w, /p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119203323513_hu9814707536908596904.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250119203323513"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="138"
+		data-flex-basis="331px"
+	
+></p>
+<p>8、当前时间显示的格式，或者不显示，个人喜欢24小时制，你可以根据自身喜好选择，这里输入2，然后回车</p>
+<p><img src="/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119201609821.png"
+	width="1145"
+	height="779"
+	srcset="/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119201609821_hu7966283519375077191.png 480w, /p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119201609821_hu8166747238844780151.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250119201609821"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="146"
+		data-flex-basis="352px"
+	
+></p>
+<p>9、提示分割符，个人喜欢箭头型，就选择(1)  Angled，你可根据自身喜好选择，这里就输入1，然后回车</p>
+<p><img src="/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119203434968.png"
+	width="1117"
+	height="808"
+	srcset="/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119203434968_hu9081549497804366032.png 480w, /p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119203434968_hu13112374118881506794.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250119203434968"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="138"
+		data-flex-basis="331px"
+	
+></p>
+<p>10、提示头的选择，个人喜欢箭头，你可以根据自身喜好选择，这里就输入3，然后回车</p>
+<p><img src="/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119203616145.png"
+	width="1117"
+	height="808"
+	srcset="/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119203616145_hu12042542805578425196.png 480w, /p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119203616145_hu5367995411214171636.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250119203616145"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="138"
+		data-flex-basis="331px"
+	
+></p>
+<p>11、提示尾部的选择，个人喜欢波浪，你可以根据自身喜好选择，这里就输入2，然后回车</p>
+<p><img src="/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119203819617.png"
+	width="1117"
+	height="808"
+	srcset="/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119203819617_hu7197327411209956527.png 480w, /p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119203819617_hu1857417192723329619.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250119203819617"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="138"
+		data-flex-basis="331px"
+	
+></p>
+<p>12、命令行的提示高度，是换行，还是在当前行，个人选择（1）One line，你可根据自身喜好选择，这里就输入1，然后回车</p>
+<p><img src="/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119203859087.png"
+	width="1117"
+	height="808"
+	srcset="/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119203859087_hu182741011492518124.png 480w, /p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119203859087_hu9356253287734715043.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250119203859087"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="138"
+		data-flex-basis="331px"
+	
+></p>
+<p>13、命令行是否紧凑，个人喜欢紧凑，选择（1）Compact 你可以根据自身喜好选择，这里就输入1，然后回车</p>
+<p><img src="/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119203921656.png"
+	width="1117"
+	height="808"
+	srcset="/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119203921656_hu9958922996834754815.png 480w, /p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119203921656_hu2158265149575524454.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250119203921656"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="138"
+		data-flex-basis="331px"
+	
+></p>
+<p>14、图标样式的选择，个人喜欢多一点的，就选择2，你可以根据自身喜好选择，这里就输入2，然后回车</p>
+<p><img src="/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119204704735.png"
+	width="1117"
+	height="808"
+	srcset="/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119204704735_hu2262959778849787532.png 480w, /p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119204704735_hu8985748579414967483.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250119204704735"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="138"
+		data-flex-basis="331px"
+	
+></p>
+<p>15、提示流程的选择，个人感觉图标多点图标比架炫酷，就选择2，你可根据自身喜好选择，这里就输入2，然后回车</p>
+<p><img src="/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119204718181.png"
+	width="1117"
+	height="808"
+	srcset="/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119204718181_hu12429779345545743764.png 480w, /p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119204718181_hu14717371802582755416.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250119204718181"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="138"
+		data-flex-basis="331px"
+	
+></p>
+<p>16、是否启用瞬态提示，选择n，否则就没有图标好看了，当然，你也可以选择1，根据自身喜好选择，这里就输入n，然后回车</p>
+<p><img src="/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119204730901.png"
+	width="1117"
+	height="808"
+	srcset="/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119204730901_hu14059542780586924638.png 480w, /p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119204730901_hu17840477590130437978.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250119204730901"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="138"
+		data-flex-basis="331px"
+	
+></p>
+<p>17、即时提示模式，选择1，然后回车</p>
+<p><img src="/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119204425850.png"
+	width="1117"
+	height="808"
+	srcset="/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119204425850_hu1971961050534679235.png 480w, /p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119204425850_hu9111162179348401411.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250119204425850"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="138"
+		data-flex-basis="331px"
+	
+></p>
+<p>18、是否将刚才的配置信息写入配置文件，选择y，然后回车即可</p>
+<p><img src="/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119204457069.png"
+	width="1117"
+	height="808"
+	srcset="/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119204457069_hu10046839113919876152.png 480w, /p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119204457069_hu7932486022943167942.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250119204457069"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="138"
+		data-flex-basis="331px"
+	
+></p>
+<p>最后，大功告成，看着就很炫酷，当然还有更多更炫酷的配置，比如设置字体颜色，也可以找寻更多的插件，这里就抛砖引玉。</p>
+<p><img src="/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119210138219.png"
+	width="1145"
+	height="781"
+	srcset="/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119210138219_hu9356406636414590050.png 480w, /p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119210138219_hu4740980221612833673.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250119210138219"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="146"
+		data-flex-basis="351px"
+	
+></p>
+<p>如果对觉得配置的主题不是很好看，想重新配置，在终端中执行命令</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">p10k configure
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>执行完成后就可以重新配置powerlevel10k主题了</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+	const mainArticleElement = document.querySelector(".main-article");
+        renderMathInElement(mainArticleElement, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2024 - 
+        
+        2025 dxjxpr All Rights Reserved
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.29.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
