@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://dxjxpr.github.io/p/markdown-syntax-guide/'>
 
-<link rel="stylesheet" href="/scss/style.min.0304c6baf04e01a8fe70693791cb744d56a3578a3120a8796cefc66825aa39c7.css"><meta property='og:title' content="Markdown Syntax Guide">
+<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="Markdown Syntax Guide">
 <meta property='og:description' content="Sample article showcasing basic Markdown syntax and formatting for HTML elements.">
 <meta property='og:url' content='https://dxjxpr.github.io/p/markdown-syntax-guide/'>
 <meta property='og:site_name' content='I&#39;m R'>
@@ -15,9 +15,6 @@
 <meta name="twitter:description" content="Sample article showcasing basic Markdown syntax and formatting for HTML elements."><meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content='https://dxjxpr.github.io/p/markdown-syntax-guide/pawel-czerwinski-8uZPynIu-rQ-unsplash.jpg' />
     <link rel="shortcut icon" href="/favicon.ico" />
-
-  
-
 
     </head>
     <body class="
@@ -429,61 +426,61 @@
 <h2 id="tables">Tables
 </h2><p>Tables aren&rsquo;t part of the core Markdown spec, but Hugo supports supports them out-of-the-box.</p>
 <div class="table-wrapper"><table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Age</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Bob</td>
-<td>27</td>
-</tr>
-<tr>
-<td>Alice</td>
-<td>23</td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th>Name</th>
+          <th>Age</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Bob</td>
+          <td>27</td>
+      </tr>
+      <tr>
+          <td>Alice</td>
+          <td>23</td>
+      </tr>
+  </tbody>
 </table></div>
 <h4 id="inline-markdown-within-tables">Inline Markdown within tables
 </h4><div class="table-wrapper"><table>
-<thead>
-<tr>
-<th>Italics</th>
-<th>Bold</th>
-<th>Code</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><em>italics</em></td>
-<td><strong>bold</strong></td>
-<td><code>code</code></td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th>Italics</th>
+          <th>Bold</th>
+          <th>Code</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><em>italics</em></td>
+          <td><strong>bold</strong></td>
+          <td><code>code</code></td>
+      </tr>
+  </tbody>
 </table></div>
 <div class="table-wrapper"><table>
-<thead>
-<tr>
-<th>A</th>
-<th>B</th>
-<th>C</th>
-<th>D</th>
-<th>E</th>
-<th>F</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</td>
-<td>Phasellus ultricies, sapien non euismod aliquam, dui ligula tincidunt odio, at accumsan nulla sapien eget ex.</td>
-<td>Proin eleifend dictum ipsum, non euismod ipsum pulvinar et. Vivamus sollicitudin, quam in pulvinar aliquam, metus elit pretium purus</td>
-<td>Proin sit amet velit nec enim imperdiet vehicula.</td>
-<td>Ut bibendum vestibulum quam, eu egestas turpis gravida nec</td>
-<td>Sed scelerisque nec turpis vel viverra. Vivamus vitae pretium sapien</td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th>A</th>
+          <th>B</th>
+          <th>C</th>
+          <th>D</th>
+          <th>E</th>
+          <th>F</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</td>
+          <td>Phasellus ultricies, sapien non euismod aliquam, dui ligula tincidunt odio, at accumsan nulla sapien eget ex.</td>
+          <td>Proin eleifend dictum ipsum, non euismod ipsum pulvinar et. Vivamus sollicitudin, quam in pulvinar aliquam, metus elit pretium purus</td>
+          <td>Proin sit amet velit nec enim imperdiet vehicula.</td>
+          <td>Ut bibendum vestibulum quam, eu egestas turpis gravida nec</td>
+          <td>Sed scelerisque nec turpis vel viverra. Vivamus vitae pretium sapien</td>
+      </tr>
+  </tbody>
 </table></div>
 <h2 id="code-blocks">Code Blocks
 </h2><h4 id="code-block-with-backticks">Code block with backticks
@@ -672,7 +669,8 @@
                 >
             </script><script>
     window.addEventListener("DOMContentLoaded", () => {
-        renderMathInElement(document.body, {
+	const mainArticleElement = document.querySelector(".main-article");
+        renderMathInElement(mainArticleElement, {
             delimiters: [
                 { left: "$$", right: "$$", display: true },
                 { left: "$", right: "$", display: false },
@@ -682,6 +680,7 @@
             ignoredClasses: ["gist"]
         });})
 </script>
+
     
 </article>
 
@@ -698,12 +697,14 @@
     <section class="copyright">
         &copy; 
         
-        2024 dxjxpr All Rights Reserved
+            2024 - 
+        
+        2025 dxjxpr All Rights Reserved
     </section>
     
     <section class="powerby">
         Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
-        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.26.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.29.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
     </section>
 </footer>
 
@@ -792,7 +793,7 @@
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
 <script>
     (function () {
         const customFont = document.createElement('link');

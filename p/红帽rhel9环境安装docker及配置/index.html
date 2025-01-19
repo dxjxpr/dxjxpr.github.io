@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="背景说明 操作系统版本，红帽RHEL9版本\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 [root@localhost ~]# cat /etc/os-release NAME=&#34;Red Hat Enterprise Linux&#34; VERSION=&#34;9.5 (Plow)&#34; ID=&#34;rhel&#34; ID_LIKE=&#34;fedora&#34; VERSION_ID=&#34;9.5&#34; PLATFORM_ID=&#34;platform:el9&#34; PRETTY_NAME=&#34;Red Hat Enterprise Linux 9.5 (Plow)&#34; ANSI_COLOR=&#34;0;31&#34; LOGO=&#34;fedora-logo-icon&#34; CPE_NAME=&#34;cpe:/o:redhat:enterprise_linux:9::baseos&#34; HOME_URL=&#34;https://www.redhat.com/&#34; DOCUMENTATION_URL=&#34;https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9&#34; BUG_REPORT_URL=&#34;https://issues.redhat.com/&#34; REDHAT_BUGZILLA_PRODUCT=&#34;Red Hat Enterprise Linux 9&#34; REDHAT_BUGZILLA_PRODUCT_VERSION=9.5 REDHAT_SUPPORT_PRODUCT=&#34;Red Hat Enterprise Linux&#34; REDHAT_SUPPORT_PRODUCT_VERSION=&#34;9.5&#34; 1、安装EPEL存储库 首先执行命令sudo yum install epel-release -y 进行安装，-y参数会自动安装，安装过程中无需手动敲y\n">
+<title>红帽RHEL9环境安装docker及配置</title>
+
+<link rel='canonical' href='https://dxjxpr.github.io/p/%E7%BA%A2%E5%B8%BDrhel9%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85docker%E5%8F%8A%E9%85%8D%E7%BD%AE/'>
+
+<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="红帽RHEL9环境安装docker及配置">
+<meta property='og:description' content="背景说明 操作系统版本，红帽RHEL9版本\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 [root@localhost ~]# cat /etc/os-release NAME=&#34;Red Hat Enterprise Linux&#34; VERSION=&#34;9.5 (Plow)&#34; ID=&#34;rhel&#34; ID_LIKE=&#34;fedora&#34; VERSION_ID=&#34;9.5&#34; PLATFORM_ID=&#34;platform:el9&#34; PRETTY_NAME=&#34;Red Hat Enterprise Linux 9.5 (Plow)&#34; ANSI_COLOR=&#34;0;31&#34; LOGO=&#34;fedora-logo-icon&#34; CPE_NAME=&#34;cpe:/o:redhat:enterprise_linux:9::baseos&#34; HOME_URL=&#34;https://www.redhat.com/&#34; DOCUMENTATION_URL=&#34;https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9&#34; BUG_REPORT_URL=&#34;https://issues.redhat.com/&#34; REDHAT_BUGZILLA_PRODUCT=&#34;Red Hat Enterprise Linux 9&#34; REDHAT_BUGZILLA_PRODUCT_VERSION=9.5 REDHAT_SUPPORT_PRODUCT=&#34;Red Hat Enterprise Linux&#34; REDHAT_SUPPORT_PRODUCT_VERSION=&#34;9.5&#34; 1、安装EPEL存储库 首先执行命令sudo yum install epel-release -y 进行安装，-y参数会自动安装，安装过程中无需手动敲y\n">
+<meta property='og:url' content='https://dxjxpr.github.io/p/%E7%BA%A2%E5%B8%BDrhel9%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85docker%E5%8F%8A%E9%85%8D%E7%BD%AE/'>
+<meta property='og:site_name' content='I&#39;m R'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-01-13T21:30:00&#43;08:00'/><meta property='article:modified_time' content='2025-01-13T21:30:00&#43;08:00'/><meta property='og:image' content='https://dxjxpr.github.io/p/%E7%BA%A2%E5%B8%BDrhel9%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85docker%E5%8F%8A%E9%85%8D%E7%BD%AE/docker.png' />
+<meta name="twitter:title" content="红帽RHEL9环境安装docker及配置">
+<meta name="twitter:description" content="背景说明 操作系统版本，红帽RHEL9版本\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 [root@localhost ~]# cat /etc/os-release NAME=&#34;Red Hat Enterprise Linux&#34; VERSION=&#34;9.5 (Plow)&#34; ID=&#34;rhel&#34; ID_LIKE=&#34;fedora&#34; VERSION_ID=&#34;9.5&#34; PLATFORM_ID=&#34;platform:el9&#34; PRETTY_NAME=&#34;Red Hat Enterprise Linux 9.5 (Plow)&#34; ANSI_COLOR=&#34;0;31&#34; LOGO=&#34;fedora-logo-icon&#34; CPE_NAME=&#34;cpe:/o:redhat:enterprise_linux:9::baseos&#34; HOME_URL=&#34;https://www.redhat.com/&#34; DOCUMENTATION_URL=&#34;https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9&#34; BUG_REPORT_URL=&#34;https://issues.redhat.com/&#34; REDHAT_BUGZILLA_PRODUCT=&#34;Red Hat Enterprise Linux 9&#34; REDHAT_BUGZILLA_PRODUCT_VERSION=9.5 REDHAT_SUPPORT_PRODUCT=&#34;Red Hat Enterprise Linux&#34; REDHAT_SUPPORT_PRODUCT_VERSION=&#34;9.5&#34; 1、安装EPEL存储库 首先执行命令sudo yum install epel-release -y 进行安装，-y参数会自动安装，安装过程中无需手动敲y\n"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://dxjxpr.github.io/p/%E7%BA%A2%E5%B8%BDrhel9%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85docker%E5%8F%8A%E9%85%8D%E7%BD%AE/docker.png' />
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu6242866133400980960.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🏃‍➡️</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">I&#39;m R</a></h1>
+            <h2 class="site-description">B What U Wanna B! Just Do It!</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/dxjxpr'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1723043422785" class="icon" viewBox="0 0 1049 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4723" xmlns:xlink="http://www.w3.org/1999/xlink" width="204.8828125" height="200"><path d="M524.979332 0C234.676191 0 0 234.676191 0 524.979332c0 232.068678 150.366597 428.501342 358.967656 498.035028 26.075132 5.215026 35.636014-11.299224 35.636014-25.205961 0-12.168395-0.869171-53.888607-0.869171-97.347161-146.020741 31.290159-176.441729-62.580318-176.441729-62.580318-23.467619-60.841976-58.234462-76.487055-58.234463-76.487055-47.804409-32.15933 3.476684-32.15933 3.476685-32.15933 53.019436 3.476684 80.83291 53.888607 80.83291 53.888607 46.935238 79.963739 122.553122 57.365291 152.97411 43.458554 4.345855-33.897672 18.252593-57.365291 33.028501-70.402857-116.468925-12.168395-239.022047-57.365291-239.022047-259.012982 0-57.365291 20.860106-104.300529 53.888607-140.805715-5.215026-13.037566-23.467619-66.926173 5.215027-139.067372 0 0 44.327725-13.906737 144.282399 53.888607 41.720212-11.299224 86.917108-17.383422 131.244833-17.383422s89.524621 6.084198 131.244833 17.383422C756.178839 203.386032 800.506564 217.29277 800.506564 217.29277c28.682646 72.1412 10.430053 126.029806 5.215026 139.067372 33.897672 36.505185 53.888607 83.440424 53.888607 140.805715 0 201.64769-122.553122 245.975415-239.891218 259.012982 19.121764 16.514251 35.636014 47.804409 35.636015 97.347161 0 70.402857-0.869171 126.898978-0.869172 144.282399 0 13.906737 9.560882 30.420988 35.636015 25.205961 208.601059-69.533686 358.967656-265.96635 358.967655-498.035028C1049.958663 234.676191 814.413301 0 524.979332 0z" fill="#191717" p-id="4724"></path><path d="M199.040177 753.571326c-0.869171 2.607513-5.215026 3.476684-8.691711 1.738342s-6.084198-5.215026-4.345855-7.82254c0.869171-2.607513 5.215026-3.476684 8.691711-1.738342s5.215026 5.215026 4.345855 7.82254z m-6.953369-4.345856M219.900283 777.038945c-2.607513 2.607513-7.82254 0.869171-10.430053-2.607514-3.476684-3.476684-4.345855-8.691711-1.738342-11.299224 2.607513-2.607513 6.953369-0.869171 10.430053 2.607514 3.476684 4.345855 4.345855 9.560882 1.738342 11.299224z m-5.215026-5.215027M240.760389 807.459932c-3.476684 2.607513-8.691711 0-11.299224-4.345855-3.476684-4.345855-3.476684-10.430053 0-12.168395 3.476684-2.607513 8.691711 0 11.299224 4.345855 3.476684 4.345855 3.476684 9.560882 0 12.168395z m0 0M269.443034 837.011749c-2.607513 3.476684-8.691711 2.607513-13.906737-1.738342-4.345855-4.345855-6.084198-10.430053-2.607513-13.037566 2.607513-3.476684 8.691711-2.607513 13.906737 1.738342 4.345855 3.476684 5.215026 9.560882 2.607513 13.037566z m0 0M308.555733 853.526c-0.869171 4.345855-6.953369 6.084198-13.037566 4.345855-6.084198-1.738342-9.560882-6.953369-8.691711-10.430053 0.869171-4.345855 6.953369-6.084198 13.037566-4.345855 6.084198 1.738342 9.560882 6.084198 8.691711 10.430053z m0 0M351.145116 857.002684c0 4.345855-5.215026 7.82254-11.299224 7.82254-6.084198 0-11.299224-3.476684-11.299224-7.82254s5.215026-7.82254 11.299224-7.82254c6.084198 0 11.299224 3.476684 11.299224 7.82254z m0 0M391.126986 850.049315c0.869171 4.345855-3.476684 8.691711-9.560882 9.560882-6.084198 0.869171-11.299224-1.738342-12.168395-6.084197-0.869171-4.345855 3.476684-8.691711 9.560881-9.560882 6.084198-0.869171 11.299224 1.738342 12.168396 6.084197z m0 0" fill="#191717" p-id="4725"></path></svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/%E7%BA%A2%E5%B8%BDrhel9%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85docker%E5%8F%8A%E9%85%8D%E7%BD%AE/">
+                <img src="/p/%E7%BA%A2%E5%B8%BDrhel9%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85docker%E5%8F%8A%E9%85%8D%E7%BD%AE/docker_hu1664770293589735814.png"
+                        srcset="/p/%E7%BA%A2%E5%B8%BDrhel9%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85docker%E5%8F%8A%E9%85%8D%E7%BD%AE/docker_hu1664770293589735814.png 800w, /p/%E7%BA%A2%E5%B8%BDrhel9%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85docker%E5%8F%8A%E9%85%8D%E7%BD%AE/docker_hu640188933511510113.png 1600w"
+                        width="800" 
+                        height="599" 
+                        loading="lazy"
+                        alt="Featured image of post 红帽RHEL9环境安装docker及配置" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/%E7%BA%A2%E5%B8%BDrhel9%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85docker%E5%8F%8A%E9%85%8D%E7%BD%AE/">红帽RHEL9环境安装docker及配置</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jan 13, 2025</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    3 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h1 id="背景说明">背景说明
+</h1><p>操作系统版本，红帽RHEL9版本</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="o">[</span>root@localhost ~<span class="o">]</span><span class="c1"># cat /etc/os-release</span>
+</span></span><span class="line"><span class="cl"><span class="nv">NAME</span><span class="o">=</span><span class="s2">&#34;Red Hat Enterprise Linux&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">VERSION</span><span class="o">=</span><span class="s2">&#34;9.5 (Plow)&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">ID</span><span class="o">=</span><span class="s2">&#34;rhel&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">ID_LIKE</span><span class="o">=</span><span class="s2">&#34;fedora&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">VERSION_ID</span><span class="o">=</span><span class="s2">&#34;9.5&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">PLATFORM_ID</span><span class="o">=</span><span class="s2">&#34;platform:el9&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">PRETTY_NAME</span><span class="o">=</span><span class="s2">&#34;Red Hat Enterprise Linux 9.5 (Plow)&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">ANSI_COLOR</span><span class="o">=</span><span class="s2">&#34;0;31&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">LOGO</span><span class="o">=</span><span class="s2">&#34;fedora-logo-icon&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">CPE_NAME</span><span class="o">=</span><span class="s2">&#34;cpe:/o:redhat:enterprise_linux:9::baseos&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">HOME_URL</span><span class="o">=</span><span class="s2">&#34;https://www.redhat.com/&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">DOCUMENTATION_URL</span><span class="o">=</span><span class="s2">&#34;https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">BUG_REPORT_URL</span><span class="o">=</span><span class="s2">&#34;https://issues.redhat.com/&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">REDHAT_BUGZILLA_PRODUCT</span><span class="o">=</span><span class="s2">&#34;Red Hat Enterprise Linux 9&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">REDHAT_BUGZILLA_PRODUCT_VERSION</span><span class="o">=</span>9.5
+</span></span><span class="line"><span class="cl"><span class="nv">REDHAT_SUPPORT_PRODUCT</span><span class="o">=</span><span class="s2">&#34;Red Hat Enterprise Linux&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">REDHAT_SUPPORT_PRODUCT_VERSION</span><span class="o">=</span><span class="s2">&#34;9.5&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="1安装epel存储库">1、安装EPEL存储库
+</h1><p>首先执行命令<code>sudo yum install epel-release -y </code>进行安装，<code>-y</code>参数会自动安装，安装过程中无需手动敲<code>y</code></p>
+<p>可能会出现找不到匹配的软件包</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="o">[</span>root@localhost ~<span class="o">]</span><span class="c1"># sudo yum install epel-release -y </span>
+</span></span><span class="line"><span class="cl">Updating Subscription Management repositories.
+</span></span><span class="line"><span class="cl">Last metadata expiration check: 2:16:32 ago on Mon <span class="m">13</span> Jan <span class="m">2025</span> 07:12:38 PM CST.
+</span></span><span class="line"><span class="cl">No match <span class="k">for</span> argument: epel-release
+</span></span><span class="line"><span class="cl">Error: Unable to find a match: epel-release
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>解决方法：</p>
+<p>启用EPEL存储库，需要安装<code>yum-utils</code>软件包，然后使用<code>yum-config-manager</code>命令启用EPEL存储库，执行以下命令：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo yum install -y yum-utils device-mapper-persistent-data lvm2
+</span></span><span class="line"><span class="cl">sudo yum-config-manager --enable epel
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后再尝试安装<code>epel-release</code>软件包，执行以下命令</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo yum install epel-release
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 注：如果该条命令依旧显示无法找到匹配的软件包，可以尝试使用以下命令（个人是使用这个命令执行成功的）</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>安装<code>epel-release</code>后，更新系统包缓存，执行以下命令</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo yum clean all
+</span></span><span class="line"><span class="cl">sudo yum makecache
+</span></span><span class="line"><span class="cl">sudo yum update
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="2设置docker的yum源">2、设置docker的yum源
+</h1><p>执行以下命令，在yum中添加docker源</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="3安装docker">3、安装docker
+</h1><p>在正式安装docker之前，如果当前主机中安装的有旧版docker或者不是docker-ce的版本，先进行卸载，执行命令</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo yum remove docker <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>                docker-client <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>                docker-client-latest <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>                docker-common <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>                docker-latest <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>                docker-latest-logrotate <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>                docker-logrotate <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>                docker-engine
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>开始安装<code>docker-ce</code>、<code>docker-ce-cli</code>、<code>containerd.io</code>，执行以下命令</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo yum install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后等待完成安装即可</p>
+<h1 id="4docker配置文件">4、docker配置文件
+</h1><p>使用<code>vi/vim</code>编辑<code>vim /etc/systemd/system/docker.service</code>文件，将以下内容写入该文件中</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="p">[</span><span class="l">Unit]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">Description=Docker Application Container Engine</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">Documentation=https://docs.docker.com</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">BindsTo=containerd.service</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">After=network-online.target firewalld.service containerd.service</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">Wants=network-online.target</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">Requires=docker.socket</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">[</span><span class="l">Service]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">Type=notify</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c"># the default is not to use systemd for cgroups because the delegate issues still</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c"># exists and systemd currently does not support the cgroup feature set required</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c"># for containers run by docker</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">ExecReload=/bin/kill -s HUP $MAINPID</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">TimeoutSec=0</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">RestartSec=2</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">Restart=always</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c"># Note that StartLimit* options were moved from &#34;Service&#34; to &#34;Unit&#34; in systemd 229.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c"># Both the old, and new location are accepted by systemd 229 and up, so using the old location</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c"># to make them work for either version of systemd.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">StartLimitBurst=3</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c"># Note that StartLimitInterval was renamed to StartLimitIntervalSec in systemd 230.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c"># Both the old, and new name are accepted by systemd 230 and up, so using the old name to make</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c"># this option work for either version of systemd.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">StartLimitInterval=60s</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c"># Having non-zero Limit*s causes performance problems due to accounting overhead</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c"># in the kernel. We recommend using cgroups to do container-local accounting.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">LimitNOFILE=infinity</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">LimitNPROC=infinity</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">LimitCORE=infinity</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c"># Comment TasksMax if your systemd version does not support it.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c"># Only systemd 226 and above support this option.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">TasksMax=infinity</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c"># set delegate yes so that systemd does not reset the cgroups of docker containers</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">Delegate=yes</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c"># kill only the docker process, not all processes in the cgroup</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">KillMode=process</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">[</span><span class="l">Install]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">WantedBy=multi-user.target</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>使用<code>vi/vim</code>编辑<code>vim /etc/systemd/system/docker.socket</code>文件，将以下内容写入该文件中</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="p">[</span><span class="l">Unit]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">Description=Docker Socket for the API</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">PartOf=docker.service</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">[</span><span class="l">Socket]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">ListenStream=/run/docker.sock</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">SocketMode=0660</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">SocketUser=root</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">SocketGroup=root</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">[</span><span class="l">Install]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">WantedBy=sockets.target</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="5配置docker的daemonjson">5、配置docker的daemon.json
+</h1><p>首先登陆阿里云账号，阿里云地址：<code>https://cn.aliyun.com/</code>，找到并点击<code>控制台</code>，然后搜索：容器镜像服务。点击进入</p>
+<p><img src="/p/%E7%BA%A2%E5%B8%BDrhel9%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85docker%E5%8F%8A%E9%85%8D%E7%BD%AE/image-20250113215729854.png"
+	width="2560"
+	height="1294"
+	srcset="/p/%E7%BA%A2%E5%B8%BDrhel9%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85docker%E5%8F%8A%E9%85%8D%E7%BD%AE/image-20250113215729854_hu1044938734564060457.png 480w, /p/%E7%BA%A2%E5%B8%BDrhel9%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85docker%E5%8F%8A%E9%85%8D%E7%BD%AE/image-20250113215729854_hu16036976056643104886.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250113215729854"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="197"
+		data-flex-basis="474px"
+	
+></p>
+<p><img src="/p/%E7%BA%A2%E5%B8%BDrhel9%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85docker%E5%8F%8A%E9%85%8D%E7%BD%AE/image-20250113215954531.png"
+	width="2560"
+	height="1295"
+	srcset="/p/%E7%BA%A2%E5%B8%BDrhel9%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85docker%E5%8F%8A%E9%85%8D%E7%BD%AE/image-20250113215954531_hu3933624394647635028.png 480w, /p/%E7%BA%A2%E5%B8%BDrhel9%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85docker%E5%8F%8A%E9%85%8D%E7%BD%AE/image-20250113215954531_hu778579866763324312.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250113215954531"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="197"
+		data-flex-basis="474px"
+	
+></p>
+<p>然后编辑文件<code>vim /etc/docker/daemon.json</code>，将以下内容写入你的daemon.json文件中</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;dns&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;8.8.8.8&#34;</span><span class="p">,</span> <span class="s2">&#34;8.8.4.4&#34;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;registry-mirrors&#34;</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;https://你的阿里云镜像加速地址&#34;</span><span class="p">,</span>  <span class="c1">// 注：该行自行添加你自己阿里云的镜像加速地址
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="s2">&#34;https://registry.docker-cn.com&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;http://hub-mirror.c.163.com&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;https://docker.mirrors.ustc.edu.cn&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;https://omh8vcpy.mirror.aliyuncs.com&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;https://docker.m.daocloud.io/&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;https://huecker.io/&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;https://dockerhub.timeweb.cloud&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;https://noohub.ru/&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;https://dockerproxy.com&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;https://docker.mirrors.ustc.edu.cn&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;https://docker.nju.edu.cn&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;https://xx4bwyg2.mirror.aliyuncs.com&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;http://f1361db2.m.daocloud.io&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;https://registry.docker-cn.com&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;http://hub-mirror.c.163.com&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;https://docker.mirrors.ustc.edu.cn&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后重新加载守护进程，执行命令<code>sudo systemctl daemon-reload</code></p>
+<h1 id="6启动docker">6、启动docker
+</h1><p>启动docker</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo systemctl start docker 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>至此docker安装完毕，并且启动成功</p>
+<h1 id="7docker其他相关命令">7、docker其他相关命令
+</h1><p>重启docker服务</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo systemctl restart docker
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>拉取docker镜像，既然是软件，那么怎么能少的了我们的<code>HelloWorld</code>呢，此处就以拉取<code>hello-world</code>镜像为例，执行命令<code>docker pull 你要拉取的镜像名及版本包</code>，注：若没有版本号，那么拉取的就是最新的（latest）版本</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">docker pulll hello-world
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>查看docker已拉取下来的镜像有哪些</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">docker images
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+	const mainArticleElement = document.querySelector(".main-article");
+        renderMathInElement(mainArticleElement, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2024 - 
+        
+        2025 dxjxpr All Rights Reserved
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.29.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
