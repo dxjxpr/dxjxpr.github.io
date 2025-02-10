@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="环境说明 操作系统：CentOS Linux release 7.9.2009 (Core) 本次安装MySQL版本：8.0.26 连接工具：xshell、xftp（或者其他连接/上传工具） 从腾讯云买的服务器，按量计费，临时用下，经济实惠（如果哪天有空写写服务器购买吧） 开始 1、查看centos7中是否有MariaDB，MariaDB与MySQL关系请自行查阅\nrpm -qa | grep mariadb\n2、如果有MariaDB，需要将 步骤1 中查询到的mairadb全部卸载，否则MySQL安装会出现问题\nrpm -e &ndash;nodeps 软件名\n3、查看本机是否已经安装过MySQL\nrpm -qa | grep -i mysql\n4、如果安装过MySQL，请确定是否有数据需要备份（如果有需要备份的数据请自行查阅相关操作进行备份，否则数据丢失概不负责）\n如果没有安装过MySQL，请跳转步骤6\n5、卸载MySQL\n将步骤3中查询到的mysql安装包全部卸载 rpm -e &ndash;nodeps 软件名\n查找mysql文件，并将其删除 find / -name mysql whereis mysql\n将find命令和whereis命令查询到的mysql文件全部删除\nrm -rf 查询到的mysql路径\n删除mysql配置文件\nrm /etc/my.cnf\n">
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="环境说明 操作系统：CentOS Linux release 7.9.2009 (Core) 本次安装MySQL版本：8.0.26 连接工具：xshell、xftp（或者其他连接/上传工具） 从腾讯云买的服务器，按量计费，临时用下，经济实惠（如果哪天有空写写服务器购买吧） 开始 1、查看centos7中是否有MariaDB，MariaDB与MySQL关系请自行查阅\nrpm -qa | grep mariadb\n2、如果有MariaDB，需要将 步骤1 中查询到的mairadb全部卸载，否则MySQL安装会出现问题\nrpm -e &ndash;nodeps 软件名\n3、查看本机是否已经安装过MySQL\nrpm -qa | grep -i mysql\n4、如果安装过MySQL，请确定是否有数据需要备份（如果有需要备份的数据请自行查阅相关操作进行备份，否则数据丢失概不负责）\n如果没有安装过MySQL，请跳转步骤6\n5、卸载MySQL\n将步骤3中查询到的mysql安装包全部卸载 rpm -e &ndash;nodeps 软件名\n查找mysql文件，并将其删除 find / -name mysql whereis mysql\n将find命令和whereis命令查询到的mysql文件全部删除\n">
 <title>CentOS7安装mysql8教程</title>
 
 <link rel='canonical' href='https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/'>
 
 <link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="CentOS7安装mysql8教程">
-<meta property='og:description' content="环境说明 操作系统：CentOS Linux release 7.9.2009 (Core) 本次安装MySQL版本：8.0.26 连接工具：xshell、xftp（或者其他连接/上传工具） 从腾讯云买的服务器，按量计费，临时用下，经济实惠（如果哪天有空写写服务器购买吧） 开始 1、查看centos7中是否有MariaDB，MariaDB与MySQL关系请自行查阅\nrpm -qa | grep mariadb\n2、如果有MariaDB，需要将 步骤1 中查询到的mairadb全部卸载，否则MySQL安装会出现问题\nrpm -e &ndash;nodeps 软件名\n3、查看本机是否已经安装过MySQL\nrpm -qa | grep -i mysql\n4、如果安装过MySQL，请确定是否有数据需要备份（如果有需要备份的数据请自行查阅相关操作进行备份，否则数据丢失概不负责）\n如果没有安装过MySQL，请跳转步骤6\n5、卸载MySQL\n将步骤3中查询到的mysql安装包全部卸载 rpm -e &ndash;nodeps 软件名\n查找mysql文件，并将其删除 find / -name mysql whereis mysql\n将find命令和whereis命令查询到的mysql文件全部删除\nrm -rf 查询到的mysql路径\n删除mysql配置文件\nrm /etc/my.cnf\n">
+<meta property='og:description' content="环境说明 操作系统：CentOS Linux release 7.9.2009 (Core) 本次安装MySQL版本：8.0.26 连接工具：xshell、xftp（或者其他连接/上传工具） 从腾讯云买的服务器，按量计费，临时用下，经济实惠（如果哪天有空写写服务器购买吧） 开始 1、查看centos7中是否有MariaDB，MariaDB与MySQL关系请自行查阅\nrpm -qa | grep mariadb\n2、如果有MariaDB，需要将 步骤1 中查询到的mairadb全部卸载，否则MySQL安装会出现问题\nrpm -e &ndash;nodeps 软件名\n3、查看本机是否已经安装过MySQL\nrpm -qa | grep -i mysql\n4、如果安装过MySQL，请确定是否有数据需要备份（如果有需要备份的数据请自行查阅相关操作进行备份，否则数据丢失概不负责）\n如果没有安装过MySQL，请跳转步骤6\n5、卸载MySQL\n将步骤3中查询到的mysql安装包全部卸载 rpm -e &ndash;nodeps 软件名\n查找mysql文件，并将其删除 find / -name mysql whereis mysql\n将find命令和whereis命令查询到的mysql文件全部删除\n">
 <meta property='og:url' content='https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/'>
 <meta property='og:site_name' content='I&#39;m R'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2021-07-27T21:06:14&#43;08:00'/><meta property='article:modified_time' content='2021-07-27T21:06:14&#43;08:00'/><meta property='og:image' content='https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/mysql.jpg' />
 <meta name="twitter:title" content="CentOS7安装mysql8教程">
-<meta name="twitter:description" content="环境说明 操作系统：CentOS Linux release 7.9.2009 (Core) 本次安装MySQL版本：8.0.26 连接工具：xshell、xftp（或者其他连接/上传工具） 从腾讯云买的服务器，按量计费，临时用下，经济实惠（如果哪天有空写写服务器购买吧） 开始 1、查看centos7中是否有MariaDB，MariaDB与MySQL关系请自行查阅\nrpm -qa | grep mariadb\n2、如果有MariaDB，需要将 步骤1 中查询到的mairadb全部卸载，否则MySQL安装会出现问题\nrpm -e &ndash;nodeps 软件名\n3、查看本机是否已经安装过MySQL\nrpm -qa | grep -i mysql\n4、如果安装过MySQL，请确定是否有数据需要备份（如果有需要备份的数据请自行查阅相关操作进行备份，否则数据丢失概不负责）\n如果没有安装过MySQL，请跳转步骤6\n5、卸载MySQL\n将步骤3中查询到的mysql安装包全部卸载 rpm -e &ndash;nodeps 软件名\n查找mysql文件，并将其删除 find / -name mysql whereis mysql\n将find命令和whereis命令查询到的mysql文件全部删除\nrm -rf 查询到的mysql路径\n删除mysql配置文件\nrm /etc/my.cnf\n"><meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:description" content="环境说明 操作系统：CentOS Linux release 7.9.2009 (Core) 本次安装MySQL版本：8.0.26 连接工具：xshell、xftp（或者其他连接/上传工具） 从腾讯云买的服务器，按量计费，临时用下，经济实惠（如果哪天有空写写服务器购买吧） 开始 1、查看centos7中是否有MariaDB，MariaDB与MySQL关系请自行查阅\nrpm -qa | grep mariadb\n2、如果有MariaDB，需要将 步骤1 中查询到的mairadb全部卸载，否则MySQL安装会出现问题\nrpm -e &ndash;nodeps 软件名\n3、查看本机是否已经安装过MySQL\nrpm -qa | grep -i mysql\n4、如果安装过MySQL，请确定是否有数据需要备份（如果有需要备份的数据请自行查阅相关操作进行备份，否则数据丢失概不负责）\n如果没有安装过MySQL，请跳转步骤6\n5、卸载MySQL\n将步骤3中查询到的mysql安装包全部卸载 rpm -e &ndash;nodeps 软件名\n查找mysql文件，并将其删除 find / -name mysql whereis mysql\n将find命令和whereis命令查询到的mysql文件全部删除\n"><meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content='https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/mysql.jpg' />
     <link rel="shortcut icon" href="/favicon.ico" />
 
@@ -59,7 +59,7 @@
                     
                     
                         
-                        <img src="/img/avatar_hu6242866133400980960.png" width="300"
+                        <img src="/img/avatar_hu_defd7c575e91cf12.png" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -116,7 +116,7 @@
         
         
         <li >
-            <a href='/about/' >
+            <a href='/about-me/' >
                 
                 
                 
@@ -129,7 +129,7 @@
 
 
                 
-                <span>About</span>
+                <span>About Me</span>
             </a>
         </li>
         
@@ -227,8 +227,8 @@
     <header class="article-header">
         <div class="article-image">
             <a href="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/">
-                <img src="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/mysql_hu10317103323202179953.jpg"
-                        srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/mysql_hu10317103323202179953.jpg 800w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/mysql_hu13101901374972182274.jpg 1600w"
+                <img src="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/mysql_hu_6611354028206251.jpg"
+                        srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/mysql_hu_6611354028206251.jpg 800w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/mysql_hu_124565f3caf06dd.jpg 1600w"
                         width="800" 
                         height="500" 
                         loading="lazy"
@@ -305,12 +305,11 @@
 <h1 id="开始">开始
 </h1><p>1、<strong>查看centos7中是否有<code>MariaDB</code>，<code>MariaDB</code>与<code>MySQL</code>关系请自行查阅</strong></p>
 <blockquote>
-<p>rpm -qa | grep mariadb</p>
-</blockquote>
+<p>rpm -qa | grep mariadb</p></blockquote>
 <p><img src="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/5dbd0cce202441c0a19df6a14a50b37d.png"
 	width="1108"
 	height="256"
-	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/5dbd0cce202441c0a19df6a14a50b37d_hu13895288146001787928.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/5dbd0cce202441c0a19df6a14a50b37d_hu17488146640750903960.png 1024w"
+	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/5dbd0cce202441c0a19df6a14a50b37d_hu_4ede94435d079d7f.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/5dbd0cce202441c0a19df6a14a50b37d_hu_e92f161a18767485.png 1024w"
 	loading="lazy"
 	
 		alt="在这里插入图片描述"
@@ -323,12 +322,11 @@
 >
 2、<strong>如果有<code>MariaDB</code>，需要将 <code>步骤1</code> 中查询到的<code>mairadb</code>全部卸载，否则<code>MySQL</code>安装会出现问题</strong></p>
 <blockquote>
-<p>rpm -e &ndash;nodeps 软件名</p>
-</blockquote>
+<p>rpm -e &ndash;nodeps 软件名</p></blockquote>
 <p><img src="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/d6c01d167bdd45a2837506e8143060f6.png"
 	width="1521"
 	height="163"
-	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/d6c01d167bdd45a2837506e8143060f6_hu9691795427806618590.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/d6c01d167bdd45a2837506e8143060f6_hu4156579029780132438.png 1024w"
+	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/d6c01d167bdd45a2837506e8143060f6_hu_37f6b3fbf7415d70.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/d6c01d167bdd45a2837506e8143060f6_hu_1865e30dd8ab6309.png 1024w"
 	loading="lazy"
 	
 		alt="在这里插入图片描述"
@@ -341,12 +339,11 @@
 >
 3、<strong>查看本机是否已经安装过<code>MySQL</code></strong></p>
 <blockquote>
-<p>rpm -qa | grep -i mysql</p>
-</blockquote>
+<p>rpm -qa | grep -i mysql</p></blockquote>
 <p><img src="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/acec7cdafa264a4ca521ed19aa096a63.png"
 	width="1022"
 	height="214"
-	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/acec7cdafa264a4ca521ed19aa096a63_hu10794008393004109569.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/acec7cdafa264a4ca521ed19aa096a63_hu12496300618945815826.png 1024w"
+	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/acec7cdafa264a4ca521ed19aa096a63_hu_d699a81206ffd40c.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/acec7cdafa264a4ca521ed19aa096a63_hu_6cab0485e3d3c564.png 1024w"
 	loading="lazy"
 	
 		alt="在这里插入图片描述"
@@ -364,35 +361,30 @@
 <li>将步骤3中查询到的mysql安装包全部卸载</li>
 </ul>
 <blockquote>
-<p>rpm -e &ndash;nodeps 软件名</p>
-</blockquote>
+<p>rpm -e &ndash;nodeps 软件名</p></blockquote>
 <ul>
 <li>查找mysql文件，并将其删除</li>
 </ul>
 <blockquote>
 <p>find / -name mysql
-whereis mysql</p>
-</blockquote>
+whereis mysql</p></blockquote>
 <p>  将<code>find</code>命令和<code>whereis</code>命令查询到的mysql文件全部删除</p>
 <blockquote>
-<p>rm -rf 查询到的mysql路径</p>
-</blockquote>
+<p>rm -rf 查询到的mysql路径</p></blockquote>
 <p>  删除mysql配置文件</p>
 <blockquote>
-<p>rm /etc/my.cnf</p>
-</blockquote>
+<p>rm /etc/my.cnf</p></blockquote>
 <ul>
 <li>确认是否全部删除mysql</li>
 </ul>
 <blockquote>
-<p>rpm -qa | grep -i mysql</p>
-</blockquote>
+<p>rpm -qa | grep -i mysql</p></blockquote>
 <p>6、<strong><a class="link" href="https://www.mysql.com/"  target="_blank" rel="noopener"
     >MySQL官网</a>下载适用于centos7的mysql安装包</strong>
 <img src="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/da834284b8bd4a5ebcc8a85623c84f7c.png"
 	width="1920"
 	height="896"
-	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/da834284b8bd4a5ebcc8a85623c84f7c_hu495114374628347799.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/da834284b8bd4a5ebcc8a85623c84f7c_hu6204235486643495659.png 1024w"
+	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/da834284b8bd4a5ebcc8a85623c84f7c_hu_411346ab12bee2e4.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/da834284b8bd4a5ebcc8a85623c84f7c_hu_f25c097d97930674.png 1024w"
 	loading="lazy"
 	
 		alt="在这里插入图片描述"
@@ -406,7 +398,7 @@ whereis mysql</p>
 <img src="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/a022ed2d90894343b77edbc0c77cf8a2.png"
 	width="1920"
 	height="821"
-	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/a022ed2d90894343b77edbc0c77cf8a2_hu17319307972049778914.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/a022ed2d90894343b77edbc0c77cf8a2_hu5887136749730145028.png 1024w"
+	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/a022ed2d90894343b77edbc0c77cf8a2_hu_8137e10c0f0bd261.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/a022ed2d90894343b77edbc0c77cf8a2_hu_b92f61c393dcc70.png 1024w"
 	loading="lazy"
 	
 		alt="在这里插入图片描述"
@@ -420,7 +412,7 @@ whereis mysql</p>
 <img src="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/8e15db4bc90e4284a8b6f1a0ff4f3fe1.png"
 	width="1607"
 	height="779"
-	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/8e15db4bc90e4284a8b6f1a0ff4f3fe1_hu8950794701804123253.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/8e15db4bc90e4284a8b6f1a0ff4f3fe1_hu2732341320480352947.png 1024w"
+	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/8e15db4bc90e4284a8b6f1a0ff4f3fe1_hu_c32d98cb82292c16.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/8e15db4bc90e4284a8b6f1a0ff4f3fe1_hu_c905a35fc7746550.png 1024w"
 	loading="lazy"
 	
 		alt="在这里插入图片描述"
@@ -436,12 +428,11 @@ whereis mysql</p>
 <p>uname -m
 或者是
 arch
-# 我的服务器是x86_64的</p>
-</blockquote>
+# 我的服务器是x86_64的</p></blockquote>
 <p><img src="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/8f55107c93e14828b386f9e418344008.png"
 	width="979"
 	height="288"
-	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/8f55107c93e14828b386f9e418344008_hu6724740749116346970.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/8f55107c93e14828b386f9e418344008_hu5397362713831787988.png 1024w"
+	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/8f55107c93e14828b386f9e418344008_hu_f5bb15f5d0753e0f.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/8f55107c93e14828b386f9e418344008_hu_bc8e56afbde6fc9b.png 1024w"
 	loading="lazy"
 	
 		alt="在这里插入图片描述"
@@ -455,7 +446,7 @@ arch
 <p><img src="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/9f04e5246506423ab42a82a9d74e6fbc.png"
 	width="1919"
 	height="873"
-	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/9f04e5246506423ab42a82a9d74e6fbc_hu11495007406620533820.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/9f04e5246506423ab42a82a9d74e6fbc_hu14635875110194632598.png 1024w"
+	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/9f04e5246506423ab42a82a9d74e6fbc_hu_fabb68e7a7714eee.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/9f04e5246506423ab42a82a9d74e6fbc_hu_46fab0b65fcc8b16.png 1024w"
 	loading="lazy"
 	
 		alt="在这里插入图片描述"
@@ -469,7 +460,7 @@ arch
 <p><img src="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/badd195d3252421595eeb2c9151425b1.png"
 	width="1230"
 	height="789"
-	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/badd195d3252421595eeb2c9151425b1_hu14185685883199399021.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/badd195d3252421595eeb2c9151425b1_hu16572607534012469190.png 1024w"
+	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/badd195d3252421595eeb2c9151425b1_hu_8f3df39cd9e77d14.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/badd195d3252421595eeb2c9151425b1_hu_c4844460cae02b8a.png 1024w"
 	loading="lazy"
 	
 		alt="在这里插入图片描述"
@@ -485,17 +476,15 @@ arch
 <li>或者是复制这个<code>tar</code>包的链接，然后通过<code>wget</code>命令下载，操作如下</li>
 </ul>
 <blockquote>
-<p>wget  文件的网络地址</p>
-</blockquote>
+<p>wget  文件的网络地址</p></blockquote>
 <p>比如我这里下载的地址是</p>
 <blockquote>
 <p>wget  <a class="link" href="https://cdn.mysql.com//Downloads/MySQL-8.0/mysql-8.0.26-1.el7.x86_64.rpm-bundle.tar"  target="_blank" rel="noopener"
-    >https://cdn.mysql.com//Downloads/MySQL-8.0/mysql-8.0.26-1.el7.x86_64.rpm-bundle.tar</a></p>
-</blockquote>
+    >https://cdn.mysql.com//Downloads/MySQL-8.0/mysql-8.0.26-1.el7.x86_64.rpm-bundle.tar</a></p></blockquote>
 <p><img src="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/4bd9695e6fb743b0987af3c82bf696b0.png"
 	width="1547"
 	height="578"
-	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/4bd9695e6fb743b0987af3c82bf696b0_hu1225348355545214436.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/4bd9695e6fb743b0987af3c82bf696b0_hu14095640571435145544.png 1024w"
+	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/4bd9695e6fb743b0987af3c82bf696b0_hu_9c228a105291c2b5.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/4bd9695e6fb743b0987af3c82bf696b0_hu_8d428fa094be1cd1.png 1024w"
 	loading="lazy"
 	
 		alt="在这里插入图片描述"
@@ -509,7 +498,7 @@ arch
 <p><img src="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/c4f2a53cb1de441a81f6ee459f4bd5a4.png"
 	width="1895"
 	height="562"
-	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/c4f2a53cb1de441a81f6ee459f4bd5a4_hu3592072233234968284.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/c4f2a53cb1de441a81f6ee459f4bd5a4_hu5101454549480280103.png 1024w"
+	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/c4f2a53cb1de441a81f6ee459f4bd5a4_hu_efadc5cdfe6781f6.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/c4f2a53cb1de441a81f6ee459f4bd5a4_hu_b0f08d92ae6fa3b0.png 1024w"
 	loading="lazy"
 	
 		alt="在这里插入图片描述"
@@ -525,7 +514,7 @@ arch
 <img src="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/50d5ebd167bc4285ba1a3e18573c9ae1.png"
 	width="1893"
 	height="746"
-	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/50d5ebd167bc4285ba1a3e18573c9ae1_hu9523193133467951419.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/50d5ebd167bc4285ba1a3e18573c9ae1_hu9094786919484292589.png 1024w"
+	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/50d5ebd167bc4285ba1a3e18573c9ae1_hu_fdf3ff6481498b13.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/50d5ebd167bc4285ba1a3e18573c9ae1_hu_e8a5615c1abedd89.png 1024w"
 	loading="lazy"
 	
 		alt="在这里插入图片描述"
@@ -544,7 +533,7 @@ arch
 <img src="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/8cc8b5dfaebc477e8fd0d80cd9745c52.png"
 	width="1164"
 	height="382"
-	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/8cc8b5dfaebc477e8fd0d80cd9745c52_hu10947724890258558264.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/8cc8b5dfaebc477e8fd0d80cd9745c52_hu7538690454289309275.png 1024w"
+	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/8cc8b5dfaebc477e8fd0d80cd9745c52_hu_b47817deec58fd56.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/8cc8b5dfaebc477e8fd0d80cd9745c52_hu_3aa51c8e4217eab9.png 1024w"
 	loading="lazy"
 	
 		alt="在这里插入图片描述"
@@ -554,18 +543,16 @@ arch
 		data-flex-grow="304"
 		data-flex-basis="731px"
 	
-></p>
-</blockquote>
+></p></blockquote>
 <p>解压该tar包</p>
 <blockquote>
 <p>tar -xvf mysql的tar包全名  -C 解压到指定目录
 # 说明：-C参数，后面跟的是目录，意思是将压缩包解压缩后存放到指定的目录下。</p>
-<p># 这里就指定到刚才创建的mysql目录下</p>
-</blockquote>
+<p># 这里就指定到刚才创建的mysql目录下</p></blockquote>
 <p><img src="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/7e1ec434fb4243d2907e93de5cb3ff75.png"
 	width="1784"
 	height="536"
-	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/7e1ec434fb4243d2907e93de5cb3ff75_hu16574330306657965308.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/7e1ec434fb4243d2907e93de5cb3ff75_hu11764867483628900876.png 1024w"
+	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/7e1ec434fb4243d2907e93de5cb3ff75_hu_a7b14f1d24f0b833.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/7e1ec434fb4243d2907e93de5cb3ff75_hu_81f1314fb26f18ff.png 1024w"
 	loading="lazy"
 	
 		alt="在这里插入图片描述"
@@ -579,7 +566,7 @@ arch
 <img src="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/64e7badb5dc6477687d0f06978210611.png"
 	width="1660"
 	height="529"
-	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/64e7badb5dc6477687d0f06978210611_hu14909570136455928782.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/64e7badb5dc6477687d0f06978210611_hu11914455526928582601.png 1024w"
+	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/64e7badb5dc6477687d0f06978210611_hu_f8f66d9f7c14bebb.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/64e7badb5dc6477687d0f06978210611_hu_3735d7e981b397d6.png 1024w"
 	loading="lazy"
 	
 		alt="在这里插入图片描述"
@@ -595,8 +582,7 @@ arch
 <li>rpm安装命令</li>
 </ul>
 <blockquote>
-<p>rpm -ivh xxx.rpm</p>
-</blockquote>
+<p>rpm -ivh xxx.rpm</p></blockquote>
 <blockquote>
 <p># 这里选择的是全部安装
 # 安装顺序如下，否则会出现依赖问题
@@ -608,8 +594,7 @@ mysql-community-libs-compat-8.0.26-1.el7.x86_64.rpm
 mysql-community-devel-8.0.26-1.el7.x86_64.rpm
 mysql-community-client-8.0.26-1.el7.x86_64.rpm
 mysql-community-server-8.0.26-1.el7.x86_64.rpm
-mysql-community-test-8.0.26-1.el7.x86_64.rpm</p>
-</blockquote>
+mysql-community-test-8.0.26-1.el7.x86_64.rpm</p></blockquote>
 <ul>
 <li>以上安装rpm时可能会出现centos的动态库缺失等情况，这里记录下几种错误情况</li>
 </ul>
@@ -684,35 +669,29 @@ perl(Test::More) is needed by mysql-community-test-8.0.26-1.el7.x86_64</font></p
     >https://pkgs.org/download/perl(Test::More)</a>，打开centos7的下拉框，找到CentOS x86_64下对应的rpm，然后打开这个rpm连接，在<code>Download</code>对应的部分找<code>Binary Package</code>，后面有对应的rpm下载连接，下载下来进行安装即可</li>
 </ul>
 </li>
-</ul>
-</blockquote>
+</ul></blockquote>
 <p>9、<strong>初始化数据库</strong></p>
 <blockquote>
-<p>mysqld &ndash;initialize &ndash;console</p>
-</blockquote>
+<p>mysqld &ndash;initialize &ndash;console</p></blockquote>
 <p>10、<strong>目录授权，否则可能会启动失败</strong></p>
 <blockquote>
-<p>chown -R mysql:mysql /var/lib/mysql/</p>
-</blockquote>
+<p>chown -R mysql:mysql /var/lib/mysql/</p></blockquote>
 <p>11、<strong>启动mysql</strong></p>
 <blockquote>
-<p>systemctl start mysqld</p>
-</blockquote>
+<p>systemctl start mysqld</p></blockquote>
 <ul>
 <li>对应的重启、关闭mysql命令如下</li>
 </ul>
 <blockquote>
 <p>systemctl stop mysqld
-systemctl restart mysqld</p>
-</blockquote>
+systemctl restart mysqld</p></blockquote>
 <p>12、<strong>查询mysql状态</strong></p>
 <blockquote>
-<p>systemctl status mysqld</p>
-</blockquote>
+<p>systemctl status mysqld</p></blockquote>
 <p><img src="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/dc9dd40507424492bc07103110d06e42.png"
 	width="1919"
 	height="607"
-	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/dc9dd40507424492bc07103110d06e42_hu6577227169046704584.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/dc9dd40507424492bc07103110d06e42_hu2463054485687122167.png 1024w"
+	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/dc9dd40507424492bc07103110d06e42_hu_dcb632cc2611267e.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/dc9dd40507424492bc07103110d06e42_hu_9ef30db34338f021.png 1024w"
 	loading="lazy"
 	
 		alt="在这里插入图片描述"
@@ -725,12 +704,11 @@ systemctl restart mysqld</p>
 ></p>
 <p>13、<strong>查询mysql的临时密码</strong></p>
 <blockquote>
-<p>cat /var/log/mysqld.log | grep password</p>
-</blockquote>
+<p>cat /var/log/mysqld.log | grep password</p></blockquote>
 <p><img src="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/0195743babce4169a3cb3bfde6320f99.png"
 	width="1900"
 	height="357"
-	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/0195743babce4169a3cb3bfde6320f99_hu423817825034180079.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/0195743babce4169a3cb3bfde6320f99_hu6187081308475177786.png 1024w"
+	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/0195743babce4169a3cb3bfde6320f99_hu_abd163260d8d8516.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/0195743babce4169a3cb3bfde6320f99_hu_6cca3e267967e6ef.png 1024w"
 	loading="lazy"
 	
 		alt="在这里插入图片描述"
@@ -743,15 +721,14 @@ systemctl restart mysqld</p>
 >
 14、<strong>使用临时密码登录mysql</strong></p>
 <blockquote>
-<p>mysql  -u root -p</p>
-</blockquote>
+<p>mysql  -u root -p</p></blockquote>
 <ul>
 <li>注意：linux下输入密码是不会回显（不是电脑坏了！），输入完毕后直接回车即可</li>
 </ul>
 <p><img src="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/e3355b85b6d54de9a4a78935ad9b9d41.png"
 	width="1516"
 	height="483"
-	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/e3355b85b6d54de9a4a78935ad9b9d41_hu15597415356221839218.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/e3355b85b6d54de9a4a78935ad9b9d41_hu317603578809890371.png 1024w"
+	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/e3355b85b6d54de9a4a78935ad9b9d41_hu_62514e625a1efbca.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/e3355b85b6d54de9a4a78935ad9b9d41_hu_85bf0cf5f3e9d013.png 1024w"
 	loading="lazy"
 	
 		alt="在这里插入图片描述"
@@ -768,7 +745,7 @@ systemctl restart mysqld</p>
 <p><img src="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/9a91be2de2184dbb887bac8ce41849cf.png"
 	width="1769"
 	height="617"
-	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/9a91be2de2184dbb887bac8ce41849cf_hu4743089053040846049.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/9a91be2de2184dbb887bac8ce41849cf_hu2060890587795556002.png 1024w"
+	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/9a91be2de2184dbb887bac8ce41849cf_hu_93b6d4e684f028a2.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/9a91be2de2184dbb887bac8ce41849cf_hu_c56b9e2fb13b3fd6.png 1024w"
 	loading="lazy"
 	
 		alt="在这里插入图片描述"
@@ -781,25 +758,22 @@ systemctl restart mysqld</p>
 ></p>
 <p>15、<strong>修改mysql的登录密码</strong></p>
 <blockquote>
-<p>alter user &lsquo;root&rsquo;@&rsquo;localhost&rsquo; identified  with mysql_native_password by &lsquo;你的密码&rsquo; ;</p>
-</blockquote>
+<p>alter user &lsquo;root&rsquo;@&rsquo;localhost&rsquo; identified  with mysql_native_password by &lsquo;你的密码&rsquo; ;</p></blockquote>
 <ul>
 <li>注：mysql8对密码的强度有很高的要求，具体密码要求可使用以下命令查询</li>
 </ul>
 <blockquote>
-<p>SHOW VARIABLES LIKE &lsquo;validate_password%&rsquo;;</p>
-</blockquote>
+<p>SHOW VARIABLES LIKE &lsquo;validate_password%&rsquo;;</p></blockquote>
 <p>最后重启下mysql即可</p>
 <p>16、<strong>mysql设置远程连接</strong>
 注：这个步骤根据实际需求而设定</p>
 <blockquote>
 <p>show databases ;
-use mysql ;</p>
-</blockquote>
+use mysql ;</p></blockquote>
 <p><img src="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/fd72829896684bed97e6399f130b6541.png"
 	width="1501"
 	height="732"
-	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/fd72829896684bed97e6399f130b6541_hu6529893882402397107.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/fd72829896684bed97e6399f130b6541_hu2810682970310523354.png 1024w"
+	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/fd72829896684bed97e6399f130b6541_hu_11fe2e9c75add100.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/fd72829896684bed97e6399f130b6541_hu_60db7ca313a90f.png 1024w"
 	loading="lazy"
 	
 		alt="在这里插入图片描述"
@@ -812,13 +786,12 @@ use mysql ;</p>
 >
 查看可登录mysql的host</p>
 <blockquote>
-<p>select host, user from user;</p>
-</blockquote>
+<p>select host, user from user;</p></blockquote>
 <p><code>host</code>部分全部都是<code>localhost</code>，说明用户只能本地连接msyql服务
 <img src="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/ec197732dcd24d5f843b0f35772406cd.png"
 	width="1066"
 	height="505"
-	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/ec197732dcd24d5f843b0f35772406cd_hu17943254018971801668.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/ec197732dcd24d5f843b0f35772406cd_hu12224010015564572201.png 1024w"
+	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/ec197732dcd24d5f843b0f35772406cd_hu_98810a766e300ffc.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/ec197732dcd24d5f843b0f35772406cd_hu_d2b53da6b7778a1e.png 1024w"
 	loading="lazy"
 	
 		alt="在这里插入图片描述"
@@ -834,12 +807,11 @@ use mysql ;</p>
 </ul>
 <blockquote>
 <p>update user set user.host=&rsquo;%&rsquo; where user.user=&lsquo;root&rsquo;;
-flush privileges;</p>
-</blockquote>
+flush privileges;</p></blockquote>
 <p><img src="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/5df7adbe22224823ada00da9c6815fbb.png"
 	width="1367"
 	height="799"
-	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/5df7adbe22224823ada00da9c6815fbb_hu16719418596397059002.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/5df7adbe22224823ada00da9c6815fbb_hu5477499815462968094.png 1024w"
+	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/5df7adbe22224823ada00da9c6815fbb_hu_73421baf1768b7f6.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/5df7adbe22224823ada00da9c6815fbb_hu_bd55897d4b5d835.png 1024w"
 	loading="lazy"
 	
 		alt="在这里插入图片描述"
@@ -856,7 +828,7 @@ flush privileges;</p>
 <img src="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/a4b7d14eeb96479aa2a5017b79f7b530.png"
 	width="691"
 	height="821"
-	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/a4b7d14eeb96479aa2a5017b79f7b530_hu17494539699271265124.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/a4b7d14eeb96479aa2a5017b79f7b530_hu15173574666481031354.png 1024w"
+	srcset="/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/a4b7d14eeb96479aa2a5017b79f7b530_hu_5ed585b6d6e895be.png 480w, /p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/a4b7d14eeb96479aa2a5017b79f7b530_hu_eef551dfc2ce9104.png 1024w"
 	loading="lazy"
 	
 		alt="在这里插入图片描述"
