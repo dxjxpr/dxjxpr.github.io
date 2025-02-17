@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="[TOC]\n本文仅仅供学习参考使用，无任何盈利性质，单纯技术分享，不承担任何法律责任，所有使用该技术的人员引发的后果自行承担相应后果 本文仅分享科学上网技术，用来学习计算机知识，查询资料，比如医学、计算机、绘画等各领域学习使用 请勿私自搭建进行违法犯罪活动 一、准备工作 1、vps厂商选择 搭建一个科学上网服务器，那么必然是需要一个云服务器作为物理基础，才能进行搭建，这里就应用Github上mmhunter3515大佬整理的VPS厂商，整理的很详细，在这里就列举几个\nVultr：https://www.vultr.com/ Lightnode：ttps://www.lightnode.com/ Google：https://cloud.google.com/ AWS：https://aws.amazon.com/ 2、注册账号与充值 本文选择vultr厂商，这个厂商的数据中心较多，于是使用的人也就很多，很多人选择这个厂商的服务器搭建网站之类，于是出现一个就封锁一个ip，就造成了vultr厂商的很多ip被封了，所以，在创建实例的时候，就会出现很有可能无法连接，因为被封了。本文只是为了演示技术，就还是选择vultr厂商（其实是没有钱去其他网站充值了，也就这个网站还有几刀可以嚯嚯）\n下面是vultr的主界面\n首先需要一个账号，点击右上角的Sign up自行注册一个账户，推荐使用Gmail邮箱\n注：关于注册账号和充值部分，厂家可能会不定期给一些优惠券或者是返还之类，这个就需要大家执行去翻阅查找资料了\n注册完成后，需要充值，最低需要$10，支持支付宝充值\n二、开始创建ECS实例 1、部署服务器 选择Products的Compute界面，可以看到Deploy Server\n创建实例\n关闭自动备份后，价格就降低几美元（一方面省钱，另外一方面其实也没有那个必要）\n然后点击Configure Software进入到镜像选择的界面，系统镜像选择，一般选择CentOS，版本的话，选择最新版本就好\n">
+<title>搭建科学上网服务器（仅供学习参考使用）</title>
+
+<link rel='canonical' href='https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/'>
+
+<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="搭建科学上网服务器（仅供学习参考使用）">
+<meta property='og:description' content="[TOC]\n本文仅仅供学习参考使用，无任何盈利性质，单纯技术分享，不承担任何法律责任，所有使用该技术的人员引发的后果自行承担相应后果 本文仅分享科学上网技术，用来学习计算机知识，查询资料，比如医学、计算机、绘画等各领域学习使用 请勿私自搭建进行违法犯罪活动 一、准备工作 1、vps厂商选择 搭建一个科学上网服务器，那么必然是需要一个云服务器作为物理基础，才能进行搭建，这里就应用Github上mmhunter3515大佬整理的VPS厂商，整理的很详细，在这里就列举几个\nVultr：https://www.vultr.com/ Lightnode：ttps://www.lightnode.com/ Google：https://cloud.google.com/ AWS：https://aws.amazon.com/ 2、注册账号与充值 本文选择vultr厂商，这个厂商的数据中心较多，于是使用的人也就很多，很多人选择这个厂商的服务器搭建网站之类，于是出现一个就封锁一个ip，就造成了vultr厂商的很多ip被封了，所以，在创建实例的时候，就会出现很有可能无法连接，因为被封了。本文只是为了演示技术，就还是选择vultr厂商（其实是没有钱去其他网站充值了，也就这个网站还有几刀可以嚯嚯）\n下面是vultr的主界面\n首先需要一个账号，点击右上角的Sign up自行注册一个账户，推荐使用Gmail邮箱\n注：关于注册账号和充值部分，厂家可能会不定期给一些优惠券或者是返还之类，这个就需要大家执行去翻阅查找资料了\n注册完成后，需要充值，最低需要$10，支持支付宝充值\n二、开始创建ECS实例 1、部署服务器 选择Products的Compute界面，可以看到Deploy Server\n创建实例\n关闭自动备份后，价格就降低几美元（一方面省钱，另外一方面其实也没有那个必要）\n然后点击Configure Software进入到镜像选择的界面，系统镜像选择，一般选择CentOS，版本的话，选择最新版本就好\n">
+<meta property='og:url' content='https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/'>
+<meta property='og:site_name' content='I&#39;m R'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-02-17T19:00:00&#43;08:00'/><meta property='article:modified_time' content='2025-02-17T19:00:00&#43;08:00'/><meta property='og:image' content='https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/cover.png' />
+<meta name="twitter:title" content="搭建科学上网服务器（仅供学习参考使用）">
+<meta name="twitter:description" content="[TOC]\n本文仅仅供学习参考使用，无任何盈利性质，单纯技术分享，不承担任何法律责任，所有使用该技术的人员引发的后果自行承担相应后果 本文仅分享科学上网技术，用来学习计算机知识，查询资料，比如医学、计算机、绘画等各领域学习使用 请勿私自搭建进行违法犯罪活动 一、准备工作 1、vps厂商选择 搭建一个科学上网服务器，那么必然是需要一个云服务器作为物理基础，才能进行搭建，这里就应用Github上mmhunter3515大佬整理的VPS厂商，整理的很详细，在这里就列举几个\nVultr：https://www.vultr.com/ Lightnode：ttps://www.lightnode.com/ Google：https://cloud.google.com/ AWS：https://aws.amazon.com/ 2、注册账号与充值 本文选择vultr厂商，这个厂商的数据中心较多，于是使用的人也就很多，很多人选择这个厂商的服务器搭建网站之类，于是出现一个就封锁一个ip，就造成了vultr厂商的很多ip被封了，所以，在创建实例的时候，就会出现很有可能无法连接，因为被封了。本文只是为了演示技术，就还是选择vultr厂商（其实是没有钱去其他网站充值了，也就这个网站还有几刀可以嚯嚯）\n下面是vultr的主界面\n首先需要一个账号，点击右上角的Sign up自行注册一个账户，推荐使用Gmail邮箱\n注：关于注册账号和充值部分，厂家可能会不定期给一些优惠券或者是返还之类，这个就需要大家执行去翻阅查找资料了\n注册完成后，需要充值，最低需要$10，支持支付宝充值\n二、开始创建ECS实例 1、部署服务器 选择Products的Compute界面，可以看到Deploy Server\n创建实例\n关闭自动备份后，价格就降低几美元（一方面省钱，另外一方面其实也没有那个必要）\n然后点击Configure Software进入到镜像选择的界面，系统镜像选择，一般选择CentOS，版本的话，选择最新版本就好\n"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/cover.png' />
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_defd7c575e91cf12.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🏃‍➡️</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">I&#39;m R</a></h1>
+            <h2 class="site-description">B What U Wanna B! Just Do It!</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/dxjxpr'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1723043422785" class="icon" viewBox="0 0 1049 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4723" xmlns:xlink="http://www.w3.org/1999/xlink" width="204.8828125" height="200"><path d="M524.979332 0C234.676191 0 0 234.676191 0 524.979332c0 232.068678 150.366597 428.501342 358.967656 498.035028 26.075132 5.215026 35.636014-11.299224 35.636014-25.205961 0-12.168395-0.869171-53.888607-0.869171-97.347161-146.020741 31.290159-176.441729-62.580318-176.441729-62.580318-23.467619-60.841976-58.234462-76.487055-58.234463-76.487055-47.804409-32.15933 3.476684-32.15933 3.476685-32.15933 53.019436 3.476684 80.83291 53.888607 80.83291 53.888607 46.935238 79.963739 122.553122 57.365291 152.97411 43.458554 4.345855-33.897672 18.252593-57.365291 33.028501-70.402857-116.468925-12.168395-239.022047-57.365291-239.022047-259.012982 0-57.365291 20.860106-104.300529 53.888607-140.805715-5.215026-13.037566-23.467619-66.926173 5.215027-139.067372 0 0 44.327725-13.906737 144.282399 53.888607 41.720212-11.299224 86.917108-17.383422 131.244833-17.383422s89.524621 6.084198 131.244833 17.383422C756.178839 203.386032 800.506564 217.29277 800.506564 217.29277c28.682646 72.1412 10.430053 126.029806 5.215026 139.067372 33.897672 36.505185 53.888607 83.440424 53.888607 140.805715 0 201.64769-122.553122 245.975415-239.891218 259.012982 19.121764 16.514251 35.636014 47.804409 35.636015 97.347161 0 70.402857-0.869171 126.898978-0.869172 144.282399 0 13.906737 9.560882 30.420988 35.636015 25.205961 208.601059-69.533686 358.967656-265.96635 358.967655-498.035028C1049.958663 234.676191 814.413301 0 524.979332 0z" fill="#191717" p-id="4724"></path><path d="M199.040177 753.571326c-0.869171 2.607513-5.215026 3.476684-8.691711 1.738342s-6.084198-5.215026-4.345855-7.82254c0.869171-2.607513 5.215026-3.476684 8.691711-1.738342s5.215026 5.215026 4.345855 7.82254z m-6.953369-4.345856M219.900283 777.038945c-2.607513 2.607513-7.82254 0.869171-10.430053-2.607514-3.476684-3.476684-4.345855-8.691711-1.738342-11.299224 2.607513-2.607513 6.953369-0.869171 10.430053 2.607514 3.476684 4.345855 4.345855 9.560882 1.738342 11.299224z m-5.215026-5.215027M240.760389 807.459932c-3.476684 2.607513-8.691711 0-11.299224-4.345855-3.476684-4.345855-3.476684-10.430053 0-12.168395 3.476684-2.607513 8.691711 0 11.299224 4.345855 3.476684 4.345855 3.476684 9.560882 0 12.168395z m0 0M269.443034 837.011749c-2.607513 3.476684-8.691711 2.607513-13.906737-1.738342-4.345855-4.345855-6.084198-10.430053-2.607513-13.037566 2.607513-3.476684 8.691711-2.607513 13.906737 1.738342 4.345855 3.476684 5.215026 9.560882 2.607513 13.037566z m0 0M308.555733 853.526c-0.869171 4.345855-6.953369 6.084198-13.037566 4.345855-6.084198-1.738342-9.560882-6.953369-8.691711-10.430053 0.869171-4.345855 6.953369-6.084198 13.037566-4.345855 6.084198 1.738342 9.560882 6.084198 8.691711 10.430053z m0 0M351.145116 857.002684c0 4.345855-5.215026 7.82254-11.299224 7.82254-6.084198 0-11.299224-3.476684-11.299224-7.82254s5.215026-7.82254 11.299224-7.82254c6.084198 0 11.299224 3.476684 11.299224 7.82254z m0 0M391.126986 850.049315c0.869171 4.345855-3.476684 8.691711-9.560882 9.560882-6.084198 0.869171-11.299224-1.738342-12.168395-6.084197-0.869171-4.345855 3.476684-8.691711 9.560881-9.560882 6.084198-0.869171 11.299224 1.738342 12.168396 6.084197z m0 0" fill="#191717" p-id="4725"></path></svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/about-me/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About Me</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#1vps厂商选择">1、vps厂商选择</a></li>
+    <li><a href="#2注册账号与充值">2、注册账号与充值</a></li>
+  </ol>
+
+  <ol>
+    <li><a href="#1部署服务器">1、部署服务器</a></li>
+    <li><a href="#2测试ip连通性">2、测试ip连通性</a></li>
+    <li><a href="#3ssh登陆实例">3、ssh登陆实例</a></li>
+    <li><a href="#4安装必要软件和镜像库">4、安装必要软件和镜像库</a></li>
+  </ol>
+
+  <ol>
+    <li><a href="#1下载并执行管理脚本">1、下载并执行管理脚本</a></li>
+    <li><a href="#2查看状态并启动">2、查看状态并启动</a></li>
+    <li><a href="#3关闭放行防火墙">3、关闭/放行防火墙</a></li>
+    <li><a href="#4下载客户端">4、下载客户端</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/">
+                <img src="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/cover_hu_458e924334c8a897.png"
+                        srcset="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/cover_hu_458e924334c8a897.png 800w, /p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/cover_hu_a085a3827661cf76.png 1600w"
+                        width="800" 
+                        height="400" 
+                        loading="lazy"
+                        alt="Featured image of post 搭建科学上网服务器（仅供学习参考使用）" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/">搭建科学上网服务器（仅供学习参考使用）</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Feb 17, 2025</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    4 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <p>[TOC]</p>
+<h1 id="本文仅仅供学习参考使用无任何盈利性质单纯技术分享不承担任何法律责任所有使用该技术的人员引发的后果自行承担相应后果">本文仅仅供学习参考使用，无任何盈利性质，单纯技术分享，不承担任何法律责任，所有使用该技术的人员引发的后果自行承担相应后果
+</h1><h1 id="本文仅分享科学上网技术用来学习计算机知识查询资料比如医学计算机绘画等各领域学习使用">本文仅分享科学上网技术，用来学习计算机知识，查询资料，比如医学、计算机、绘画等各领域学习使用
+</h1><h1 id="请勿私自搭建进行违法犯罪活动">请勿私自搭建进行违法犯罪活动
+</h1><h1 id="一准备工作">一、准备工作
+</h1><h2 id="1vps厂商选择">1、vps厂商选择
+</h2><p>搭建一个科学上网服务器，那么必然是需要一个云服务器作为物理基础，才能进行搭建，这里就应用Github上<a class="link" href="https://github.com/mmhunter3515/vpsdamimi"  target="_blank" rel="noopener"
+    >mmhunter3515</a>大佬整理的VPS厂商，整理的很详细，在这里就列举几个</p>
+<ul>
+<li><strong>Vultr</strong>：https://www.vultr.com/</li>
+<li><strong>Lightnode</strong>：ttps://www.lightnode.com/</li>
+<li><strong>Google</strong>：https://cloud.google.com/</li>
+<li><strong>AWS</strong>：https://aws.amazon.com/</li>
+</ul>
+<h2 id="2注册账号与充值">2、注册账号与充值
+</h2><p>本文选择<a class="link" href="vultr.com" >vultr</a>厂商，这个厂商的数据中心较多，于是使用的人也就很多，很多人选择这个厂商的服务器搭建网站之类，于是出现一个就封锁一个ip，就造成了vultr厂商的很多ip被封了，所以，在创建实例的时候，就会出现很有可能无法连接，因为被封了。本文只是为了演示技术，就还是选择vultr厂商（其实是没有钱去其他网站充值了，也就这个网站还有几刀可以嚯嚯）</p>
+<p>下面是vultr的主界面</p>
+<p><img src="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250214210749764.png"
+	width="2560"
+	height="1373"
+	srcset="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250214210749764_hu_1ac59ae6e6b61a3f.png 480w, /p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250214210749764_hu_fbd61ef669dd9890.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250214210749764"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="186"
+		data-flex-basis="447px"
+	
+></p>
+<p>首先需要一个账号，点击右上角的<code>Sign up</code>自行注册一个账户，推荐使用Gmail邮箱</p>
+<p>注：关于注册账号和充值部分，厂家可能会不定期给一些优惠券或者是返还之类，这个就需要大家执行去翻阅查找资料了</p>
+<p><img src="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250214210859432.png"
+	width="2560"
+	height="1375"
+	srcset="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250214210859432_hu_701427d716ed923c.png 480w, /p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250214210859432_hu_42a62c53f2ba05a3.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250214210859432"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="186"
+		data-flex-basis="446px"
+	
+></p>
+<p>注册完成后，需要充值，最低需要<code>$10</code>，支持<code>支付宝</code>充值</p>
+<p><img src="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250214211413313.png"
+	width="2560"
+	height="1415"
+	srcset="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250214211413313_hu_86fd99f49997a28a.png 480w, /p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250214211413313_hu_5d2f29c9f54b40c1.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250214211413313"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="180"
+		data-flex-basis="434px"
+	
+></p>
+<h1 id="二开始创建ecs实例">二、开始创建ECS实例
+</h1><h2 id="1部署服务器">1、部署服务器
+</h2><p>选择<code>Products</code>的<code>Compute</code>界面，可以看到<code>Deploy Server</code></p>
+<p><img src="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217153905149.png"
+	width="2560"
+	height="1415"
+	srcset="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217153905149_hu_1cfa7f2a34e20810.png 480w, /p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217153905149_hu_5c0e6fb1867236d3.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250217153905149"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="180"
+		data-flex-basis="434px"
+	
+></p>
+<p>创建实例</p>
+<p><img src="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217154218405.png"
+	width="2560"
+	height="1415"
+	srcset="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217154218405_hu_17500e5eb30666c2.png 480w, /p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217154218405_hu_b7c1215b8322d8cb.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250217154218405"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="180"
+		data-flex-basis="434px"
+	
+></p>
+<p>关闭自动备份后，价格就降低几美元（一方面省钱，另外一方面其实也没有那个必要）</p>
+<p><img src="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217154326460.png"
+	width="2560"
+	height="1415"
+	srcset="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217154326460_hu_794a2222574fff45.png 480w, /p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217154326460_hu_b5cc848a22d81db6.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250217154326460"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="180"
+		data-flex-basis="434px"
+	
+></p>
+<p>然后点击<code>Configure Software</code>进入到镜像选择的界面，系统镜像选择，一般选择<code>CentOS</code>，版本的话，选择最新版本就好</p>
+<p><img src="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217154443360.png"
+	width="2560"
+	height="1415"
+	srcset="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217154443360_hu_f46170d24f4d37a7.png 480w, /p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217154443360_hu_98c06a7b5150cba1.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250217154443360"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="180"
+		data-flex-basis="434px"
+	
+></p>
+<p><img src="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217154559420.png"
+	width="2560"
+	height="1415"
+	srcset="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217154559420_hu_a8f70659afa2f4cd.png 480w, /p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217154559420_hu_79634e6a180dbbfc.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250217154559420"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="180"
+		data-flex-basis="434px"
+	
+></p>
+<p>点击开始部署后，稍等两秒就会自动跳转到实例列表界面，创建实力耗时约<code>1min</code></p>
+<p><img src="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217155649854.png"
+	width="2560"
+	height="1415"
+	srcset="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217155649854_hu_51e92d32d108e8f3.png 480w, /p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217155649854_hu_531469ba06b0b58d.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250217155649854"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="180"
+		data-flex-basis="434px"
+	
+></p>
+<h2 id="2测试ip连通性">2、测试ip连通性
+</h2><p>当实例创建完成后，会自动分配一个ip，点击实例名称，进入详细界面，就可以看到当前实例的root账户和密码</p>
+<p><img src="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217160110842.png"
+	width="2560"
+	height="1415"
+	srcset="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217160110842_hu_bb060ae3a7976931.png 480w, /p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217160110842_hu_fc5c58abb8ad68fa.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250217160110842"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="180"
+		data-flex-basis="434px"
+	
+></p>
+<p>复制ip地址，如果是<code>macos</code>电脑或者是<code>linux</code>打开终端，如果是windows电脑，就打开<code>cmd</code>，使用<code>ping</code>命令测试一下能否ping的通，如下图，就表示ping的通，可以ssh连接</p>
+<p><img src="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217160308968.png"
+	width="1145"
+	height="808"
+	srcset="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217160308968_hu_aa5c7bda85c4a261.png 480w, /p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217160308968_hu_889985519495518a.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250217160308968"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="141"
+		data-flex-basis="340px"
+	
+></p>
+<p>如果你创建的实例，分配的ip地址，无法ping通，那么就销毁当前实例，再重新创建一个实例，更换国家或者地区，多尝试几次，总归是可以创建成功的。</p>
+<h2 id="3ssh登陆实例">3、ssh登陆实例
+</h2><p>如果你的电脑是<code>macos</code>或者是<code>linux</code>，那么直接使用终端就可以直接进行ssh登陆了。如果你的电脑是<code>windows</code>，那么也能够使用cmd进行ssh登陆，或者是安装像<code>xshell</code>、<code>PuTTY</code>、<code>SecureCRT</code>、<code>MobaXterm</code>这样的ssh工具（请自行下载和安装）</p>
+<h2 id="4安装必要软件和镜像库">4、安装必要软件和镜像库
+</h2><p>执行以下命令，安装相关软件，以及epel库</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo yum install -y epel-release
+</span></span><span class="line"><span class="cl">sudo yum clean all 
+</span></span><span class="line"><span class="cl">sudo yum makecache
+</span></span><span class="line"><span class="cl">sudo yum update -y 
+</span></span><span class="line"><span class="cl">sudo yum upgrade
+</span></span><span class="line"><span class="cl">sudo yum install -y wget vim git curl zlib* gcc gcc-c++ automake autoconf libtool make
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="三一键部署脚本">三、一键部署脚本
+</h1><h2 id="1下载并执行管理脚本">1、下载并执行管理脚本
+</h2><p>CentOS/Debian/Ubuntu ShadowsocksR一键部署管理脚本，执行命令</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 下载一键安装脚本</span>
+</span></span><span class="line"><span class="cl">wget --no-check-certificate https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocksR.sh
+</span></span><span class="line"><span class="cl"><span class="c1"># 增加可执行权限</span>
+</span></span><span class="line"><span class="cl">chmod +x shadowsocksR.sh
+</span></span><span class="line"><span class="cl"><span class="c1"># 开始执行</span>
+</span></span><span class="line"><span class="cl">./shadowsocksR.sh 2&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="p">|</span> tee shadowsocksR.log
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>设置密码，直接回车，默认密码即可</p>
+<p><img src="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217161541237.png"
+	width="1145"
+	height="808"
+	srcset="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217161541237_hu_ed88abab8d1fdb4e.png 480w, /p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217161541237_hu_5aa1a99252842456.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250217161541237"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="141"
+		data-flex-basis="340px"
+	
+></p>
+<p>设置端口，直接回车，默认端口即可</p>
+<p><img src="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217161621766.png"
+	width="1145"
+	height="808"
+	srcset="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217161621766_hu_31b91575c5c20b4.png 480w, /p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217161621766_hu_28bb833b76aa865a.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250217161621766"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="141"
+		data-flex-basis="340px"
+	
+></p>
+<p>加密方式，直接回车，使用默认的加密协议即可</p>
+<p><img src="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217161658665.png"
+	width="1145"
+	height="808"
+	srcset="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217161658665_hu_e6378b0dedc7367f.png 480w, /p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217161658665_hu_18ae4ba267709cff.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250217161658665"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="141"
+		data-flex-basis="340px"
+	
+></p>
+<p>设置协议，直接回车，默认协议即可</p>
+<p><img src="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217161723082.png"
+	width="1145"
+	height="808"
+	srcset="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217161723082_hu_388b6a7d5db5647a.png 480w, /p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217161723082_hu_cfd9decdda2bbaf9.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250217161723082"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="141"
+		data-flex-basis="340px"
+	
+></p>
+<p>设定混淆方式，default 为默认混淆，直接回车，默认即可</p>
+<p><img src="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217161814570.png"
+	width="1145"
+	height="808"
+	srcset="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217161814570_hu_db749d3ae0e921a8.png 480w, /p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217161814570_hu_d2c69d6cc7ae8030.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250217161814570"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="141"
+		data-flex-basis="340px"
+	
+></p>
+<p>安装成功，按任意键，自动启动</p>
+<p><img src="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217161856775.png"
+	width="1145"
+	height="808"
+	srcset="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217161856775_hu_d55daa245a8f649e.png 480w, /p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217161856775_hu_a7b5714a56afbcf5.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250217161856775"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="141"
+		data-flex-basis="340px"
+	
+></p>
+<p>然后会自动安装一些脚本</p>
+<p><img src="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217161927739.png"
+	width="1145"
+	height="808"
+	srcset="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217161927739_hu_96e2cfdc42f320b2.png 480w, /p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217161927739_hu_879e6be98d8cff55.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250217161927739"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="141"
+		data-flex-basis="340px"
+	
+></p>
+<p>最终，安装完成，会显示刚才所配置的信息，将下面的配置信息保存好，以便客户端使用。</p>
+<p><img src="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217162052524.png"
+	width="1145"
+	height="808"
+	srcset="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217162052524_hu_f2122d254693e656.png 480w, /p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217162052524_hu_7e3d0ea81c25c3df.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250217162052524"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="141"
+		data-flex-basis="340px"
+	
+></p>
+<p>安装过后如果想要修改，运行如下相关命令</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 启动</span>
+</span></span><span class="line"><span class="cl">/etc/init.d/shadowsocks start
+</span></span><span class="line"><span class="cl"><span class="c1"># 停止</span>
+</span></span><span class="line"><span class="cl">/etc/init.d/shadowsocks stop
+</span></span><span class="line"><span class="cl"><span class="c1"># 重启</span>
+</span></span><span class="line"><span class="cl">/etc/init.d/shadowsocks restart
+</span></span><span class="line"><span class="cl"><span class="c1"># 状态</span>
+</span></span><span class="line"><span class="cl">/etc/init.d/shadowsocks status
+</span></span><span class="line"><span class="cl"><span class="c1"># 配置文件路径</span>
+</span></span><span class="line"><span class="cl">/etc/shadowsocks.json <span class="c1"># 修改文件用vi 或者 vim命令，使用方法百度</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 日志文件路径</span>
+</span></span><span class="line"><span class="cl">/var/log/shadowsocks.log
+</span></span><span class="line"><span class="cl"><span class="c1"># 安装路径</span>
+</span></span><span class="line"><span class="cl">/usr/local/shadowsocks/shadowsoks
+</span></span><span class="line"><span class="cl"><span class="c1"># 卸载</span>
+</span></span><span class="line"><span class="cl">./shadowsocksR.sh uninstall
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="2查看状态并启动">2、查看状态并启动
+</h2><p>执行命令<code>/etc/init.d/shadowsocks status</code>查看状态</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">root@vultr:~# /etc/init.d/shadowsocks status
+</span></span><span class="line"><span class="cl">ShadowsocksR is stopped
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>执行命令<code>/etc/init.d/shadowsocks start</code>启动服务</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">root@vultr:~# /etc/init.d/shadowsocks start
+</span></span><span class="line"><span class="cl">Traceback <span class="o">(</span>most recent call last<span class="o">)</span>:
+</span></span><span class="line"><span class="cl">  File <span class="s2">&#34;/usr/local/shadowsocks/server.py&#34;</span>, line 32, in &lt;module&gt;
+</span></span><span class="line"><span class="cl">    from shadowsocks import shell, daemon, eventloop, tcprelay, udprelay, <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  File <span class="s2">&#34;/usr/local/shadowsocks/../shadowsocks/shell.py&#34;</span>, line 26, in &lt;module&gt;
+</span></span><span class="line"><span class="cl">    from shadowsocks.common import to_bytes, to_str, IPNetwork, PortRange
+</span></span><span class="line"><span class="cl">  File <span class="s2">&#34;/usr/local/shadowsocks/../shadowsocks/common.py&#34;</span>, line 27, in &lt;module&gt;
+</span></span><span class="line"><span class="cl">    from shadowsocks import lru_cache
+</span></span><span class="line"><span class="cl">  File <span class="s2">&#34;/usr/local/shadowsocks/../shadowsocks/lru_cache.py&#34;</span>, line 44, in &lt;module&gt;
+</span></span><span class="line"><span class="cl">    class LRUCache<span class="o">(</span>collections.MutableMapping<span class="o">)</span>:
+</span></span><span class="line"><span class="cl">                   ^^^^^^^^^^^^^^^^^^^^^^^^^^
+</span></span><span class="line"><span class="cl">AttributeError: module <span class="s1">&#39;collections&#39;</span> has no attribute <span class="s1">&#39;MutableMapping&#39;</span>
+</span></span><span class="line"><span class="cl">Starting ShadowsocksR failed
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在启动时候出现报错，根据报错信息查看，是由于python的collections库没有MutableMapping属性，这是由于在python3中collections的模块有所变动，需要把</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">collections.MutableMapping
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>变成</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">collections.abc.MutableMapping
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>根据报错信息可以明确看到，是由于<code>/usr/local/shadowsocks/lru_cache.py</code>文件中，第44行报错，那么就修改这个位置，增加<code>abc</code>，修改后如下图，然后保存并退出</p>
+<p><img src="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217163111355.png"
+	width="1145"
+	height="808"
+	srcset="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217163111355_hu_50d1f9b6671585be.png 480w, /p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217163111355_hu_b458435bebd4d78.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250217163111355"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="141"
+		data-flex-basis="340px"
+	
+></p>
+<p>再次执行命令<code>/etc/init.d/shadowsocks start</code>启动服务，此时启动成功，报错信息消失</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">root@vultr:~# /etc/init.d/shadowsocks start
+</span></span><span class="line"><span class="cl">IPv6 support
+</span></span><span class="line"><span class="cl">2025-02-17 08:31:52 INFO     util.py:94 loading libcrypto from libcrypto.so.3
+</span></span><span class="line"><span class="cl">2025-02-17 08:31:52 INFO     shell.py:74 ShadowsocksR SSRR 3.2.2 2018-05-22
+</span></span><span class="line"><span class="cl">started
+</span></span><span class="line"><span class="cl">Starting ShadowsocksR success
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>再次执行命令<code>/etc/init.d/shadowsocks status</code>查看状态，状态正常</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">root@vultr:~# /etc/init.d/shadowsocks status
+</span></span><span class="line"><span class="cl">ShadowsocksR <span class="o">(</span>pid 50662<span class="o">)</span> is running...
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="3关闭放行防火墙">3、关闭/放行防火墙
+</h2><p>在服务启动之后，系统防火墙是启动的状态，并未放行其对应的端口号，需要关闭防火墙，或者是在防火墙中放行端口，这样客户端才能够访问，否则无法使用</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 查看防火墙状态</span>
+</span></span><span class="line"><span class="cl">root@vultr:~# systemctl status firewalld
+</span></span><span class="line"><span class="cl">● firewalld.service - firewalld - dynamic firewall daemon
+</span></span><span class="line"><span class="cl">     Loaded: loaded <span class="o">(</span>/usr/lib/systemd/system/firewalld.service<span class="p">;</span> enabled<span class="p">;</span> preset: enabled<span class="o">)</span>
+</span></span><span class="line"><span class="cl">     Active: active <span class="o">(</span>running<span class="o">)</span> since Mon 2025-02-17 09:06:05 UTC<span class="p">;</span> 16s ago
+</span></span><span class="line"><span class="cl"> Invocation: 80def4cc4c7442b0b4209d49a4a12d4b
+</span></span><span class="line"><span class="cl">       Docs: man:firewalld<span class="o">(</span>1<span class="o">)</span>
+</span></span><span class="line"><span class="cl">   Main PID: <span class="m">50936</span> <span class="o">(</span>firewalld<span class="o">)</span>
+</span></span><span class="line"><span class="cl">      Tasks: <span class="m">2</span> <span class="o">(</span>limit: 10802<span class="o">)</span>
+</span></span><span class="line"><span class="cl">     Memory: 25.4M <span class="o">(</span>peak: 27M<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        CPU: 211ms
+</span></span><span class="line"><span class="cl">     CGroup: /system.slice/firewalld.service
+</span></span><span class="line"><span class="cl">             └─50936 /usr/bin/python3 -sP /usr/sbin/firewalld --nofork --nopid
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Feb <span class="m">17</span> 09:06:05 vultr.guest systemd<span class="o">[</span>1<span class="o">]</span>: Starting firewalld.service - firewalld - dynamic firewall daemon...
+</span></span><span class="line"><span class="cl">Feb <span class="m">17</span> 09:06:05 vultr.guest systemd<span class="o">[</span>1<span class="o">]</span>: Started firewalld.service - firewalld - dynamic firewall daemon.
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 查看防火墙已放行的端口，这里是空的</span>
+</span></span><span class="line"><span class="cl">root@vultr:~# firewall-cmd --list-ports
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 方法一</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 安装服务管理脚本时，创建的端口是16782，这里在防火墙中为该端口永久放行</span>
+</span></span><span class="line"><span class="cl">root@vultr:~# firewall-cmd --zone<span class="o">=</span>public --add-port<span class="o">=</span>16782/tcp --permanent
+</span></span><span class="line"><span class="cl">success
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 防火墙配置完成后，重新加载</span>
+</span></span><span class="line"><span class="cl">root@vultr:~# sudo firewall-cmd --reload
+</span></span><span class="line"><span class="cl">success
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 再次查看防火墙放行端口</span>
+</span></span><span class="line"><span class="cl">root@vultr:~# sudo firewall-cmd --list-all
+</span></span><span class="line"><span class="cl">public <span class="o">(</span>default, active<span class="o">)</span>
+</span></span><span class="line"><span class="cl">  target: default
+</span></span><span class="line"><span class="cl">  ingress-priority: <span class="m">0</span>
+</span></span><span class="line"><span class="cl">  egress-priority: <span class="m">0</span>
+</span></span><span class="line"><span class="cl">  icmp-block-inversion: no
+</span></span><span class="line"><span class="cl">  interfaces: enp1s0
+</span></span><span class="line"><span class="cl">  sources:
+</span></span><span class="line"><span class="cl">  services: cockpit dhcpv6-client ssh
+</span></span><span class="line"><span class="cl">  ports: 16782/tcp   <span class="c1"># 已放行的端口</span>
+</span></span><span class="line"><span class="cl">  protocols:
+</span></span><span class="line"><span class="cl">  forward: yes
+</span></span><span class="line"><span class="cl">  masquerade: no
+</span></span><span class="line"><span class="cl">  forward-ports:
+</span></span><span class="line"><span class="cl">  source-ports:
+</span></span><span class="line"><span class="cl">  icmp-blocks:
+</span></span><span class="line"><span class="cl">  rich rules:
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 方法二</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 关闭防火墙</span>
+</span></span><span class="line"><span class="cl">root@vultr:~# systemctl stop firewalld
+</span></span><span class="line"><span class="cl">root@vultr:~#
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 查看防火墙状态</span>
+</span></span><span class="line"><span class="cl">root@vultr:~# systemctl status firewalld
+</span></span><span class="line"><span class="cl">○ firewalld.service - firewalld - dynamic firewall daemon
+</span></span><span class="line"><span class="cl">     Loaded: loaded <span class="o">(</span>/usr/lib/systemd/system/firewalld.service<span class="p">;</span> enabled<span class="p">;</span> preset: enabled<span class="o">)</span>
+</span></span><span class="line"><span class="cl">     Active: inactive <span class="o">(</span>dead<span class="o">)</span> since Mon 2025-02-17 09:14:30 UTC<span class="p">;</span> 33s ago
+</span></span><span class="line"><span class="cl">   Duration: 8min 25.285s
+</span></span><span class="line"><span class="cl"> Invocation: 80def4cc4c7442b0b4209d49a4a12d4b
+</span></span><span class="line"><span class="cl">       Docs: man:firewalld<span class="o">(</span>1<span class="o">)</span>
+</span></span><span class="line"><span class="cl">    Process: <span class="m">50936</span> <span class="nv">ExecStart</span><span class="o">=</span>/usr/sbin/firewalld --nofork --nopid <span class="nv">$FIREWALLD_ARGS</span> <span class="o">(</span><span class="nv">code</span><span class="o">=</span>exited, <span class="nv">status</span><span class="o">=</span>0/SUCCESS<span class="o">)</span>
+</span></span><span class="line"><span class="cl">   Main PID: <span class="m">50936</span> <span class="o">(</span><span class="nv">code</span><span class="o">=</span>exited, <span class="nv">status</span><span class="o">=</span>0/SUCCESS<span class="o">)</span>
+</span></span><span class="line"><span class="cl">   Mem peak: 29.3M
+</span></span><span class="line"><span class="cl">        CPU: 390ms
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Feb <span class="m">17</span> 09:06:05 vultr.guest systemd<span class="o">[</span>1<span class="o">]</span>: Starting firewalld.service - firewalld - dynamic firewall daemon...
+</span></span><span class="line"><span class="cl">Feb <span class="m">17</span> 09:06:05 vultr.guest systemd<span class="o">[</span>1<span class="o">]</span>: Started firewalld.service - firewalld - dynamic firewall daemon.
+</span></span><span class="line"><span class="cl">Feb <span class="m">17</span> 09:14:30 vultr.guest systemd<span class="o">[</span>1<span class="o">]</span>: Stopping firewalld.service - firewalld - dynamic firewall daemon...
+</span></span><span class="line"><span class="cl">Feb <span class="m">17</span> 09:14:30 vultr.guest systemd<span class="o">[</span>1<span class="o">]</span>: firewalld.service: Deactivated successfully.
+</span></span><span class="line"><span class="cl">Feb <span class="m">17</span> 09:14:30 vultr.guest systemd<span class="o">[</span>1<span class="o">]</span>: Stopped firewalld.service - firewalld - dynamic firewall daemon.
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="4下载客户端">4、下载客户端
+</h2><p>Mac：https://github.com/shadowsocksr-backup/ShadowsocksX-NG/releases</p>
+<p>Win：https://github.com/shadowsocksr-backup/shadowsocksr-csharp/releases</p>
+<p>iPhone：到商店里安装FirstWingy、potatso lite。（搞一个美国appleID）</p>
+<p>本人电脑是MacOS，就以Mac为例，下载<code>ShadowsocksX-NG-R8.dmg</code>，打开，然后双击绿色的<code>ShadowsocksX-NG-R8</code></p>
+<p><img src="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217163839136.png"
+	width="984"
+	height="541"
+	srcset="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217163839136_hu_9b83efe57fe3ee8e.png 480w, /p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217163839136_hu_d0e396a41bc22cfe.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250217163839136"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="181"
+		data-flex-basis="436px"
+	
+></p>
+<p>双击完后，会提示当前软件不安全，此时需要打开电脑设置-Privacy &amp; Scurity，在最下面会出现这个软件的信息，然后点击<code>Open Anyway</code>，输入电脑密码就可以打开</p>
+<p><img src="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217163440254.png"
+	width="715"
+	height="625"
+	srcset="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217163440254_hu_c47414bf7763de0b.png 480w, /p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217163440254_hu_d2fdb7633a560590.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250217163440254"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="114"
+		data-flex-basis="274px"
+	
+></p>
+<p>打开完成后，电脑的右上角图标就会出现一个小飞机图标，这个就是shadowsocks</p>
+<p><img src="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217164144945.png"
+	width="424"
+	height="173"
+	srcset="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217164144945_hu_f0569d188c5be30d.png 480w, /p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217164144945_hu_b6ad8e140456f449.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250217164144945"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="245"
+		data-flex-basis="588px"
+	
+></p>
+<p>然后点击小飞机&ndash;Servers&ndash;Server Preferences</p>
+<p><img src="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217164310724.png"
+	width="497"
+	height="550"
+	srcset="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217164310724_hu_86f1136f396a8db8.png 480w, /p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217164310724_hu_36267b6e8b0410e9.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250217164310724"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="90"
+		data-flex-basis="216px"
+	
+></p>
+<p><img src="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217164655640.png"
+	width="590"
+	height="600"
+	srcset="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217164655640_hu_4c05fa1695da8219.png 480w, /p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217164655640_hu_a5371a326f08a4e5.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250217164655640"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="98"
+		data-flex-basis="236px"
+	
+></p>
+<p><img src="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217164813161.png"
+	width="525"
+	height="576"
+	srcset="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217164813161_hu_b3d47277c58fa93a.png 480w, /p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217164813161_hu_541edf5cce608089.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250217164813161"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="91"
+		data-flex-basis="218px"
+	
+></p>
+<p>啟動成功後，這裡以訪問Google和Youtube為例，</p>
+<p><img src="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217165751148.png"
+	width="2560"
+	height="1415"
+	srcset="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217165751148_hu_a5bd72b22708806a.png 480w, /p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217165751148_hu_bab85dd993c48deb.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250217165751148"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="180"
+		data-flex-basis="434px"
+	
+></p>
+<p><img src="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217165809442.png"
+	width="2560"
+	height="1415"
+	srcset="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217165809442_hu_e5ecc9c5944149aa.png 480w, /p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217165809442_hu_2fdd054d15670c03.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250217165809442"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="180"
+		data-flex-basis="434px"
+	
+></p>
+<p>使用搜索一個世界上最受歡迎的網站</p>
+<p><img src="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217165927212.png"
+	width="2560"
+	height="1415"
+	srcset="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217165927212_hu_b11709adb45209a7.png 480w, /p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217165927212_hu_8ada3ce2dc1309ed.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250217165927212"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="180"
+		data-flex-basis="434px"
+	
+></p>
+<p>訪問全球最大同性交友網站Github</p>
+<p><img src="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217170019024.png"
+	width="2560"
+	height="1415"
+	srcset="/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217170019024_hu_681a36ed1d25b10e.png 480w, /p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217170019024_hu_1b32471635f0ce51.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250217170019024"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="180"
+		data-flex-basis="434px"
+	
+></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+	const mainArticleElement = document.querySelector(".main-article");
+        renderMathInElement(mainArticleElement, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2024 - 
+        
+        2025 dxjxpr All Rights Reserved
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
