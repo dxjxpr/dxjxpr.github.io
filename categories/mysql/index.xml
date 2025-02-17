@@ -1,0 +1,577 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>MySql on I&#39;m Mr.Liu</title>
+        <link>https://dxjxpr.github.io/categories/mysql/</link>
+        <description>Recent content in MySql on I&#39;m Mr.Liu</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en</language>
+        <copyright>dxjxpr All Rights Reserved</copyright>
+        <lastBuildDate>Tue, 27 Jul 2021 21:06:14 +0800</lastBuildDate><atom:link href="https://dxjxpr.github.io/categories/mysql/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>CentOS7安装mysql8教程</title>
+        <link>https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/</link>
+        <pubDate>Tue, 27 Jul 2021 21:06:14 +0800</pubDate>
+        
+        <guid>https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/</guid>
+        <description>&lt;img src="https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/mysql.jpg" alt="Featured image of post CentOS7安装mysql8教程" /&gt;&lt;h1 id=&#34;环境说明&#34;&gt;环境说明
+&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;操作系统：CentOS Linux release 7.9.2009 (Core)&lt;/li&gt;
+&lt;li&gt;本次安装MySQL版本：8.0.26&lt;/li&gt;
+&lt;li&gt;连接工具：xshell、xftp（或者其他连接/上传工具）&lt;/li&gt;
+&lt;li&gt;从腾讯云买的服务器，按量计费，临时用下，经济实惠（如果哪天有空写写服务器购买吧）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;开始&#34;&gt;开始
+&lt;/h1&gt;&lt;p&gt;1、&lt;strong&gt;查看centos7中是否有&lt;code&gt;MariaDB&lt;/code&gt;，&lt;code&gt;MariaDB&lt;/code&gt;与&lt;code&gt;MySQL&lt;/code&gt;关系请自行查阅&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;rpm -qa | grep mariadb&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/5dbd0cce202441c0a19df6a14a50b37d.png&#34;
+	width=&#34;1108&#34;
+	height=&#34;256&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/5dbd0cce202441c0a19df6a14a50b37d_hu_4ede94435d079d7f.png 480w, https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/5dbd0cce202441c0a19df6a14a50b37d_hu_e92f161a18767485.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;432&#34;
+		data-flex-basis=&#34;1038px&#34;
+	
+&gt;
+2、&lt;strong&gt;如果有&lt;code&gt;MariaDB&lt;/code&gt;，需要将 &lt;code&gt;步骤1&lt;/code&gt; 中查询到的&lt;code&gt;mairadb&lt;/code&gt;全部卸载，否则&lt;code&gt;MySQL&lt;/code&gt;安装会出现问题&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;rpm -e &amp;ndash;nodeps 软件名&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/d6c01d167bdd45a2837506e8143060f6.png&#34;
+	width=&#34;1521&#34;
+	height=&#34;163&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/d6c01d167bdd45a2837506e8143060f6_hu_37f6b3fbf7415d70.png 480w, https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/d6c01d167bdd45a2837506e8143060f6_hu_1865e30dd8ab6309.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;933&#34;
+		data-flex-basis=&#34;2239px&#34;
+	
+&gt;
+3、&lt;strong&gt;查看本机是否已经安装过&lt;code&gt;MySQL&lt;/code&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;rpm -qa | grep -i mysql&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/acec7cdafa264a4ca521ed19aa096a63.png&#34;
+	width=&#34;1022&#34;
+	height=&#34;214&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/acec7cdafa264a4ca521ed19aa096a63_hu_d699a81206ffd40c.png 480w, https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/acec7cdafa264a4ca521ed19aa096a63_hu_6cab0485e3d3c564.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;477&#34;
+		data-flex-basis=&#34;1146px&#34;
+	
+&gt;
+4、&lt;strong&gt;如果安装过&lt;code&gt;MySQL&lt;/code&gt;，请确定是否有数据需要备份（&lt;font color=&#39;red&#39;&gt;如果有需要备份的数据请自行查阅相关操作进行备份，否则数据丢失概不负责&lt;/font&gt;）&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;  &lt;strong&gt;如果没有安装过&lt;code&gt;MySQL&lt;/code&gt;，请跳转步骤6&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;5、&lt;strong&gt;卸载&lt;code&gt;MySQL&lt;/code&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;将步骤3中查询到的mysql安装包全部卸载&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;rpm -e &amp;ndash;nodeps 软件名&lt;/p&gt;&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;查找mysql文件，并将其删除&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;find / -name mysql
+whereis mysql&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;  将&lt;code&gt;find&lt;/code&gt;命令和&lt;code&gt;whereis&lt;/code&gt;命令查询到的mysql文件全部删除&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;rm -rf 查询到的mysql路径&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;  删除mysql配置文件&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;rm /etc/my.cnf&lt;/p&gt;&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;确认是否全部删除mysql&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;rpm -qa | grep -i mysql&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;6、&lt;strong&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.mysql.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;MySQL官网&lt;/a&gt;下载适用于centos7的mysql安装包&lt;/strong&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/da834284b8bd4a5ebcc8a85623c84f7c.png&#34;
+	width=&#34;1920&#34;
+	height=&#34;896&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/da834284b8bd4a5ebcc8a85623c84f7c_hu_411346ab12bee2e4.png 480w, https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/da834284b8bd4a5ebcc8a85623c84f7c_hu_f25c097d97930674.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;214&#34;
+		data-flex-basis=&#34;514px&#34;
+	
+&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/a022ed2d90894343b77edbc0c77cf8a2.png&#34;
+	width=&#34;1920&#34;
+	height=&#34;821&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/a022ed2d90894343b77edbc0c77cf8a2_hu_8137e10c0f0bd261.png 480w, https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/a022ed2d90894343b77edbc0c77cf8a2_hu_b92f61c393dcc70.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;233&#34;
+		data-flex-basis=&#34;561px&#34;
+	
+&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/8e15db4bc90e4284a8b6f1a0ff4f3fe1.png&#34;
+	width=&#34;1607&#34;
+	height=&#34;779&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/8e15db4bc90e4284a8b6f1a0ff4f3fe1_hu_c32d98cb82292c16.png 480w, https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/8e15db4bc90e4284a8b6f1a0ff4f3fe1_hu_c905a35fc7746550.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;206&#34;
+		data-flex-basis=&#34;495px&#34;
+	
+&gt;
+查询服务器是x86_64架构还是arm架构&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;uname -m
+或者是
+arch
+# 我的服务器是x86_64的&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/8f55107c93e14828b386f9e418344008.png&#34;
+	width=&#34;979&#34;
+	height=&#34;288&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/8f55107c93e14828b386f9e418344008_hu_f5bb15f5d0753e0f.png 480w, https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/8f55107c93e14828b386f9e418344008_hu_bc8e56afbde6fc9b.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;339&#34;
+		data-flex-basis=&#34;815px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/9f04e5246506423ab42a82a9d74e6fbc.png&#34;
+	width=&#34;1919&#34;
+	height=&#34;873&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/9f04e5246506423ab42a82a9d74e6fbc_hu_fabb68e7a7714eee.png 480w, https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/9f04e5246506423ab42a82a9d74e6fbc_hu_46fab0b65fcc8b16.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;219&#34;
+		data-flex-basis=&#34;527px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/badd195d3252421595eeb2c9151425b1.png&#34;
+	width=&#34;1230&#34;
+	height=&#34;789&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/badd195d3252421595eeb2c9151425b1_hu_8f3df39cd9e77d14.png 480w, https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/badd195d3252421595eeb2c9151425b1_hu_c4844460cae02b8a.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;155&#34;
+		data-flex-basis=&#34;374px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;这里可以下载直接通过浏览器下载下来，然后通过ftp上传到所要安装的服务器中&lt;/li&gt;
+&lt;li&gt;或者是复制这个&lt;code&gt;tar&lt;/code&gt;包的链接，然后通过&lt;code&gt;wget&lt;/code&gt;命令下载，操作如下&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;wget  文件的网络地址&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;比如我这里下载的地址是&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;wget  &lt;a class=&#34;link&#34; href=&#34;https://cdn.mysql.com//Downloads/MySQL-8.0/mysql-8.0.26-1.el7.x86_64.rpm-bundle.tar&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://cdn.mysql.com//Downloads/MySQL-8.0/mysql-8.0.26-1.el7.x86_64.rpm-bundle.tar&lt;/a&gt;&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/4bd9695e6fb743b0987af3c82bf696b0.png&#34;
+	width=&#34;1547&#34;
+	height=&#34;578&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/4bd9695e6fb743b0987af3c82bf696b0_hu_9c228a105291c2b5.png 480w, https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/4bd9695e6fb743b0987af3c82bf696b0_hu_8d428fa094be1cd1.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;267&#34;
+		data-flex-basis=&#34;642px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/c4f2a53cb1de441a81f6ee459f4bd5a4.png&#34;
+	width=&#34;1895&#34;
+	height=&#34;562&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/c4f2a53cb1de441a81f6ee459f4bd5a4_hu_efadc5cdfe6781f6.png 480w, https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/c4f2a53cb1de441a81f6ee459f4bd5a4_hu_b0f08d92ae6fa3b0.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;337&#34;
+		data-flex-basis=&#34;809px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;无论是通过&lt;code&gt;xftp&lt;/code&gt;工具还是&lt;code&gt;wget&lt;/code&gt;命令，将MySQL的&lt;code&gt;tar&lt;/code&gt;包传到centos的某个目录下（比如home目录下），这里演示的是上传到&lt;code&gt;root&lt;/code&gt;用户的home目录下
+&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/50d5ebd167bc4285ba1a3e18573c9ae1.png&#34;
+	width=&#34;1893&#34;
+	height=&#34;746&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/50d5ebd167bc4285ba1a3e18573c9ae1_hu_fdf3ff6481498b13.png 480w, https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/50d5ebd167bc4285ba1a3e18573c9ae1_hu_e8a5615c1abedd89.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;253&#34;
+		data-flex-basis=&#34;609px&#34;
+	
+&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;7、&lt;strong&gt;解压tar包&lt;/strong&gt;
+在解压之前，建议先创建一个空的目录，因为这个tar包解压后多个rpm包会直接放到当前目录。因为我的tar包是在&lt;code&gt;root&lt;/code&gt;用户的home目录下，所以直接在这个目录下创建了一个mysql的目录。这个目录无所谓！&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;mkdir mysql
+&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/8cc8b5dfaebc477e8fd0d80cd9745c52.png&#34;
+	width=&#34;1164&#34;
+	height=&#34;382&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/8cc8b5dfaebc477e8fd0d80cd9745c52_hu_b47817deec58fd56.png 480w, https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/8cc8b5dfaebc477e8fd0d80cd9745c52_hu_3aa51c8e4217eab9.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;304&#34;
+		data-flex-basis=&#34;731px&#34;
+	
+&gt;&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;解压该tar包&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;tar -xvf mysql的tar包全名  -C 解压到指定目录
+# 说明：-C参数，后面跟的是目录，意思是将压缩包解压缩后存放到指定的目录下。&lt;/p&gt;
+&lt;p&gt;# 这里就指定到刚才创建的mysql目录下&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/7e1ec434fb4243d2907e93de5cb3ff75.png&#34;
+	width=&#34;1784&#34;
+	height=&#34;536&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/7e1ec434fb4243d2907e93de5cb3ff75_hu_a7b14f1d24f0b833.png 480w, https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/7e1ec434fb4243d2907e93de5cb3ff75_hu_81f1314fb26f18ff.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;332&#34;
+		data-flex-basis=&#34;798px&#34;
+	
+&gt;
+&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/64e7badb5dc6477687d0f06978210611.png&#34;
+	width=&#34;1660&#34;
+	height=&#34;529&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/64e7badb5dc6477687d0f06978210611_hu_f8f66d9f7c14bebb.png 480w, https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/64e7badb5dc6477687d0f06978210611_hu_3735d7e981b397d6.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;313&#34;
+		data-flex-basis=&#34;753px&#34;
+	
+&gt;
+8、&lt;strong&gt;开始安装MySQL&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;rpm安装命令&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;rpm -ivh xxx.rpm&lt;/p&gt;&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;# 这里选择的是全部安装
+# 安装顺序如下，否则会出现依赖问题
+mysql-community-common-8.0.26-1.el7.x86_64.rpm
+mysql-community-client-plugins-8.0.26-1.el7.x86_64.rpm
+mysql-community-embedded-compat-8.0.26-1.el7.x86_64.rpm
+mysql-community-libs-8.0.26-1.el7.x86_64.rpm
+mysql-community-libs-compat-8.0.26-1.el7.x86_64.rpm
+mysql-community-devel-8.0.26-1.el7.x86_64.rpm
+mysql-community-client-8.0.26-1.el7.x86_64.rpm
+mysql-community-server-8.0.26-1.el7.x86_64.rpm
+mysql-community-test-8.0.26-1.el7.x86_64.rpm&lt;/p&gt;&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;以上安装rpm时可能会出现centos的动态库缺失等情况，这里记录下几种错误情况&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;情况1：
+[root@VM-0-14-centos mysql]# rpm -ivh mysql-community-embedded-compat-8.0.26-1.el7.x86_64.rpm
+&lt;font color=&#39;red&#39;&gt;warning: mysql-community-embedded-compat-8.0.26-1.el7.x86_64.rpm: Header V3 DSA/SHA256 Signature, key ID 5072e1f5: NOKEY
+error: Failed dependencies:
+libnuma.so.1()(64bit) is needed by mysql-community-embedded-compat-8.0.26-1.el7.x86_64
+libnuma.so.1(libnuma_1.1)(64bit) is needed by mysql-community-embedded-compat-8.0.26-1.el7.x86_64
+libnuma.so.1(libnuma_1.2)(64bit) is needed by mysql-community-embedded-compat-8.0.26-1.el7.x86_64&lt;/font&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;解决方式：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;yum -y install numactl&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;情况2
+&lt;font color=&#39;red&#39;&gt;[root@VM-0-14-centos mysql]# rpm -ivh mysql-community-devel-8.0.26-1.el7.x86_64.rpm
+warning: mysql-community-devel-8.0.26-1.el7.x86_64.rpm: Header V3 DSA/SHA256 Signature, key ID 5072e1f5: NOKEY
+error: Failed dependencies:
+pkgconfig(openssl) is needed by mysql-community-devel-8.0.26-1.el7.x86_64&lt;/font&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;解决方式&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;yum install openssl-devel&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;情况3
+&lt;font color=&#39;red&#39;&gt;[root@VM-0-14-centos mysql]# rpm -ivh mysql-community-test-8.0.26-1.el7.x86_64.rpm
+warning: mysql-community-test-8.0.26-1.el7.x86_64.rpm: Header V3 DSA/SHA256 Signature, key ID 5072e1f5: NOKEY
+error: Failed dependencies:
+perl(Data::Dumper) is needed by mysql-community-test-8.0.26-1.el7.x86_64&lt;/font&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;解决方式&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;yum -y install autoconf&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;情况4
+&lt;font color=&#39;red&#39;&gt;[root@VM-0-14-centos mysql]# rpm -ivh mysql-community-test-8.0.26-1.el7.x86_64.rpm
+warning: mysql-community-test-8.0.26-1.el7.x86_64.rpm: Header V3 DSA/SHA256 Signature, key ID 5072e1f5: NOKEY
+error: Failed dependencies:
+perl(JSON) is needed by mysql-community-test-8.0.26-1.el7.x86_64&lt;/font&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;解决方式&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;yum install perl-JSON.noarch -y&lt;/li&gt;
+&lt;li&gt;yum install perl.x86_64 perl-devel.x86_64 -y&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;情况5
+&lt;font color=&#39;red&#39;&gt;[root@VM-0-14-centos mysql]# rpm -ivh mysql-community-test-8.0.26-1.el7.x86_64.rpm
+warning: mysql-community-test-8.0.26-1.el7.x86_64.rpm: Header V3 DSA/SHA256 Signature, key ID 5072e1f5: NOKEY
+error: Failed dependencies:
+perl(Test::More) is needed by mysql-community-test-8.0.26-1.el7.x86_64&lt;/font&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;解决方式：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;到 &lt;a class=&#34;link&#34; href=&#34;https://pkgs.org/download/perl%28Test::More%29&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://pkgs.org/download/perl(Test::More)&lt;/a&gt;，打开centos7的下拉框，找到CentOS x86_64下对应的rpm，然后打开这个rpm连接，在&lt;code&gt;Download&lt;/code&gt;对应的部分找&lt;code&gt;Binary Package&lt;/code&gt;，后面有对应的rpm下载连接，下载下来进行安装即可&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;&lt;/blockquote&gt;
+&lt;p&gt;9、&lt;strong&gt;初始化数据库&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;mysqld &amp;ndash;initialize &amp;ndash;console&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;10、&lt;strong&gt;目录授权，否则可能会启动失败&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;chown -R mysql:mysql /var/lib/mysql/&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;11、&lt;strong&gt;启动mysql&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;systemctl start mysqld&lt;/p&gt;&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;对应的重启、关闭mysql命令如下&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;systemctl stop mysqld
+systemctl restart mysqld&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;12、&lt;strong&gt;查询mysql状态&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;systemctl status mysqld&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/dc9dd40507424492bc07103110d06e42.png&#34;
+	width=&#34;1919&#34;
+	height=&#34;607&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/dc9dd40507424492bc07103110d06e42_hu_dcb632cc2611267e.png 480w, https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/dc9dd40507424492bc07103110d06e42_hu_9ef30db34338f021.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;316&#34;
+		data-flex-basis=&#34;758px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;13、&lt;strong&gt;查询mysql的临时密码&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;cat /var/log/mysqld.log | grep password&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/0195743babce4169a3cb3bfde6320f99.png&#34;
+	width=&#34;1900&#34;
+	height=&#34;357&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/0195743babce4169a3cb3bfde6320f99_hu_abd163260d8d8516.png 480w, https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/0195743babce4169a3cb3bfde6320f99_hu_6cca3e267967e6ef.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;532&#34;
+		data-flex-basis=&#34;1277px&#34;
+	
+&gt;
+14、&lt;strong&gt;使用临时密码登录mysql&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;mysql  -u root -p&lt;/p&gt;&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;注意：linux下输入密码是不会回显（不是电脑坏了！），输入完毕后直接回车即可&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/e3355b85b6d54de9a4a78935ad9b9d41.png&#34;
+	width=&#34;1516&#34;
+	height=&#34;483&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/e3355b85b6d54de9a4a78935ad9b9d41_hu_62514e625a1efbca.png 480w, https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/e3355b85b6d54de9a4a78935ad9b9d41_hu_85bf0cf5f3e9d013.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;313&#34;
+		data-flex-basis=&#34;753px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;密码输入正确，回车后看到如下信息，则代表成功进入mysql&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/9a91be2de2184dbb887bac8ce41849cf.png&#34;
+	width=&#34;1769&#34;
+	height=&#34;617&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/9a91be2de2184dbb887bac8ce41849cf_hu_93b6d4e684f028a2.png 480w, https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/9a91be2de2184dbb887bac8ce41849cf_hu_c56b9e2fb13b3fd6.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;286&#34;
+		data-flex-basis=&#34;688px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;15、&lt;strong&gt;修改mysql的登录密码&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;alter user &amp;lsquo;root&amp;rsquo;@&amp;rsquo;localhost&amp;rsquo; identified  with mysql_native_password by &amp;lsquo;你的密码&amp;rsquo; ;&lt;/p&gt;&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;注：mysql8对密码的强度有很高的要求，具体密码要求可使用以下命令查询&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;SHOW VARIABLES LIKE &amp;lsquo;validate_password%&amp;rsquo;;&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;最后重启下mysql即可&lt;/p&gt;
+&lt;p&gt;16、&lt;strong&gt;mysql设置远程连接&lt;/strong&gt;
+注：这个步骤根据实际需求而设定&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;show databases ;
+use mysql ;&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/fd72829896684bed97e6399f130b6541.png&#34;
+	width=&#34;1501&#34;
+	height=&#34;732&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/fd72829896684bed97e6399f130b6541_hu_11fe2e9c75add100.png 480w, https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/fd72829896684bed97e6399f130b6541_hu_60db7ca313a90f.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;205&#34;
+		data-flex-basis=&#34;492px&#34;
+	
+&gt;
+查看可登录mysql的host&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;select host, user from user;&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;&lt;code&gt;host&lt;/code&gt;部分全部都是&lt;code&gt;localhost&lt;/code&gt;，说明用户只能本地连接msyql服务
+&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/ec197732dcd24d5f843b0f35772406cd.png&#34;
+	width=&#34;1066&#34;
+	height=&#34;505&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/ec197732dcd24d5f843b0f35772406cd_hu_98810a766e300ffc.png 480w, https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/ec197732dcd24d5f843b0f35772406cd_hu_d2b53da6b7778a1e.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;211&#34;
+		data-flex-basis=&#34;506px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;修改&lt;code&gt;root&lt;/code&gt;用户的&lt;code&gt;host&lt;/code&gt;值，并刷新mysql数据库&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;update user set user.host=&amp;rsquo;%&amp;rsquo; where user.user=&amp;lsquo;root&amp;rsquo;;
+flush privileges;&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/5df7adbe22224823ada00da9c6815fbb.png&#34;
+	width=&#34;1367&#34;
+	height=&#34;799&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/5df7adbe22224823ada00da9c6815fbb_hu_73421baf1768b7f6.png 480w, https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/5df7adbe22224823ada00da9c6815fbb_hu_bd55897d4b5d835.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;171&#34;
+		data-flex-basis=&#34;410px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;在我的windows电脑上使用Navicat测试连接服务器上的mysql，看看是否能够远程连接
+&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/a4b7d14eeb96479aa2a5017b79f7b530.png&#34;
+	width=&#34;691&#34;
+	height=&#34;821&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/a4b7d14eeb96479aa2a5017b79f7b530_hu_5ed585b6d6e895be.png 480w, https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/a4b7d14eeb96479aa2a5017b79f7b530_hu_eef551dfc2ce9104.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;在这里插入图片描述&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;84&#34;
+		data-flex-basis=&#34;201px&#34;
+	
+&gt;
+17、其他情况说明&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;连接失败的情况&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;centos7的防火墙是否开启了3306的端口&lt;/li&gt;
+&lt;li&gt;云服务器的出入站规则配置情况&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;篇幅太长这里不再一一说明情况，如果遇到失败情况请自行查询&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

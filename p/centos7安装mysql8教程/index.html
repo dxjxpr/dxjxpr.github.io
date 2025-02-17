@@ -10,7 +10,7 @@
 <meta property='og:description' content="环境说明 操作系统：CentOS Linux release 7.9.2009 (Core) 本次安装MySQL版本：8.0.26 连接工具：xshell、xftp（或者其他连接/上传工具） 从腾讯云买的服务器，按量计费，临时用下，经济实惠（如果哪天有空写写服务器购买吧） 开始 1、查看centos7中是否有MariaDB，MariaDB与MySQL关系请自行查阅\nrpm -qa | grep mariadb\n2、如果有MariaDB，需要将 步骤1 中查询到的mairadb全部卸载，否则MySQL安装会出现问题\nrpm -e &ndash;nodeps 软件名\n3、查看本机是否已经安装过MySQL\nrpm -qa | grep -i mysql\n4、如果安装过MySQL，请确定是否有数据需要备份（如果有需要备份的数据请自行查阅相关操作进行备份，否则数据丢失概不负责）\n如果没有安装过MySQL，请跳转步骤6\n5、卸载MySQL\n将步骤3中查询到的mysql安装包全部卸载 rpm -e &ndash;nodeps 软件名\n查找mysql文件，并将其删除 find / -name mysql whereis mysql\n将find命令和whereis命令查询到的mysql文件全部删除\n">
 <meta property='og:url' content='https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/'>
 <meta property='og:site_name' content='I&#39;m Mr.Liu'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2021-07-27T21:06:14&#43;08:00'/><meta property='article:modified_time' content='2021-07-27T21:06:14&#43;08:00'/><meta property='og:image' content='https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/mysql.jpg' />
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='MySql' /><meta property='article:tag' content='数据库' /><meta property='article:published_time' content='2021-07-27T21:06:14&#43;08:00'/><meta property='article:modified_time' content='2021-07-27T21:06:14&#43;08:00'/><meta property='og:image' content='https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/mysql.jpg' />
 <meta name="twitter:title" content="CentOS7安装mysql8教程">
 <meta name="twitter:description" content="环境说明 操作系统：CentOS Linux release 7.9.2009 (Core) 本次安装MySQL版本：8.0.26 连接工具：xshell、xftp（或者其他连接/上传工具） 从腾讯云买的服务器，按量计费，临时用下，经济实惠（如果哪天有空写写服务器购买吧） 开始 1、查看centos7中是否有MariaDB，MariaDB与MySQL关系请自行查阅\nrpm -qa | grep mariadb\n2、如果有MariaDB，需要将 步骤1 中查询到的mairadb全部卸载，否则MySQL安装会出现问题\nrpm -e &ndash;nodeps 软件名\n3、查看本机是否已经安装过MySQL\nrpm -qa | grep -i mysql\n4、如果安装过MySQL，请确定是否有数据需要备份（如果有需要备份的数据请自行查阅相关操作进行备份，否则数据丢失概不负责）\n如果没有安装过MySQL，请跳转步骤6\n5、卸载MySQL\n将步骤3中查询到的mysql安装包全部卸载 rpm -e &ndash;nodeps 软件名\n查找mysql文件，并将其删除 find / -name mysql whereis mysql\n将find命令和whereis命令查询到的mysql文件全部删除\n"><meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content='https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/mysql.jpg' />
@@ -239,6 +239,18 @@
     
 
     <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" >
+                数据库
+            </a>
+        
+            <a href="/categories/mysql/" >
+                MySql
+            </a>
+        
+    </header>
     
 
     <div class="article-title-wrapper">
@@ -858,6 +870,14 @@ flush privileges;</p></blockquote>
 
     <footer class="article-footer">
     
+    <section class="article-tags">
+        
+            <a href="/tags/mysql/">MySql</a>
+        
+            <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+        
+    </section>
+
 
     
     <section class="article-copyright">
@@ -906,6 +926,39 @@ flush privileges;</p></blockquote>
     
 
     
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/">
+        
+        
+            <div class="article-image">
+                <img src="/p/navicat15%E6%BF%80%E6%B4%BB%E6%95%99%E7%A8%8B/navicat.8ce58706535eb229e29ccbb9057f70cb_hu_26e9345d4fc381e0.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Navicat15激活教程"
+                        
+                        data-hash="md5-jOWHBlNesininMu5BX9wyw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Navicat15激活教程</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
 
      
     
