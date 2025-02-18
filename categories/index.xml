@@ -7,12 +7,44 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
         <copyright>dxjxpr All Rights Reserved</copyright>
-        <lastBuildDate>Tue, 14 Jan 2025 21:30:00 +0800</lastBuildDate><atom:link href="https://dxjxpr.github.io/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Mon, 17 Feb 2025 19:00:00 +0800</lastBuildDate><atom:link href="https://dxjxpr.github.io/categories/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Linux</title>
         <link>https://dxjxpr.github.io/categories/linux/</link>
-        <pubDate>Tue, 14 Jan 2025 21:30:00 +0800</pubDate>
+        <pubDate>Mon, 17 Feb 2025 19:00:00 +0800</pubDate>
         
         <guid>https://dxjxpr.github.io/categories/linux/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>VPN</title>
+        <link>https://dxjxpr.github.io/categories/vpn/</link>
+        <pubDate>Mon, 17 Feb 2025 19:00:00 +0800</pubDate>
+        
+        <guid>https://dxjxpr.github.io/categories/vpn/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>VPS</title>
+        <link>https://dxjxpr.github.io/categories/vps/</link>
+        <pubDate>Mon, 17 Feb 2025 19:00:00 +0800</pubDate>
+        
+        <guid>https://dxjxpr.github.io/categories/vps/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>MacOS</title>
+        <link>https://dxjxpr.github.io/categories/macos/</link>
+        <pubDate>Sun, 19 Jan 2025 21:30:00 +0800</pubDate>
+        
+        <guid>https://dxjxpr.github.io/categories/macos/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Unix</title>
+        <link>https://dxjxpr.github.io/categories/unix/</link>
+        <pubDate>Sun, 19 Jan 2025 21:30:00 +0800</pubDate>
+        
+        <guid>https://dxjxpr.github.io/categories/unix/</guid>
         <description></description>
         </item>
         <item>

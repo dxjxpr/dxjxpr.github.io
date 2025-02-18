@@ -1,0 +1,504 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>MacOS on I&#39;m Mr.Liu</title>
+        <link>https://dxjxpr.github.io/categories/macos/</link>
+        <description>Recent content in MacOS on I&#39;m Mr.Liu</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en</language>
+        <copyright>dxjxpr All Rights Reserved</copyright>
+        <lastBuildDate>Sun, 19 Jan 2025 21:30:00 +0800</lastBuildDate><atom:link href="https://dxjxpr.github.io/categories/macos/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>打造macOs超级炫酷终端item2&#43;oh-my-zsh&#43;Powerlevel10k</title>
+        <link>https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/</link>
+        <pubDate>Sun, 19 Jan 2025 21:30:00 +0800</pubDate>
+        
+        <guid>https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/</guid>
+        <description>&lt;img src="https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/oh-my-zsh.png" alt="Featured image of post 打造macOs超级炫酷终端item2&#43;oh-my-zsh&#43;Powerlevel10k" /&gt;&lt;p&gt;使用&lt;code&gt;iTerm2 + oh-my-zsh + Powerlevel10k&lt;/code&gt;打造&lt;code&gt;macOs&lt;/code&gt;潮流又实用的&lt;code&gt;Terminal&lt;/code&gt;保姆级教学&lt;/p&gt;
+&lt;p&gt;[TOC]&lt;/p&gt;
+&lt;h1 id=&#34;一先展示最终效果图&#34;&gt;一、先展示最终效果图
+&lt;/h1&gt;&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250117212756057.png&#34;
+	width=&#34;1145&#34;
+	height=&#34;781&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250117212756057_hu_77fa24fda3cf0ab0.png 480w, https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250117212756057_hu_189847aff1cd7ba4.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250117212756057&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;146&#34;
+		data-flex-basis=&#34;351px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;顺便跑个彩色小火车给大家快乐下（命令：sl | lolcat）&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119191517123.png&#34;
+	width=&#34;1145&#34;
+	height=&#34;779&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119191517123_hu_d666dc48abad9a3d.png 480w, https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119191517123_hu_fa60bfc67dd5a566.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250119191517123&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;146&#34;
+		data-flex-basis=&#34;352px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;下面我们开始今天的安装教程&lt;/p&gt;
+&lt;h1 id=&#34;二安装item2终端&#34;&gt;二、安装iTem2终端
+&lt;/h1&gt;&lt;p&gt;首先到到&lt;code&gt;iTem2&lt;/code&gt;的官网&lt;code&gt;https://iterm2.com/downloads.html&lt;/code&gt;下载安装包，下载下来的安装包是一个&lt;code&gt;.zip&lt;/code&gt;的压缩文件，进行解压，解压后，双击进行安装，或者可以直接将该应用程序放入到&lt;code&gt;Applications&lt;/code&gt;目录下，然后就可以在&lt;code&gt;Lauchpad&lt;/code&gt;里看到&lt;code&gt;iTem&lt;/code&gt;的图标，点击即可启动&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250117215230259.png&#34;
+	width=&#34;2560&#34;
+	height=&#34;1329&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250117215230259_hu_8308235451b782c9.png 480w, https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250117215230259_hu_3deecfffec182fa6.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250117215230259&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;192&#34;
+		data-flex-basis=&#34;462px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;iTem2&lt;/code&gt;的功能丰富，更加全面的可以查看官方文档：&lt;code&gt;https://iterm2.com/documentation.html&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;至于配色、字体大小、窗口大小等配置信息，可以在设置中，自行进行配置&lt;/p&gt;
+&lt;h1 id=&#34;三安装oh-my-zsh配置框架&#34;&gt;三、安装oh-my-zsh配置框架
+&lt;/h1&gt;&lt;p&gt;&lt;code&gt;oh-my-zsh&lt;/code&gt;是一个管理&lt;code&gt;zsh&lt;/code&gt;配置的开源框架，该框架插件生态丰富，比如代码高亮、代码提示等，还有很多主体（此次的主题就是&lt;code&gt;Powerlevel10k&lt;/code&gt;主题）&lt;/p&gt;
+&lt;p&gt;首先需要下载安装&lt;code&gt;zsh&lt;/code&gt;的shell，执行以下命令，并将zsh设置为默认的shell&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;brew update
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;brew install zsh
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;查看当前shell&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$SHELL&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;如果当前shell不是zsh，将shell切换成zsh&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;chsh -s /bin/zsh
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;安装&lt;code&gt;oh-my-zsh&lt;/code&gt;，官网：&lt;code&gt;https://ohmyz.sh/#install&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;执行以下命令：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sh -c &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 或者&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sh -c &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 两个安装命令选择一个即可，个人一般使用第一个，这个无所谓&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;安装完成后，可以看到如下的&lt;code&gt;oh-my-zsh&lt;/code&gt;的彩色图标，同时可以看到光标前面的提示符变成了向右的箭头，这里默认的主题是&lt;code&gt;robbyrussell&lt;/code&gt;，主题的配置信息都是&lt;code&gt;~/.zshrc&lt;/code&gt;配置文件中&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119193513535.png&#34;
+	width=&#34;1145&#34;
+	height=&#34;778&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119193513535_hu_11ce63654c10f264.png 480w, https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119193513535_hu_2e1e06e88a1cbfce.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250119193513535&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;147&#34;
+		data-flex-basis=&#34;353px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h1 id=&#34;四安装插件&#34;&gt;四、安装插件
+&lt;/h1&gt;&lt;p&gt;安装&lt;code&gt;oh-my-zsh&lt;/code&gt;后，建议安装定制的插件，这里介绍两个&lt;a class=&#34;link&#34; href=&#34;https://github.com/zsh-users/zsh-autosuggestions&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;zsh-autosuggestions&lt;/a&gt;和&lt;a class=&#34;link&#34; href=&#34;https://github.com/zsh-users/zsh-syntax-highlighting&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;zsh-syntax-highlighting&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;zsh-autosuggestions
+该插件在用户键入时，是根据命令行历史和完整命令名推荐余下的输入&lt;/li&gt;
+&lt;li&gt;zsh-syntax-highlighting
+此插件对zsh提示符后的输入自动匹配语法高亮，可以让用户在实际命令运行前审核输入行，以便及时发现和改正语法错误。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;安装方式，是将插件从github上克隆到&lt;code&gt;~/.oh-my-zsh/custom/plugins&lt;/code&gt;目录下，然后编辑&lt;code&gt;~/.zshrc&lt;/code&gt;文件，找到&lt;code&gt;plugins=(git)&lt;/code&gt;那一行，将所安装的插件，放入到插件列表中，同时为了保证语法高亮的效果&lt;code&gt;zsh-syntax-highlighting&lt;/code&gt;插件必须置于插件列表的最后一项，如下&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;plugins&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=(&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  git
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  zsh-autosuggestions
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  zsh-syntax-highlighting
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;然后退出item2终端，重新启动才能生效&lt;/p&gt;
+&lt;h1 id=&#34;五配置powerlevel10k主题&#34;&gt;五、配置Powerlevel10k主题
+&lt;/h1&gt;&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/romkatv/powerlevel10k&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;powerlevel10k&lt;/a&gt;是为zsh定制而做的主题，有以下主要特征&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;界面美观&lt;/li&gt;
+&lt;li&gt;即时反馈&lt;/li&gt;
+&lt;li&gt;集成git&lt;/li&gt;
+&lt;li&gt;及其他特点&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;在&lt;code&gt;oh-my-zsh&lt;/code&gt;环境下的安装很简单，直接从github源克隆powerlevel10k仓库到&lt;code&gt;~/.oh-my-zsh/custom/themes&lt;/code&gt;目录下&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git clone --depth&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; https://github.com/romkatv/powerlevel10k.git &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;ZSH_CUSTOM&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;:-&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$HOME&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;/.oh-my-zsh/custom&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;/themes/powerlevel10k
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;中国大陆地区也可以使用gitee上的官方镜像加速下载&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git clone --depth&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; https://gitee.com/romkatv/powerlevel10k.git &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;ZSH_CUSTOM&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;:-&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$HOME&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;/.oh-my-zsh/custom&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;/themes/powerlevel10k
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;编辑&lt;code&gt;.zshrc&lt;/code&gt;文件，将主题更改为&lt;code&gt;powerlevel10k&lt;/code&gt;，找到&lt;code&gt;ZSH_THEME=&amp;quot;robbyrussell&amp;quot;&lt;/code&gt;那一行，然后将&lt;code&gt;robbyrussell&lt;/code&gt;更换为&lt;code&gt;powerlevel10k/powerlevel10k&lt;/code&gt;，如下&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;ZSH_THEME&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;powerlevel10k/powerlevel10k&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;安装完成后，执行命令&lt;code&gt;source ~/.zshrc&lt;/code&gt;或者是退出iTem2重启一下，然后就会自动触发Powerlevel10k配置向导（Configuration Wizard），然后跟随提示，一步步进行配置，以下是根据个人喜好进行的配置，仅供参考学习，大体流程如下&lt;/p&gt;
+&lt;p&gt;在配置powerlevel10k之前，可能会提示你：询问是否安装推荐的字体（&lt;strong&gt;Meslo Nerd Font&lt;/strong&gt;），然后选择安装，安装完成后需要重启item2，然后重启，重新进入powerlevel10k的配置流程&lt;/p&gt;
+&lt;p&gt;1、问：这看起来像钻石（旋转的正方形）吗？&lt;/p&gt;
+&lt;p&gt;答：y&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119200703620.png&#34;
+	width=&#34;1145&#34;
+	height=&#34;780&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119200703620_hu_b28bffde699c8e6f.png 480w, https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119200703620_hu_9e8285982befe510.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250119200703620&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;146&#34;
+		data-flex-basis=&#34;352px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;2、问：这看起来像一把锁吗？&lt;/p&gt;
+&lt;p&gt;答：y&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119200926840.png&#34;
+	width=&#34;1145&#34;
+	height=&#34;781&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119200926840_hu_72b4db56286683a0.png 480w, https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119200926840_hu_b8e0b67d524c9af2.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250119200926840&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;146&#34;
+		data-flex-basis=&#34;351px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;3、问：这看起来像一个向上的箭头吗？&lt;/p&gt;
+&lt;p&gt;答：y&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119201036973.png&#34;
+	width=&#34;1145&#34;
+	height=&#34;781&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119201036973_hu_667e065700ad598f.png 480w, https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119201036973_hu_8d9029f6af77e26f.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250119201036973&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;146&#34;
+		data-flex-basis=&#34;351px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;4、问：向下的箭头指向什么数字？&lt;/p&gt;
+&lt;p&gt;答：1&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119201115418.png&#34;
+	width=&#34;1145&#34;
+	height=&#34;780&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119201115418_hu_d171682ffdba223b.png 480w, https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119201115418_hu_e0818efd5445e11b.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250119201115418&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;146&#34;
+		data-flex-basis=&#34;352px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;5、问：所有这些图标都适合十字吗？&lt;/p&gt;
+&lt;p&gt;答：y&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119201309249.png&#34;
+	width=&#34;1145&#34;
+	height=&#34;781&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119201309249_hu_5d32546063cdeaff.png 480w, https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119201309249_hu_5af474c9f724f37b.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250119201309249&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;146&#34;
+		data-flex-basis=&#34;351px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;6、选择一个提示风格，个人比较喜欢（3）Rainbow，所以这里就选择3，你可根据你的喜好选择，这里就输入：3&lt;/p&gt;
+&lt;p&gt;然后回车&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119201324058.png&#34;
+	width=&#34;1145&#34;
+	height=&#34;778&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119201324058_hu_c52062dd9751302a.png 480w, https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119201324058_hu_a3471a4bc6d1a89.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250119201324058&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;147&#34;
+		data-flex-basis=&#34;353px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;7、字符集的选择，(1)  Unicode.这里就输入1，然后回车&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119203323513.png&#34;
+	width=&#34;1117&#34;
+	height=&#34;808&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119203323513_hu_694730976cd75de0.png 480w, https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119203323513_hu_23dc867542564a7.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250119203323513&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;138&#34;
+		data-flex-basis=&#34;331px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;8、当前时间显示的格式，或者不显示，个人喜欢24小时制，你可以根据自身喜好选择，这里输入2，然后回车&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119201609821.png&#34;
+	width=&#34;1145&#34;
+	height=&#34;779&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119201609821_hu_8ad16210a93a1ebe.png 480w, https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119201609821_hu_63051618f2834c7.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250119201609821&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;146&#34;
+		data-flex-basis=&#34;352px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;9、提示分割符，个人喜欢箭头型，就选择(1)  Angled，你可根据自身喜好选择，这里就输入1，然后回车&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119203434968.png&#34;
+	width=&#34;1117&#34;
+	height=&#34;808&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119203434968_hu_e5e54aaee80d649b.png 480w, https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119203434968_hu_6e89efc914cdef5b.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250119203434968&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;138&#34;
+		data-flex-basis=&#34;331px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;10、提示头的选择，个人喜欢箭头，你可以根据自身喜好选择，这里就输入3，然后回车&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119203616145.png&#34;
+	width=&#34;1117&#34;
+	height=&#34;808&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119203616145_hu_b3be8d4d51d2b04d.png 480w, https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119203616145_hu_8bc24bfe9fef4402.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250119203616145&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;138&#34;
+		data-flex-basis=&#34;331px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;11、提示尾部的选择，个人喜欢波浪，你可以根据自身喜好选择，这里就输入2，然后回车&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119203819617.png&#34;
+	width=&#34;1117&#34;
+	height=&#34;808&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119203819617_hu_d021085259f8b9d3.png 480w, https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119203819617_hu_89c58cee4311d04d.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250119203819617&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;138&#34;
+		data-flex-basis=&#34;331px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;12、命令行的提示高度，是换行，还是在当前行，个人选择（1）One line，你可根据自身喜好选择，这里就输入1，然后回车&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119203859087.png&#34;
+	width=&#34;1117&#34;
+	height=&#34;808&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119203859087_hu_fa9b52fe6b6547db.png 480w, https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119203859087_hu_5ab6bc90be66f3d3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250119203859087&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;138&#34;
+		data-flex-basis=&#34;331px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;13、命令行是否紧凑，个人喜欢紧凑，选择（1）Compact 你可以根据自身喜好选择，这里就输入1，然后回车&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119203921656.png&#34;
+	width=&#34;1117&#34;
+	height=&#34;808&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119203921656_hu_9d3005f018606c58.png 480w, https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119203921656_hu_1e5245acda0c5c0e.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250119203921656&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;138&#34;
+		data-flex-basis=&#34;331px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;14、图标样式的选择，个人喜欢多一点的，就选择2，你可以根据自身喜好选择，这里就输入2，然后回车&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119204704735.png&#34;
+	width=&#34;1117&#34;
+	height=&#34;808&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119204704735_hu_d78a074badac9c9d.png 480w, https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119204704735_hu_a32f72d8d7377878.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250119204704735&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;138&#34;
+		data-flex-basis=&#34;331px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;15、提示流程的选择，个人感觉图标多点图标比架炫酷，就选择2，你可根据自身喜好选择，这里就输入2，然后回车&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119204718181.png&#34;
+	width=&#34;1117&#34;
+	height=&#34;808&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119204718181_hu_a86876e2c22489eb.png 480w, https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119204718181_hu_419abf6314a84115.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250119204718181&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;138&#34;
+		data-flex-basis=&#34;331px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;16、是否启用瞬态提示，选择n，否则就没有图标好看了，当然，你也可以选择1，根据自身喜好选择，这里就输入n，然后回车&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119204730901.png&#34;
+	width=&#34;1117&#34;
+	height=&#34;808&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119204730901_hu_6d1ef7c2574c8149.png 480w, https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119204730901_hu_f3aaf4a0ab4485ad.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250119204730901&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;138&#34;
+		data-flex-basis=&#34;331px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;17、即时提示模式，选择1，然后回车&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119204425850.png&#34;
+	width=&#34;1117&#34;
+	height=&#34;808&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119204425850_hu_a485a8ae814d156e.png 480w, https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119204425850_hu_dde727eca8715525.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250119204425850&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;138&#34;
+		data-flex-basis=&#34;331px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;18、是否将刚才的配置信息写入配置文件，选择y，然后回车即可&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119204457069.png&#34;
+	width=&#34;1117&#34;
+	height=&#34;808&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119204457069_hu_3b698e5e74bb995f.png 480w, https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119204457069_hu_fc89581b73292948.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250119204457069&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;138&#34;
+		data-flex-basis=&#34;331px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;最后，大功告成，看着就很炫酷，当然还有更多更炫酷的配置，比如设置字体颜色，也可以找寻更多的插件，这里就抛砖引玉。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119210138219.png&#34;
+	width=&#34;1145&#34;
+	height=&#34;781&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119210138219_hu_cebaa3bb3404f3e2.png 480w, https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119210138219_hu_4c175c0fd7329b31.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250119210138219&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;146&#34;
+		data-flex-basis=&#34;351px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;如果对觉得配置的主题不是很好看，想重新配置，在终端中执行命令&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;p10k configure
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;执行完成后就可以重新配置powerlevel10k主题了&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

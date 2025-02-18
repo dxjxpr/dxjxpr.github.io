@@ -7,7 +7,1315 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
         <copyright>dxjxpr All Rights Reserved</copyright>
-        <lastBuildDate>Tue, 14 Jan 2025 21:30:00 +0800</lastBuildDate><atom:link href="https://dxjxpr.github.io/categories/linux/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Mon, 17 Feb 2025 19:00:00 +0800</lastBuildDate><atom:link href="https://dxjxpr.github.io/categories/linux/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>搭建科学上网服务器（仅供学习参考使用）</title>
+        <link>https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/</link>
+        <pubDate>Mon, 17 Feb 2025 19:00:00 +0800</pubDate>
+        
+        <guid>https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/</guid>
+        <description>&lt;img src="https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/cover.png" alt="Featured image of post 搭建科学上网服务器（仅供学习参考使用）" /&gt;&lt;p&gt;[TOC]&lt;/p&gt;
+&lt;h1 id=&#34;本文仅仅供学习参考使用无任何盈利性质单纯技术分享不承担任何法律责任所有使用该技术的人员引发的后果自行承担相应后果&#34;&gt;本文仅仅供学习参考使用，无任何盈利性质，单纯技术分享，不承担任何法律责任，所有使用该技术的人员引发的后果自行承担相应后果
+&lt;/h1&gt;&lt;h1 id=&#34;本文仅分享科学上网技术用来学习计算机知识查询资料比如医学计算机绘画等各领域学习使用&#34;&gt;本文仅分享科学上网技术，用来学习计算机知识，查询资料，比如医学、计算机、绘画等各领域学习使用
+&lt;/h1&gt;&lt;h1 id=&#34;请勿私自搭建进行违法犯罪活动&#34;&gt;请勿私自搭建进行违法犯罪活动
+&lt;/h1&gt;&lt;h1 id=&#34;一准备工作&#34;&gt;一、准备工作
+&lt;/h1&gt;&lt;h2 id=&#34;1vps厂商选择&#34;&gt;1、vps厂商选择
+&lt;/h2&gt;&lt;p&gt;搭建一个科学上网服务器，那么必然是需要一个云服务器作为物理基础，才能进行搭建，这里就应用Github上&lt;a class=&#34;link&#34; href=&#34;https://github.com/mmhunter3515/vpsdamimi&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;mmhunter3515&lt;/a&gt;大佬整理的VPS厂商，整理的很详细，在这里就列举几个&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Vultr&lt;/strong&gt;：https://www.vultr.com/&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Lightnode&lt;/strong&gt;：ttps://www.lightnode.com/&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Google&lt;/strong&gt;：https://cloud.google.com/&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;AWS&lt;/strong&gt;：https://aws.amazon.com/&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;2注册账号与充值&#34;&gt;2、注册账号与充值
+&lt;/h2&gt;&lt;p&gt;本文选择&lt;a class=&#34;link&#34; href=&#34;vultr.com&#34; &gt;vultr&lt;/a&gt;厂商，这个厂商的数据中心较多，于是使用的人也就很多，很多人选择这个厂商的服务器搭建网站之类，于是出现一个就封锁一个ip，就造成了vultr厂商的很多ip被封了，所以，在创建实例的时候，就会出现很有可能无法连接，因为被封了。本文只是为了演示技术，就还是选择vultr厂商（其实是没有钱去其他网站充值了，也就这个网站还有几刀可以嚯嚯）&lt;/p&gt;
+&lt;p&gt;下面是vultr的主界面&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250214210749764.png&#34;
+	width=&#34;2560&#34;
+	height=&#34;1373&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250214210749764_hu_1ac59ae6e6b61a3f.png 480w, https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250214210749764_hu_fbd61ef669dd9890.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250214210749764&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;186&#34;
+		data-flex-basis=&#34;447px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;首先需要一个账号，点击右上角的&lt;code&gt;Sign up&lt;/code&gt;自行注册一个账户，推荐使用Gmail邮箱&lt;/p&gt;
+&lt;p&gt;注：关于注册账号和充值部分，厂家可能会不定期给一些优惠券或者是返还之类，这个就需要大家执行去翻阅查找资料了&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250214210859432.png&#34;
+	width=&#34;2560&#34;
+	height=&#34;1375&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250214210859432_hu_701427d716ed923c.png 480w, https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250214210859432_hu_42a62c53f2ba05a3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250214210859432&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;186&#34;
+		data-flex-basis=&#34;446px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;注册完成后，需要充值，最低需要&lt;code&gt;$10&lt;/code&gt;，支持&lt;code&gt;支付宝&lt;/code&gt;充值&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250214211413313.png&#34;
+	width=&#34;2560&#34;
+	height=&#34;1415&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250214211413313_hu_86fd99f49997a28a.png 480w, https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250214211413313_hu_5d2f29c9f54b40c1.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250214211413313&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;180&#34;
+		data-flex-basis=&#34;434px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h1 id=&#34;二开始创建ecs实例&#34;&gt;二、开始创建ECS实例
+&lt;/h1&gt;&lt;h2 id=&#34;1部署服务器&#34;&gt;1、部署服务器
+&lt;/h2&gt;&lt;p&gt;选择&lt;code&gt;Products&lt;/code&gt;的&lt;code&gt;Compute&lt;/code&gt;界面，可以看到&lt;code&gt;Deploy Server&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217153905149.png&#34;
+	width=&#34;2560&#34;
+	height=&#34;1415&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217153905149_hu_1cfa7f2a34e20810.png 480w, https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217153905149_hu_5c0e6fb1867236d3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250217153905149&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;180&#34;
+		data-flex-basis=&#34;434px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;创建实例&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217154218405.png&#34;
+	width=&#34;2560&#34;
+	height=&#34;1415&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217154218405_hu_17500e5eb30666c2.png 480w, https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217154218405_hu_b7c1215b8322d8cb.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250217154218405&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;180&#34;
+		data-flex-basis=&#34;434px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;关闭自动备份后，价格就降低几美元（一方面省钱，另外一方面其实也没有那个必要）&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217154326460.png&#34;
+	width=&#34;2560&#34;
+	height=&#34;1415&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217154326460_hu_794a2222574fff45.png 480w, https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217154326460_hu_b5cc848a22d81db6.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250217154326460&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;180&#34;
+		data-flex-basis=&#34;434px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;然后点击&lt;code&gt;Configure Software&lt;/code&gt;进入到镜像选择的界面，系统镜像选择，一般选择&lt;code&gt;CentOS&lt;/code&gt;，版本的话，选择最新版本就好&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217154443360.png&#34;
+	width=&#34;2560&#34;
+	height=&#34;1415&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217154443360_hu_f46170d24f4d37a7.png 480w, https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217154443360_hu_98c06a7b5150cba1.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250217154443360&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;180&#34;
+		data-flex-basis=&#34;434px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217154559420.png&#34;
+	width=&#34;2560&#34;
+	height=&#34;1415&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217154559420_hu_a8f70659afa2f4cd.png 480w, https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217154559420_hu_79634e6a180dbbfc.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250217154559420&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;180&#34;
+		data-flex-basis=&#34;434px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;点击开始部署后，稍等两秒就会自动跳转到实例列表界面，创建实力耗时约&lt;code&gt;1min&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217155649854.png&#34;
+	width=&#34;2560&#34;
+	height=&#34;1415&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217155649854_hu_51e92d32d108e8f3.png 480w, https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217155649854_hu_531469ba06b0b58d.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250217155649854&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;180&#34;
+		data-flex-basis=&#34;434px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;2测试ip连通性&#34;&gt;2、测试ip连通性
+&lt;/h2&gt;&lt;p&gt;当实例创建完成后，会自动分配一个ip，点击实例名称，进入详细界面，就可以看到当前实例的root账户和密码&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217160110842.png&#34;
+	width=&#34;2560&#34;
+	height=&#34;1415&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217160110842_hu_bb060ae3a7976931.png 480w, https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217160110842_hu_fc5c58abb8ad68fa.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250217160110842&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;180&#34;
+		data-flex-basis=&#34;434px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;复制ip地址，如果是&lt;code&gt;macos&lt;/code&gt;电脑或者是&lt;code&gt;linux&lt;/code&gt;打开终端，如果是windows电脑，就打开&lt;code&gt;cmd&lt;/code&gt;，使用&lt;code&gt;ping&lt;/code&gt;命令测试一下能否ping的通，如下图，就表示ping的通，可以ssh连接&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217160308968.png&#34;
+	width=&#34;1145&#34;
+	height=&#34;808&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217160308968_hu_aa5c7bda85c4a261.png 480w, https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217160308968_hu_889985519495518a.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250217160308968&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;141&#34;
+		data-flex-basis=&#34;340px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;如果你创建的实例，分配的ip地址，无法ping通，那么就销毁当前实例，再重新创建一个实例，更换国家或者地区，多尝试几次，总归是可以创建成功的。&lt;/p&gt;
+&lt;h2 id=&#34;3ssh登陆实例&#34;&gt;3、ssh登陆实例
+&lt;/h2&gt;&lt;p&gt;如果你的电脑是&lt;code&gt;macos&lt;/code&gt;或者是&lt;code&gt;linux&lt;/code&gt;，那么直接使用终端就可以直接进行ssh登陆了。如果你的电脑是&lt;code&gt;windows&lt;/code&gt;，那么也能够使用cmd进行ssh登陆，或者是安装像&lt;code&gt;xshell&lt;/code&gt;、&lt;code&gt;PuTTY&lt;/code&gt;、&lt;code&gt;SecureCRT&lt;/code&gt;、&lt;code&gt;MobaXterm&lt;/code&gt;这样的ssh工具（请自行下载和安装）&lt;/p&gt;
+&lt;h2 id=&#34;4安装必要软件和镜像库&#34;&gt;4、安装必要软件和镜像库
+&lt;/h2&gt;&lt;p&gt;执行以下命令，安装相关软件，以及epel库&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo yum install -y epel-release
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo yum clean all 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo yum makecache
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo yum update -y 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo yum upgrade
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo yum install -y wget vim git curl zlib* gcc gcc-c++ automake autoconf libtool make
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h1 id=&#34;三一键部署脚本&#34;&gt;三、一键部署脚本
+&lt;/h1&gt;&lt;h2 id=&#34;1下载并执行管理脚本&#34;&gt;1、下载并执行管理脚本
+&lt;/h2&gt;&lt;p&gt;CentOS/Debian/Ubuntu ShadowsocksR一键部署管理脚本，执行命令&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 下载一键安装脚本&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;wget --no-check-certificate https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocksR.sh
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 增加可执行权限&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;chmod +x shadowsocksR.sh
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 开始执行&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;./shadowsocksR.sh 2&amp;gt;&lt;span class=&#34;p&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; tee shadowsocksR.log
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;设置密码，直接回车，默认密码即可&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217161541237.png&#34;
+	width=&#34;1145&#34;
+	height=&#34;808&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217161541237_hu_ed88abab8d1fdb4e.png 480w, https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217161541237_hu_5aa1a99252842456.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250217161541237&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;141&#34;
+		data-flex-basis=&#34;340px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;设置端口，直接回车，默认端口即可&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217161621766.png&#34;
+	width=&#34;1145&#34;
+	height=&#34;808&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217161621766_hu_31b91575c5c20b4.png 480w, https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217161621766_hu_28bb833b76aa865a.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250217161621766&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;141&#34;
+		data-flex-basis=&#34;340px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;加密方式，直接回车，使用默认的加密协议即可&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217161658665.png&#34;
+	width=&#34;1145&#34;
+	height=&#34;808&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217161658665_hu_e6378b0dedc7367f.png 480w, https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217161658665_hu_18ae4ba267709cff.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250217161658665&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;141&#34;
+		data-flex-basis=&#34;340px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;设置协议，直接回车，默认协议即可&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217161723082.png&#34;
+	width=&#34;1145&#34;
+	height=&#34;808&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217161723082_hu_388b6a7d5db5647a.png 480w, https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217161723082_hu_cfd9decdda2bbaf9.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250217161723082&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;141&#34;
+		data-flex-basis=&#34;340px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;设定混淆方式，default 为默认混淆，直接回车，默认即可&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217161814570.png&#34;
+	width=&#34;1145&#34;
+	height=&#34;808&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217161814570_hu_db749d3ae0e921a8.png 480w, https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217161814570_hu_d2c69d6cc7ae8030.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250217161814570&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;141&#34;
+		data-flex-basis=&#34;340px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;安装成功，按任意键，自动启动&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217161856775.png&#34;
+	width=&#34;1145&#34;
+	height=&#34;808&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217161856775_hu_d55daa245a8f649e.png 480w, https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217161856775_hu_a7b5714a56afbcf5.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250217161856775&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;141&#34;
+		data-flex-basis=&#34;340px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;然后会自动安装一些脚本&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217161927739.png&#34;
+	width=&#34;1145&#34;
+	height=&#34;808&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217161927739_hu_96e2cfdc42f320b2.png 480w, https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217161927739_hu_879e6be98d8cff55.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250217161927739&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;141&#34;
+		data-flex-basis=&#34;340px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;最终，安装完成，会显示刚才所配置的信息，将下面的配置信息保存好，以便客户端使用。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217162052524.png&#34;
+	width=&#34;1145&#34;
+	height=&#34;808&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217162052524_hu_f2122d254693e656.png 480w, https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217162052524_hu_7e3d0ea81c25c3df.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250217162052524&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;141&#34;
+		data-flex-basis=&#34;340px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;安装过后如果想要修改，运行如下相关命令&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 启动&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;/etc/init.d/shadowsocks start
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 停止&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;/etc/init.d/shadowsocks stop
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 重启&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;/etc/init.d/shadowsocks restart
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 状态&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;/etc/init.d/shadowsocks status
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 配置文件路径&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;/etc/shadowsocks.json &lt;span class=&#34;c1&#34;&gt;# 修改文件用vi 或者 vim命令，使用方法百度&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 日志文件路径&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;/var/log/shadowsocks.log
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 安装路径&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;/usr/local/shadowsocks/shadowsoks
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 卸载&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;./shadowsocksR.sh uninstall
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;2查看状态并启动&#34;&gt;2、查看状态并启动
+&lt;/h2&gt;&lt;p&gt;执行命令&lt;code&gt;/etc/init.d/shadowsocks status&lt;/code&gt;查看状态&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;root@vultr:~# /etc/init.d/shadowsocks status
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ShadowsocksR is stopped
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;执行命令&lt;code&gt;/etc/init.d/shadowsocks start&lt;/code&gt;启动服务&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;root@vultr:~# /etc/init.d/shadowsocks start
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Traceback &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;most recent call last&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  File &lt;span class=&#34;s2&#34;&gt;&amp;#34;/usr/local/shadowsocks/server.py&amp;#34;&lt;/span&gt;, line 32, in &amp;lt;module&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    from shadowsocks import shell, daemon, eventloop, tcprelay, udprelay, &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  File &lt;span class=&#34;s2&#34;&gt;&amp;#34;/usr/local/shadowsocks/../shadowsocks/shell.py&amp;#34;&lt;/span&gt;, line 26, in &amp;lt;module&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    from shadowsocks.common import to_bytes, to_str, IPNetwork, PortRange
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  File &lt;span class=&#34;s2&#34;&gt;&amp;#34;/usr/local/shadowsocks/../shadowsocks/common.py&amp;#34;&lt;/span&gt;, line 27, in &amp;lt;module&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    from shadowsocks import lru_cache
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  File &lt;span class=&#34;s2&#34;&gt;&amp;#34;/usr/local/shadowsocks/../shadowsocks/lru_cache.py&amp;#34;&lt;/span&gt;, line 44, in &amp;lt;module&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    class LRUCache&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;collections.MutableMapping&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                   ^^^^^^^^^^^^^^^^^^^^^^^^^^
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;AttributeError: module &lt;span class=&#34;s1&#34;&gt;&amp;#39;collections&amp;#39;&lt;/span&gt; has no attribute &lt;span class=&#34;s1&#34;&gt;&amp;#39;MutableMapping&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Starting ShadowsocksR failed
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;在启动时候出现报错，根据报错信息查看，是由于python的collections库没有MutableMapping属性，这是由于在python3中collections的模块有所变动，需要把&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;collections.MutableMapping
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;变成&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;collections.abc.MutableMapping
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;根据报错信息可以明确看到，是由于&lt;code&gt;/usr/local/shadowsocks/lru_cache.py&lt;/code&gt;文件中，第44行报错，那么就修改这个位置，增加&lt;code&gt;abc&lt;/code&gt;，修改后如下图，然后保存并退出&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217163111355.png&#34;
+	width=&#34;1145&#34;
+	height=&#34;808&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217163111355_hu_50d1f9b6671585be.png 480w, https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217163111355_hu_b458435bebd4d78.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250217163111355&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;141&#34;
+		data-flex-basis=&#34;340px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;再次执行命令&lt;code&gt;/etc/init.d/shadowsocks start&lt;/code&gt;启动服务，此时启动成功，报错信息消失&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;root@vultr:~# /etc/init.d/shadowsocks start
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;IPv6 support
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2025-02-17 08:31:52 INFO     util.py:94 loading libcrypto from libcrypto.so.3
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;2025-02-17 08:31:52 INFO     shell.py:74 ShadowsocksR SSRR 3.2.2 2018-05-22
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;started
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Starting ShadowsocksR success
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;再次执行命令&lt;code&gt;/etc/init.d/shadowsocks status&lt;/code&gt;查看状态，状态正常&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;root@vultr:~# /etc/init.d/shadowsocks status
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ShadowsocksR &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;pid 50662&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; is running...
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;3关闭放行防火墙&#34;&gt;3、关闭/放行防火墙
+&lt;/h2&gt;&lt;p&gt;在服务启动之后，系统防火墙是启动的状态，并未放行其对应的端口号，需要关闭防火墙，或者是在防火墙中放行端口，这样客户端才能够访问，否则无法使用&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 查看防火墙状态&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;root@vultr:~# systemctl status firewalld
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;● firewalld.service - firewalld - dynamic firewall daemon
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;     Loaded: loaded &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;/usr/lib/systemd/system/firewalld.service&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; enabled&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; preset: enabled&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;     Active: active &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;running&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; since Mon 2025-02-17 09:06:05 UTC&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; 16s ago
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; Invocation: 80def4cc4c7442b0b4209d49a4a12d4b
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;       Docs: man:firewalld&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;1&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;   Main PID: &lt;span class=&#34;m&#34;&gt;50936&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;firewalld&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      Tasks: &lt;span class=&#34;m&#34;&gt;2&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;limit: 10802&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;     Memory: 25.4M &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;peak: 27M&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        CPU: 211ms
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;     CGroup: /system.slice/firewalld.service
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;             └─50936 /usr/bin/python3 -sP /usr/sbin/firewalld --nofork --nopid
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Feb &lt;span class=&#34;m&#34;&gt;17&lt;/span&gt; 09:06:05 vultr.guest systemd&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;1&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;: Starting firewalld.service - firewalld - dynamic firewall daemon...
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Feb &lt;span class=&#34;m&#34;&gt;17&lt;/span&gt; 09:06:05 vultr.guest systemd&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;1&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;: Started firewalld.service - firewalld - dynamic firewall daemon.
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 查看防火墙已放行的端口，这里是空的&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;root@vultr:~# firewall-cmd --list-ports
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;26
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;27
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 方法一&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 安装服务管理脚本时，创建的端口是16782，这里在防火墙中为该端口永久放行&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;root@vultr:~# firewall-cmd --zone&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;public --add-port&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;16782/tcp --permanent
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;success
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 防火墙配置完成后，重新加载&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;root@vultr:~# sudo firewall-cmd --reload
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;success
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 再次查看防火墙放行端口&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;root@vultr:~# sudo firewall-cmd --list-all
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;public &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;default, active&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  target: default
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ingress-priority: &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  egress-priority: &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  icmp-block-inversion: no
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  interfaces: enp1s0
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  sources:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  services: cockpit dhcpv6-client ssh
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ports: 16782/tcp   &lt;span class=&#34;c1&#34;&gt;# 已放行的端口&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  protocols:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  forward: yes
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  masquerade: no
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  forward-ports:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  source-ports:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  icmp-blocks:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  rich rules:
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 方法二&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 关闭防火墙&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;root@vultr:~# systemctl stop firewalld
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;root@vultr:~#
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 查看防火墙状态&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;root@vultr:~# systemctl status firewalld
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;○ firewalld.service - firewalld - dynamic firewall daemon
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;     Loaded: loaded &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;/usr/lib/systemd/system/firewalld.service&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; enabled&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; preset: enabled&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;     Active: inactive &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;dead&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; since Mon 2025-02-17 09:14:30 UTC&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; 33s ago
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;   Duration: 8min 25.285s
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; Invocation: 80def4cc4c7442b0b4209d49a4a12d4b
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;       Docs: man:firewalld&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;1&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    Process: &lt;span class=&#34;m&#34;&gt;50936&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;ExecStart&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;/usr/sbin/firewalld --nofork --nopid &lt;span class=&#34;nv&#34;&gt;$FIREWALLD_ARGS&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;code&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;exited, &lt;span class=&#34;nv&#34;&gt;status&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;0/SUCCESS&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;   Main PID: &lt;span class=&#34;m&#34;&gt;50936&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;code&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;exited, &lt;span class=&#34;nv&#34;&gt;status&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;0/SUCCESS&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;   Mem peak: 29.3M
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        CPU: 390ms
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Feb &lt;span class=&#34;m&#34;&gt;17&lt;/span&gt; 09:06:05 vultr.guest systemd&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;1&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;: Starting firewalld.service - firewalld - dynamic firewall daemon...
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Feb &lt;span class=&#34;m&#34;&gt;17&lt;/span&gt; 09:06:05 vultr.guest systemd&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;1&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;: Started firewalld.service - firewalld - dynamic firewall daemon.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Feb &lt;span class=&#34;m&#34;&gt;17&lt;/span&gt; 09:14:30 vultr.guest systemd&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;1&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;: Stopping firewalld.service - firewalld - dynamic firewall daemon...
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Feb &lt;span class=&#34;m&#34;&gt;17&lt;/span&gt; 09:14:30 vultr.guest systemd&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;1&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;: firewalld.service: Deactivated successfully.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Feb &lt;span class=&#34;m&#34;&gt;17&lt;/span&gt; 09:14:30 vultr.guest systemd&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;1&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;: Stopped firewalld.service - firewalld - dynamic firewall daemon.
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;4下载客户端&#34;&gt;4、下载客户端
+&lt;/h2&gt;&lt;p&gt;Mac：https://github.com/shadowsocksr-backup/ShadowsocksX-NG/releases&lt;/p&gt;
+&lt;p&gt;Win：https://github.com/shadowsocksr-backup/shadowsocksr-csharp/releases&lt;/p&gt;
+&lt;p&gt;iPhone：到商店里安装FirstWingy、potatso lite。（搞一个美国appleID）&lt;/p&gt;
+&lt;p&gt;本人电脑是MacOS，就以Mac为例，下载&lt;code&gt;ShadowsocksX-NG-R8.dmg&lt;/code&gt;，打开，然后双击绿色的&lt;code&gt;ShadowsocksX-NG-R8&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217163839136.png&#34;
+	width=&#34;984&#34;
+	height=&#34;541&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217163839136_hu_9b83efe57fe3ee8e.png 480w, https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217163839136_hu_d0e396a41bc22cfe.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250217163839136&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;181&#34;
+		data-flex-basis=&#34;436px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;双击完后，会提示当前软件不安全，此时需要打开电脑设置-Privacy &amp;amp; Scurity，在最下面会出现这个软件的信息，然后点击&lt;code&gt;Open Anyway&lt;/code&gt;，输入电脑密码就可以打开&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217163440254.png&#34;
+	width=&#34;715&#34;
+	height=&#34;625&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217163440254_hu_c47414bf7763de0b.png 480w, https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217163440254_hu_d2fdb7633a560590.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250217163440254&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;114&#34;
+		data-flex-basis=&#34;274px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;打开完成后，电脑的右上角图标就会出现一个小飞机图标，这个就是shadowsocks&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217164144945.png&#34;
+	width=&#34;424&#34;
+	height=&#34;173&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217164144945_hu_f0569d188c5be30d.png 480w, https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217164144945_hu_b6ad8e140456f449.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250217164144945&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;245&#34;
+		data-flex-basis=&#34;588px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;然后点击小飞机&amp;ndash;Servers&amp;ndash;Server Preferences&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217164310724.png&#34;
+	width=&#34;497&#34;
+	height=&#34;550&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217164310724_hu_86f1136f396a8db8.png 480w, https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217164310724_hu_36267b6e8b0410e9.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250217164310724&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;90&#34;
+		data-flex-basis=&#34;216px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217164655640.png&#34;
+	width=&#34;590&#34;
+	height=&#34;600&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217164655640_hu_4c05fa1695da8219.png 480w, https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217164655640_hu_a5371a326f08a4e5.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250217164655640&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;98&#34;
+		data-flex-basis=&#34;236px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217164813161.png&#34;
+	width=&#34;525&#34;
+	height=&#34;576&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217164813161_hu_b3d47277c58fa93a.png 480w, https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217164813161_hu_541edf5cce608089.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250217164813161&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;91&#34;
+		data-flex-basis=&#34;218px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;啟動成功後，這裡以訪問Google和Youtube為例，&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217165751148.png&#34;
+	width=&#34;2560&#34;
+	height=&#34;1415&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217165751148_hu_a5bd72b22708806a.png 480w, https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217165751148_hu_bab85dd993c48deb.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250217165751148&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;180&#34;
+		data-flex-basis=&#34;434px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217165809442.png&#34;
+	width=&#34;2560&#34;
+	height=&#34;1415&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217165809442_hu_e5ecc9c5944149aa.png 480w, https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217165809442_hu_2fdd054d15670c03.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250217165809442&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;180&#34;
+		data-flex-basis=&#34;434px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;使用搜索一個世界上最受歡迎的網站&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217165927212.png&#34;
+	width=&#34;2560&#34;
+	height=&#34;1415&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217165927212_hu_b11709adb45209a7.png 480w, https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217165927212_hu_8ada3ce2dc1309ed.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250217165927212&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;180&#34;
+		data-flex-basis=&#34;434px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;訪問全球最大同性交友網站Github&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217170019024.png&#34;
+	width=&#34;2560&#34;
+	height=&#34;1415&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217170019024_hu_681a36ed1d25b10e.png 480w, https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/image-20250217170019024_hu_1b32471635f0ce51.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250217170019024&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;180&#34;
+		data-flex-basis=&#34;434px&#34;
+	
+&gt;&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>打造macOs超级炫酷终端item2&#43;oh-my-zsh&#43;Powerlevel10k</title>
+        <link>https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/</link>
+        <pubDate>Sun, 19 Jan 2025 21:30:00 +0800</pubDate>
+        
+        <guid>https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/</guid>
+        <description>&lt;img src="https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/oh-my-zsh.png" alt="Featured image of post 打造macOs超级炫酷终端item2&#43;oh-my-zsh&#43;Powerlevel10k" /&gt;&lt;p&gt;使用&lt;code&gt;iTerm2 + oh-my-zsh + Powerlevel10k&lt;/code&gt;打造&lt;code&gt;macOs&lt;/code&gt;潮流又实用的&lt;code&gt;Terminal&lt;/code&gt;保姆级教学&lt;/p&gt;
+&lt;p&gt;[TOC]&lt;/p&gt;
+&lt;h1 id=&#34;一先展示最终效果图&#34;&gt;一、先展示最终效果图
+&lt;/h1&gt;&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250117212756057.png&#34;
+	width=&#34;1145&#34;
+	height=&#34;781&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250117212756057_hu_77fa24fda3cf0ab0.png 480w, https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250117212756057_hu_189847aff1cd7ba4.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250117212756057&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;146&#34;
+		data-flex-basis=&#34;351px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;顺便跑个彩色小火车给大家快乐下（命令：sl | lolcat）&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119191517123.png&#34;
+	width=&#34;1145&#34;
+	height=&#34;779&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119191517123_hu_d666dc48abad9a3d.png 480w, https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119191517123_hu_fa60bfc67dd5a566.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250119191517123&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;146&#34;
+		data-flex-basis=&#34;352px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;下面我们开始今天的安装教程&lt;/p&gt;
+&lt;h1 id=&#34;二安装item2终端&#34;&gt;二、安装iTem2终端
+&lt;/h1&gt;&lt;p&gt;首先到到&lt;code&gt;iTem2&lt;/code&gt;的官网&lt;code&gt;https://iterm2.com/downloads.html&lt;/code&gt;下载安装包，下载下来的安装包是一个&lt;code&gt;.zip&lt;/code&gt;的压缩文件，进行解压，解压后，双击进行安装，或者可以直接将该应用程序放入到&lt;code&gt;Applications&lt;/code&gt;目录下，然后就可以在&lt;code&gt;Lauchpad&lt;/code&gt;里看到&lt;code&gt;iTem&lt;/code&gt;的图标，点击即可启动&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250117215230259.png&#34;
+	width=&#34;2560&#34;
+	height=&#34;1329&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250117215230259_hu_8308235451b782c9.png 480w, https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250117215230259_hu_3deecfffec182fa6.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250117215230259&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;192&#34;
+		data-flex-basis=&#34;462px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;iTem2&lt;/code&gt;的功能丰富，更加全面的可以查看官方文档：&lt;code&gt;https://iterm2.com/documentation.html&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;至于配色、字体大小、窗口大小等配置信息，可以在设置中，自行进行配置&lt;/p&gt;
+&lt;h1 id=&#34;三安装oh-my-zsh配置框架&#34;&gt;三、安装oh-my-zsh配置框架
+&lt;/h1&gt;&lt;p&gt;&lt;code&gt;oh-my-zsh&lt;/code&gt;是一个管理&lt;code&gt;zsh&lt;/code&gt;配置的开源框架，该框架插件生态丰富，比如代码高亮、代码提示等，还有很多主体（此次的主题就是&lt;code&gt;Powerlevel10k&lt;/code&gt;主题）&lt;/p&gt;
+&lt;p&gt;首先需要下载安装&lt;code&gt;zsh&lt;/code&gt;的shell，执行以下命令，并将zsh设置为默认的shell&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;brew update
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;brew install zsh
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;查看当前shell&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$SHELL&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;如果当前shell不是zsh，将shell切换成zsh&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;chsh -s /bin/zsh
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;安装&lt;code&gt;oh-my-zsh&lt;/code&gt;，官网：&lt;code&gt;https://ohmyz.sh/#install&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;执行以下命令：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sh -c &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 或者&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sh -c &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 两个安装命令选择一个即可，个人一般使用第一个，这个无所谓&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;安装完成后，可以看到如下的&lt;code&gt;oh-my-zsh&lt;/code&gt;的彩色图标，同时可以看到光标前面的提示符变成了向右的箭头，这里默认的主题是&lt;code&gt;robbyrussell&lt;/code&gt;，主题的配置信息都是&lt;code&gt;~/.zshrc&lt;/code&gt;配置文件中&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119193513535.png&#34;
+	width=&#34;1145&#34;
+	height=&#34;778&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119193513535_hu_11ce63654c10f264.png 480w, https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119193513535_hu_2e1e06e88a1cbfce.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250119193513535&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;147&#34;
+		data-flex-basis=&#34;353px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h1 id=&#34;四安装插件&#34;&gt;四、安装插件
+&lt;/h1&gt;&lt;p&gt;安装&lt;code&gt;oh-my-zsh&lt;/code&gt;后，建议安装定制的插件，这里介绍两个&lt;a class=&#34;link&#34; href=&#34;https://github.com/zsh-users/zsh-autosuggestions&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;zsh-autosuggestions&lt;/a&gt;和&lt;a class=&#34;link&#34; href=&#34;https://github.com/zsh-users/zsh-syntax-highlighting&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;zsh-syntax-highlighting&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;zsh-autosuggestions
+该插件在用户键入时，是根据命令行历史和完整命令名推荐余下的输入&lt;/li&gt;
+&lt;li&gt;zsh-syntax-highlighting
+此插件对zsh提示符后的输入自动匹配语法高亮，可以让用户在实际命令运行前审核输入行，以便及时发现和改正语法错误。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;安装方式，是将插件从github上克隆到&lt;code&gt;~/.oh-my-zsh/custom/plugins&lt;/code&gt;目录下，然后编辑&lt;code&gt;~/.zshrc&lt;/code&gt;文件，找到&lt;code&gt;plugins=(git)&lt;/code&gt;那一行，将所安装的插件，放入到插件列表中，同时为了保证语法高亮的效果&lt;code&gt;zsh-syntax-highlighting&lt;/code&gt;插件必须置于插件列表的最后一项，如下&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;plugins&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=(&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  git
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  zsh-autosuggestions
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  zsh-syntax-highlighting
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;然后退出item2终端，重新启动才能生效&lt;/p&gt;
+&lt;h1 id=&#34;五配置powerlevel10k主题&#34;&gt;五、配置Powerlevel10k主题
+&lt;/h1&gt;&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/romkatv/powerlevel10k&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;powerlevel10k&lt;/a&gt;是为zsh定制而做的主题，有以下主要特征&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;界面美观&lt;/li&gt;
+&lt;li&gt;即时反馈&lt;/li&gt;
+&lt;li&gt;集成git&lt;/li&gt;
+&lt;li&gt;及其他特点&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;在&lt;code&gt;oh-my-zsh&lt;/code&gt;环境下的安装很简单，直接从github源克隆powerlevel10k仓库到&lt;code&gt;~/.oh-my-zsh/custom/themes&lt;/code&gt;目录下&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git clone --depth&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; https://github.com/romkatv/powerlevel10k.git &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;ZSH_CUSTOM&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;:-&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$HOME&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;/.oh-my-zsh/custom&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;/themes/powerlevel10k
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;中国大陆地区也可以使用gitee上的官方镜像加速下载&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git clone --depth&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; https://gitee.com/romkatv/powerlevel10k.git &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;ZSH_CUSTOM&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;:-&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$HOME&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;/.oh-my-zsh/custom&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;/themes/powerlevel10k
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;编辑&lt;code&gt;.zshrc&lt;/code&gt;文件，将主题更改为&lt;code&gt;powerlevel10k&lt;/code&gt;，找到&lt;code&gt;ZSH_THEME=&amp;quot;robbyrussell&amp;quot;&lt;/code&gt;那一行，然后将&lt;code&gt;robbyrussell&lt;/code&gt;更换为&lt;code&gt;powerlevel10k/powerlevel10k&lt;/code&gt;，如下&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;ZSH_THEME&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;powerlevel10k/powerlevel10k&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;安装完成后，执行命令&lt;code&gt;source ~/.zshrc&lt;/code&gt;或者是退出iTem2重启一下，然后就会自动触发Powerlevel10k配置向导（Configuration Wizard），然后跟随提示，一步步进行配置，以下是根据个人喜好进行的配置，仅供参考学习，大体流程如下&lt;/p&gt;
+&lt;p&gt;在配置powerlevel10k之前，可能会提示你：询问是否安装推荐的字体（&lt;strong&gt;Meslo Nerd Font&lt;/strong&gt;），然后选择安装，安装完成后需要重启item2，然后重启，重新进入powerlevel10k的配置流程&lt;/p&gt;
+&lt;p&gt;1、问：这看起来像钻石（旋转的正方形）吗？&lt;/p&gt;
+&lt;p&gt;答：y&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119200703620.png&#34;
+	width=&#34;1145&#34;
+	height=&#34;780&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119200703620_hu_b28bffde699c8e6f.png 480w, https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119200703620_hu_9e8285982befe510.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250119200703620&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;146&#34;
+		data-flex-basis=&#34;352px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;2、问：这看起来像一把锁吗？&lt;/p&gt;
+&lt;p&gt;答：y&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119200926840.png&#34;
+	width=&#34;1145&#34;
+	height=&#34;781&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119200926840_hu_72b4db56286683a0.png 480w, https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119200926840_hu_b8e0b67d524c9af2.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250119200926840&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;146&#34;
+		data-flex-basis=&#34;351px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;3、问：这看起来像一个向上的箭头吗？&lt;/p&gt;
+&lt;p&gt;答：y&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119201036973.png&#34;
+	width=&#34;1145&#34;
+	height=&#34;781&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119201036973_hu_667e065700ad598f.png 480w, https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119201036973_hu_8d9029f6af77e26f.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250119201036973&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;146&#34;
+		data-flex-basis=&#34;351px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;4、问：向下的箭头指向什么数字？&lt;/p&gt;
+&lt;p&gt;答：1&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119201115418.png&#34;
+	width=&#34;1145&#34;
+	height=&#34;780&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119201115418_hu_d171682ffdba223b.png 480w, https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119201115418_hu_e0818efd5445e11b.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250119201115418&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;146&#34;
+		data-flex-basis=&#34;352px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;5、问：所有这些图标都适合十字吗？&lt;/p&gt;
+&lt;p&gt;答：y&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119201309249.png&#34;
+	width=&#34;1145&#34;
+	height=&#34;781&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119201309249_hu_5d32546063cdeaff.png 480w, https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119201309249_hu_5af474c9f724f37b.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250119201309249&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;146&#34;
+		data-flex-basis=&#34;351px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;6、选择一个提示风格，个人比较喜欢（3）Rainbow，所以这里就选择3，你可根据你的喜好选择，这里就输入：3&lt;/p&gt;
+&lt;p&gt;然后回车&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119201324058.png&#34;
+	width=&#34;1145&#34;
+	height=&#34;778&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119201324058_hu_c52062dd9751302a.png 480w, https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119201324058_hu_a3471a4bc6d1a89.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250119201324058&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;147&#34;
+		data-flex-basis=&#34;353px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;7、字符集的选择，(1)  Unicode.这里就输入1，然后回车&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119203323513.png&#34;
+	width=&#34;1117&#34;
+	height=&#34;808&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119203323513_hu_694730976cd75de0.png 480w, https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119203323513_hu_23dc867542564a7.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250119203323513&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;138&#34;
+		data-flex-basis=&#34;331px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;8、当前时间显示的格式，或者不显示，个人喜欢24小时制，你可以根据自身喜好选择，这里输入2，然后回车&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119201609821.png&#34;
+	width=&#34;1145&#34;
+	height=&#34;779&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119201609821_hu_8ad16210a93a1ebe.png 480w, https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119201609821_hu_63051618f2834c7.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250119201609821&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;146&#34;
+		data-flex-basis=&#34;352px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;9、提示分割符，个人喜欢箭头型，就选择(1)  Angled，你可根据自身喜好选择，这里就输入1，然后回车&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119203434968.png&#34;
+	width=&#34;1117&#34;
+	height=&#34;808&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119203434968_hu_e5e54aaee80d649b.png 480w, https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119203434968_hu_6e89efc914cdef5b.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250119203434968&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;138&#34;
+		data-flex-basis=&#34;331px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;10、提示头的选择，个人喜欢箭头，你可以根据自身喜好选择，这里就输入3，然后回车&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119203616145.png&#34;
+	width=&#34;1117&#34;
+	height=&#34;808&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119203616145_hu_b3be8d4d51d2b04d.png 480w, https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119203616145_hu_8bc24bfe9fef4402.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250119203616145&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;138&#34;
+		data-flex-basis=&#34;331px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;11、提示尾部的选择，个人喜欢波浪，你可以根据自身喜好选择，这里就输入2，然后回车&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119203819617.png&#34;
+	width=&#34;1117&#34;
+	height=&#34;808&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119203819617_hu_d021085259f8b9d3.png 480w, https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119203819617_hu_89c58cee4311d04d.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250119203819617&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;138&#34;
+		data-flex-basis=&#34;331px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;12、命令行的提示高度，是换行，还是在当前行，个人选择（1）One line，你可根据自身喜好选择，这里就输入1，然后回车&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119203859087.png&#34;
+	width=&#34;1117&#34;
+	height=&#34;808&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119203859087_hu_fa9b52fe6b6547db.png 480w, https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119203859087_hu_5ab6bc90be66f3d3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250119203859087&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;138&#34;
+		data-flex-basis=&#34;331px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;13、命令行是否紧凑，个人喜欢紧凑，选择（1）Compact 你可以根据自身喜好选择，这里就输入1，然后回车&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119203921656.png&#34;
+	width=&#34;1117&#34;
+	height=&#34;808&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119203921656_hu_9d3005f018606c58.png 480w, https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119203921656_hu_1e5245acda0c5c0e.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250119203921656&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;138&#34;
+		data-flex-basis=&#34;331px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;14、图标样式的选择，个人喜欢多一点的，就选择2，你可以根据自身喜好选择，这里就输入2，然后回车&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119204704735.png&#34;
+	width=&#34;1117&#34;
+	height=&#34;808&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119204704735_hu_d78a074badac9c9d.png 480w, https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119204704735_hu_a32f72d8d7377878.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250119204704735&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;138&#34;
+		data-flex-basis=&#34;331px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;15、提示流程的选择，个人感觉图标多点图标比架炫酷，就选择2，你可根据自身喜好选择，这里就输入2，然后回车&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119204718181.png&#34;
+	width=&#34;1117&#34;
+	height=&#34;808&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119204718181_hu_a86876e2c22489eb.png 480w, https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119204718181_hu_419abf6314a84115.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250119204718181&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;138&#34;
+		data-flex-basis=&#34;331px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;16、是否启用瞬态提示，选择n，否则就没有图标好看了，当然，你也可以选择1，根据自身喜好选择，这里就输入n，然后回车&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119204730901.png&#34;
+	width=&#34;1117&#34;
+	height=&#34;808&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119204730901_hu_6d1ef7c2574c8149.png 480w, https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119204730901_hu_f3aaf4a0ab4485ad.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250119204730901&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;138&#34;
+		data-flex-basis=&#34;331px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;17、即时提示模式，选择1，然后回车&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119204425850.png&#34;
+	width=&#34;1117&#34;
+	height=&#34;808&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119204425850_hu_a485a8ae814d156e.png 480w, https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119204425850_hu_dde727eca8715525.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250119204425850&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;138&#34;
+		data-flex-basis=&#34;331px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;18、是否将刚才的配置信息写入配置文件，选择y，然后回车即可&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119204457069.png&#34;
+	width=&#34;1117&#34;
+	height=&#34;808&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119204457069_hu_3b698e5e74bb995f.png 480w, https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119204457069_hu_fc89581b73292948.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250119204457069&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;138&#34;
+		data-flex-basis=&#34;331px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;最后，大功告成，看着就很炫酷，当然还有更多更炫酷的配置，比如设置字体颜色，也可以找寻更多的插件，这里就抛砖引玉。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119210138219.png&#34;
+	width=&#34;1145&#34;
+	height=&#34;781&#34;
+	srcset=&#34;https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119210138219_hu_cebaa3bb3404f3e2.png 480w, https://dxjxpr.github.io/p/%E6%89%93%E9%80%A0macos%E8%B6%85%E7%BA%A7%E7%82%AB%E9%85%B7%E7%BB%88%E7%AB%AFitem2-oh-my-zsh-powerlevel10k/image-20250119210138219_hu_4c175c0fd7329b31.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250119210138219&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;146&#34;
+		data-flex-basis=&#34;351px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;如果对觉得配置的主题不是很好看，想重新配置，在终端中执行命令&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;p10k configure
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;执行完成后就可以重新配置powerlevel10k主题了&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>红帽RHEL9搭建局域网镜像源与永久挂载ISO文件</title>
         <link>https://dxjxpr.github.io/p/%E7%BA%A2%E5%B8%BDrhel9%E6%90%AD%E5%BB%BA%E5%B1%80%E5%9F%9F%E7%BD%91%E9%95%9C%E5%83%8F%E6%BA%90%E4%B8%8E%E6%B0%B8%E4%B9%85%E6%8C%82%E8%BD%BDiso%E6%96%87%E4%BB%B6/</link>
         <pubDate>Tue, 14 Jan 2025 21:30:00 +0800</pubDate>
