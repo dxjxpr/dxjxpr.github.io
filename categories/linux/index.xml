@@ -7,7 +7,71 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
         <copyright>dxjxpr All Rights Reserved</copyright>
-        <lastBuildDate>Mon, 17 Feb 2025 19:00:00 +0800</lastBuildDate><atom:link href="https://dxjxpr.github.io/categories/linux/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Fri, 21 Feb 2025 12:00:00 +0800</lastBuildDate><atom:link href="https://dxjxpr.github.io/categories/linux/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>解决Ubuntu和Windows双系统时间不同步问题</title>
+        <link>https://dxjxpr.github.io/p/%E8%A7%A3%E5%86%B3ubuntu%E5%92%8Cwindows%E5%8F%8C%E7%B3%BB%E7%BB%9F%E6%97%B6%E9%97%B4%E4%B8%8D%E5%90%8C%E6%AD%A5%E9%97%AE%E9%A2%98/</link>
+        <pubDate>Fri, 21 Feb 2025 12:00:00 +0800</pubDate>
+        
+        <guid>https://dxjxpr.github.io/p/%E8%A7%A3%E5%86%B3ubuntu%E5%92%8Cwindows%E5%8F%8C%E7%B3%BB%E7%BB%9F%E6%97%B6%E9%97%B4%E4%B8%8D%E5%90%8C%E6%AD%A5%E9%97%AE%E9%A2%98/</guid>
+        <description>&lt;img src="https://dxjxpr.github.io/p/%E8%A7%A3%E5%86%B3ubuntu%E5%92%8Cwindows%E5%8F%8C%E7%B3%BB%E7%BB%9F%E6%97%B6%E9%97%B4%E4%B8%8D%E5%90%8C%E6%AD%A5%E9%97%AE%E9%A2%98/cover.jpg" alt="Featured image of post 解决Ubuntu和Windows双系统时间不同步问题" /&gt;&lt;p&gt;1、 电脑硬件时间，也就是电脑主板的BIOS上显示的时间
+2、介绍三种时间标准&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;UTC，即Coordinated Universal Time，协调世界时
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;GMT，即Greenwich Mean Time，格林尼治标准时间
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;RTC，即Real-time clock，实时时钟
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;3、Windows与Linux看待BIOS里时间的方式不一样&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Linux时钟分为系统时钟（System Clock）和硬件时钟（RTC）。Linux把硬件时间当作UTC，系统时间是UTC时间经过换算过来的（就是东几区：加时间，西几区：减时间）。比如北京时间，就是GMT+8,在windows里是凌晨00:00，那么在Linux中就是08:00，多八个小时，这是与所在的地理位置有关，此处就请科普下地理知识，经度纬度，以及地球公转自转，太阳照射时间等知识信息
+Windows系统就直接读取了系统硬件时间（RTC），当作本地时间（Local time），因此windows系统时间和BIOS中显示的时间（RTC）是一样的&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;4、解决方法，在ubuntu，打开终端，执行以下命令&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo apt install ntpdate &lt;span class=&#34;c1&#34;&gt;# 使用ntp同步时间&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo ntpdate time.windows.com &lt;span class=&#34;c1&#34;&gt;# 同步微软windows时间&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo hwclock --localtime --systohc &lt;span class=&#34;c1&#34;&gt;# 将时间跟新到硬件上&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 如果显示没有hwclock命令，就先安装该命令&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# sudo apt install util-linux-extra&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;如果同步之后，windows的时间依旧没有更新，一般是你电脑的时间同步按钮打开了，关闭这个同步功能，再打开这个功能，调整一下，然后就可以了。&lt;/p&gt;
+&lt;p&gt;另外一个方式，在ubuntu里执行命令&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;timedatectl set-local-rtc &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; --adjust-system-clock
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# --adjust-system-clock 参数解释&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 当使用set-local-rtc命令时，若使用了此选项，则表示根据RTC时间来更新系统时钟,而不是用UTC来更新（UTC需要+8）。&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 若未使用此选项，则表示根据系统时钟来更新RTC时间。&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;然后重启电脑&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>搭建科学上网服务器（仅供学习参考使用）</title>
         <link>https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/</link>
         <pubDate>Mon, 17 Feb 2025 19:00:00 +0800</pubDate>
