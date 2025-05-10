@@ -591,7 +591,38 @@
 <h3 id="将公钥添加到github">将公钥添加到Github
 </h3><p>1、登陆Github，进入 <strong>Settings</strong> &gt; <strong>SSH and GPG keys</strong> &gt; <strong>New SSH key</strong></p>
 <p>2、粘贴公钥，设置标题（如 “MyKey”），点击 <strong>Add SSH key</strong>即可</p>
-<h3 id="将公钥复制到远程服务器">将公钥复制到远程服务器
+<p>3、测试联通性，执行以下命令</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">ssh -T git@github.com
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>会输出以下内容</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">Hi username! You<span class="err">&#39;</span>ve successfully authenticated...
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果出现以下内容，敲yes回车即可</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">The authenticity of host <span class="s1">&#39;github.com (222.222.222.222)&#39;</span> can<span class="err">&#39;</span>t be established.
+</span></span><span class="line"><span class="cl"><span class="c1"># RSA key fingerprint is 66:77:ffc:a5:76:28:55:3g:6h:1b:56:4e:tb:df:gg:g8.</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Are you sure you want to continue connecting (yes/no)?</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="将公钥复制到远程服务器">将公钥复制到远程服务器
 </h3><p>执行以下命令</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -603,6 +634,23 @@
 <pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">ssh-copy-id -i ~/.ssh/id_rsa.pub user@remote_host
 </span></span><span class="line"><span class="cl"><span class="c1"># 替换 user@remote_host为你的真实服务器ip地址（如 john@192.168.1.100），添加时需要输入密码</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># 或手动将公钥追加到服务器的 ~/.ssh/authorized_keys。</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>测试联通性，执行以下命令</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">ssh user@remote_host
+</span></span><span class="line"><span class="cl"><span class="c1"># 若没有密码，则会直接连接成功</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 若设密码，输入私钥密码。</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 如果出现以下内容，敲yes回车即可</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Are you sure you want to continue connecting (yes/no)?</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div>
