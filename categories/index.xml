@@ -7,7 +7,31 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
         <copyright>dxjxpr All Rights Reserved</copyright>
-        <lastBuildDate>Wed, 07 May 2025 12:00:00 +0800</lastBuildDate><atom:link href="https://dxjxpr.github.io/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Thu, 08 May 2025 12:00:00 +0800</lastBuildDate><atom:link href="https://dxjxpr.github.io/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>HTTP</title>
+        <link>https://dxjxpr.github.io/categories/http/</link>
+        <pubDate>Thu, 08 May 2025 12:00:00 +0800</pubDate>
+        
+        <guid>https://dxjxpr.github.io/categories/http/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>HTTPS</title>
+        <link>https://dxjxpr.github.io/categories/https/</link>
+        <pubDate>Thu, 08 May 2025 12:00:00 +0800</pubDate>
+        
+        <guid>https://dxjxpr.github.io/categories/https/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>SSH</title>
+        <link>https://dxjxpr.github.io/categories/ssh/</link>
+        <pubDate>Thu, 08 May 2025 12:00:00 +0800</pubDate>
+        
+        <guid>https://dxjxpr.github.io/categories/ssh/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>Git</title>
         <link>https://dxjxpr.github.io/categories/git/</link>
         <pubDate>Wed, 07 May 2025 12:00:00 +0800</pubDate>
