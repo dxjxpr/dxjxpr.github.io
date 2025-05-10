@@ -7,7 +7,15 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
         <copyright>dxjxpr All Rights Reserved</copyright>
-        <lastBuildDate>Tue, 06 May 2025 12:00:00 +0800</lastBuildDate><atom:link href="https://dxjxpr.github.io/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Wed, 07 May 2025 12:00:00 +0800</lastBuildDate><atom:link href="https://dxjxpr.github.io/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Git</title>
+        <link>https://dxjxpr.github.io/categories/git/</link>
+        <pubDate>Wed, 07 May 2025 12:00:00 +0800</pubDate>
+        
+        <guid>https://dxjxpr.github.io/categories/git/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>VPN</title>
         <link>https://dxjxpr.github.io/categories/vpn/</link>
         <pubDate>Tue, 06 May 2025 12:00:00 +0800</pubDate>

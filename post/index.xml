@@ -7,7 +7,114 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
         <copyright>dxjxpr All Rights Reserved</copyright>
-        <lastBuildDate>Tue, 06 May 2025 12:00:00 +0800</lastBuildDate><atom:link href="https://dxjxpr.github.io/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Wed, 07 May 2025 12:00:00 +0800</lastBuildDate><atom:link href="https://dxjxpr.github.io/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Git简介-发展</title>
+        <link>https://dxjxpr.github.io/p/git%E7%AE%80%E4%BB%8B-%E5%8F%91%E5%B1%95/</link>
+        <pubDate>Wed, 07 May 2025 12:00:00 +0800</pubDate>
+        
+        <guid>https://dxjxpr.github.io/p/git%E7%AE%80%E4%BB%8B-%E5%8F%91%E5%B1%95/</guid>
+        <description>&lt;img src="https://dxjxpr.github.io/p/git%E7%AE%80%E4%BB%8B-%E5%8F%91%E5%B1%95/cover.jpg" alt="Featured image of post Git简介-发展" /&gt;&lt;h1 id=&#34;git&#34;&gt;Git
+&lt;/h1&gt;&lt;h2 id=&#34;简介&#34;&gt;简介
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Git是一个开源的分布式版本控制系统，跨平台，支持Windows、Linux、MacOS。主要是用于项目的版本管理，是由林纳斯·托瓦兹(Linux Torvalds)在2005年为Linux内核开发而创建。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;起因&#34;&gt;起因
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;在2002年至2005年间，Linux内核开发团队使用BitKeeper（一个专有的版本控制系统）来管理代码，Linux团队汇集了全球顶尖人才，免不了有人想破解BitKeeper的软件，BitKeeper的开发公司BitMover在2005年停止了向Linux团队的免费版本支持。&lt;/li&gt;
+&lt;li&gt;于是成功惹怒了Linus这位大佬，迫使Linus寻找一个高效、分布式的版本控制工具。由于对当时其他工具（如SVN、CVS）的性能和功能不满，Linus决定开发一个自己的版本控制系统，然后一周后，Git这个延续至今的闪耀新星诞生。只能说大佬就是大佬。&lt;/li&gt;
+&lt;li&gt;站在历史的角度来说，BitKeeper公司也是错过了一次流芳百世的机会/商机，如果BitKeeper公司继续提供使用，可能也不会有Git的问世。历史的滚滚车轮总是这么奇妙，悄无声息，又很神秘，好像一切都是安排好的一样。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;设计目标&#34;&gt;设计目标
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;高效性：能够快速处理大型项目（如Linux内核）的版本控制&lt;/li&gt;
+&lt;li&gt;分布式：允许开发者在本地操作完整的历史记录，无需依赖中央服务器&lt;/li&gt;
+&lt;li&gt;数据完整性：通过SHA-1哈希确保版本历史的可靠性&lt;/li&gt;
+&lt;li&gt;简单易用：提供直观的命令和灵活的工作流程&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;发展历史&#34;&gt;发展历史
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;几个关键阶段&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;2005年4月7日正式上线&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;2005-2008年：社区接管与功能完善&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;2008-2012年：普及与生态系统繁荣&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;2012-2020年：性能优化与新功能&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;2020年至今：现代化与企业级应用&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;当今地位&#34;&gt;当今地位
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;普及度：Git是全球最流行的版本控制系统，几乎所有主流代码托管平台（Github、GitLab、Bitbucket）都是以Git为核心&lt;/li&gt;
+&lt;li&gt;影响力：Git不仅用于软件开发，还被应用于书籍写作、法律文档管理、数据科学等领域&lt;/li&gt;
+&lt;li&gt;维护：Git由开源社区进行维护，拥有全球顶尖的开发者贡献者，代码托管在GitHub上&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;git下载与安装&#34;&gt;Git下载与安装
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;官网地址：https://git-scm.com/&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/Users/dh/work/typora_blog_ariticle/image-20250510174600272.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250510174600272&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;GitHub地址：https://github.com/git/git&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/Users/dh/work/typora_blog_ariticle/image-20250510174653485.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250510174653485&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;基本概念&#34;&gt;基本概念
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;仓库（Repository）：存储代码和版本历史的地方，分为本地仓库和远程仓库。&lt;/li&gt;
+&lt;li&gt;提交（Commit）：代码变更的快照，记录修改内容和元数据（如作者、时间）。&lt;/li&gt;
+&lt;li&gt;分支（Branch）：代码的独立开发线，默认分支通常为main。&lt;/li&gt;
+&lt;li&gt;合并（Merge）：将不同分支的更改整合到一起。&lt;/li&gt;
+&lt;li&gt;远程仓库（Remote）：托管在服务器上的仓库，如GitHub、GitLab。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;常用命令&#34;&gt;常用命令
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;初始化：git init（创建新仓库）&lt;/li&gt;
+&lt;li&gt;克隆：git clone &lt;url&gt;（复制远程仓库）&lt;/li&gt;
+&lt;li&gt;添加：git add &lt;file&gt;（将更改加入暂存区）&lt;/li&gt;
+&lt;li&gt;提交：git commit -m &amp;ldquo;message&amp;rdquo;（保存更改到本地仓库）&lt;/li&gt;
+&lt;li&gt;推送：git push origin &lt;branch&gt;（上传本地更改到远程仓库）&lt;/li&gt;
+&lt;li&gt;拉取：git pull（从远程仓库获取更新）&lt;/li&gt;
+&lt;li&gt;分支：git branch（查看分支）、git checkout -b &lt;branch&gt;（创建并切换分支）&lt;/li&gt;
+&lt;li&gt;合并：git merge &lt;branch&gt;（合并分支）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;应用场景&#34;&gt;应用场景
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;软件开发：管理代码版本，支持团队协作。&lt;/li&gt;
+&lt;li&gt;开源项目：通过GitHub等平台实现全球开发者贡献。&lt;/li&gt;
+&lt;li&gt;非代码场景：管理文档、配置文件、数据科学项目等。&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
         <title>全球知名、靠谱且实用的VPN厂家推荐</title>
         <link>https://dxjxpr.github.io/p/%E5%85%A8%E7%90%83%E7%9F%A5%E5%90%8D%E9%9D%A0%E8%B0%B1%E4%B8%94%E5%AE%9E%E7%94%A8%E7%9A%84vpn%E5%8E%82%E5%AE%B6%E6%8E%A8%E8%8D%90/</link>
         <pubDate>Tue, 06 May 2025 12:00:00 +0800</pubDate>
