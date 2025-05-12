@@ -7,7 +7,86 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
         <copyright>dxjxpr All Rights Reserved</copyright>
-        <lastBuildDate>Thu, 08 May 2025 12:00:00 +0800</lastBuildDate><atom:link href="https://dxjxpr.github.io/categories/http/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sat, 10 May 2025 12:00:00 +0800</lastBuildDate><atom:link href="https://dxjxpr.github.io/categories/http/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>HTTP状态码（Status Code）</title>
+        <link>https://dxjxpr.github.io/p/http%E7%8A%B6%E6%80%81%E7%A0%81status-code/</link>
+        <pubDate>Sat, 10 May 2025 12:00:00 +0800</pubDate>
+        
+        <guid>https://dxjxpr.github.io/p/http%E7%8A%B6%E6%80%81%E7%A0%81status-code/</guid>
+        <description>&lt;img src="https://dxjxpr.github.io/p/http%E7%8A%B6%E6%80%81%E7%A0%81status-code/cover.jpg" alt="Featured image of post HTTP状态码（Status Code）" /&gt;&lt;p&gt;HTTP状态码（Status Code）是服务器对客户端请求的响应状态，分为五类，一共约60种标准状态码。&lt;/p&gt;
+&lt;h2 id=&#34;1xx---信息性状态码informational&#34;&gt;1xx - 信息性状态码（Informational）
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;表示请求已经被接收，处理仍然在继续，客户端需等待进一步响应
+&lt;ul&gt;
+&lt;li&gt;100 Continue：客户端应继续发送请求的剩余部份。&lt;/li&gt;
+&lt;li&gt;101 Switching Protocols：服务器根据客户端请求切换协议（如HTTP到WebSocket）&lt;/li&gt;
+&lt;li&gt;102 Processing：服务器正在处理请求，但尚未完成（较少见）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;2xx---成功状态码success&#34;&gt;2xx - 成功状态码（Success）
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;表示请求已经成功被服务器接收、理解并处理
+&lt;ul&gt;
+&lt;li&gt;200 OK：请求成功，响应包含请求的数据&lt;/li&gt;
+&lt;li&gt;201 Created：请求成功并创建了新资源（如POST请求）&lt;/li&gt;
+&lt;li&gt;202 Accepted：请求已接收但尚未处理完成（常用于异步处理）&lt;/li&gt;
+&lt;li&gt;204 No Content：请求成功，但无内容返回（如DELETE请求）&lt;/li&gt;
+&lt;li&gt;206 Partial Content：服务器成功返回部份内容（常用于范围请求，如视频分片）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;3xx---重定向状态码redirection&#34;&gt;3xx - 重定向状态码（Redirection）
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;表示客户端需采取进一步操作（如重定向）以完成请求
+&lt;ul&gt;
+&lt;li&gt;300 Multiple Choices：资源有多种表示形式，客户端需选择&lt;/li&gt;
+&lt;li&gt;301 Moved Permanently：资源永久移动到新URL&lt;/li&gt;
+&lt;li&gt;302 Found：资源临时移动到新URL（早期称为：Moved Temporarily）&lt;/li&gt;
+&lt;li&gt;303 See Other：建议客户端使用GET请求访问另一个URL&lt;/li&gt;
+&lt;li&gt;304 Not Modified：资源未更改，客户端可使用缓存（常用于条件请求）&lt;/li&gt;
+&lt;li&gt;307 Temporary Redirect：临时重定向，客户端应保留原请求方法&lt;/li&gt;
+&lt;li&gt;308 Permanent Redirect：永久重定向，客户端应保留原请求方法&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;4xx---客户端错误状态码client-error&#34;&gt;4xx - 客户端错误状态码（Client Error）
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;表示客户端请求有误，服务器无法处理
+&lt;ul&gt;
+&lt;li&gt;400 Bad Request：请求语法错误或参数无效&lt;/li&gt;
+&lt;li&gt;401 Unauthorized：请求需身份验证（未提供或无效的认证信息）&lt;/li&gt;
+&lt;li&gt;403 Forbidden：客户端无权限访问资源&lt;/li&gt;
+&lt;li&gt;404 Not Found：服务器未找到请求的资源&lt;/li&gt;
+&lt;li&gt;405 Method Not Allowed：请求方法（如POST）不被服务器允许&lt;/li&gt;
+&lt;li&gt;408 Request Timeout：客户端请求超时&lt;/li&gt;
+&lt;li&gt;409 Conflict：请求与服务器资源状态冲突（如尝试创建已存在的资源）&lt;/li&gt;
+&lt;li&gt;410 Gone：资源已被永久删除且无转发地址&lt;/li&gt;
+&lt;li&gt;429 Too Many Requests：客户端在限定时间内发送了过多请求（限流）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;5xx---服务器错误状态码server-error&#34;&gt;5xx - 服务器错误状态码（Server Error）
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;表示服务器在处理请求时发生错误
+&lt;ul&gt;
+&lt;li&gt;500 Internal Server Error：服务器遇到未知错误，无法完成请求&lt;/li&gt;
+&lt;li&gt;501 Not Implemented：服务器不支持请求的功能（如不支持的请求方法）&lt;/li&gt;
+&lt;li&gt;502 Bad Gateway：作为网关或代理的服务器从上游服务器收到无效响应&lt;/li&gt;
+&lt;li&gt;503 Service Unavailable：服务器暂时不可用（如维护或过载）&lt;/li&gt;
+&lt;li&gt;504 Gateway Timeout：网关或代理服务器未及时从上游服务器收到响应&lt;/li&gt;
+&lt;li&gt;505 HTTP Version Not Supported：服务器不支持请求的HTTP协议版本&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;其他&#34;&gt;其他
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;总数：约60种标准状态码（由HTTP/1.1、HTTP/2及扩展定义），实际使用中常见约20-30种&lt;/li&gt;
+&lt;li&gt;扩展状态码：某些服务器或框架可能定义非标准状态码（如Cloudflare的520、522），但不属于官方规范&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
         <title>HTTP、HTTPS、SSH区别以及如何使用ssh-keygen生成密钥对</title>
         <link>https://dxjxpr.github.io/p/httphttpsssh%E5%8C%BA%E5%88%AB%E4%BB%A5%E5%8F%8A%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8ssh-keygen%E7%94%9F%E6%88%90%E5%AF%86%E9%92%A5%E5%AF%B9/</link>
         <pubDate>Thu, 08 May 2025 12:00:00 +0800</pubDate>
