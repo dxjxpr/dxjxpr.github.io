@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="HTTP状态码（Status Code）是服务器对客户端请求的响应状态，分为五类，一共约60种标准状态码。\n1xx - 信息性状态码（Informational） 表示请求已经被接收，处理仍然在继续，客户端需等待进一步响应 100 Continue：客户端应继续发送请求的剩余部份。 101 Switching Protocols：服务器根据客户端请求切换协议（如HTTP到WebSocket） 102 Processing：服务器正在处理请求，但尚未完成（较少见） 2xx - 成功状态码（Success） 表示请求已经成功被服务器接收、理解并处理 200 OK：请求成功，响应包含请求的数据 201 Created：请求成功并创建了新资源（如POST请求） 202 Accepted：请求已接收但尚未处理完成（常用于异步处理） 204 No Content：请求成功，但无内容返回（如DELETE请求） 206 Partial Content：服务器成功返回部份内容（常用于范围请求，如视频分片） 3xx - 重定向状态码（Redirection） 表示客户端需采取进一步操作（如重定向）以完成请求 300 Multiple Choices：资源有多种表示形式，客户端需选择 301 Moved Permanently：资源永久移动到新URL 302 Found：资源临时移动到新URL（早期称为：Moved Temporarily） 303 See Other：建议客户端使用GET请求访问另一个URL 304 Not Modified：资源未更改，客户端可使用缓存（常用于条件请求） 307 Temporary Redirect：临时重定向，客户端应保留原请求方法 308 Permanent Redirect：永久重定向，客户端应保留原请求方法 4xx - 客户端错误状态码（Client Error） 表示客户端请求有误，服务器无法处理 400 Bad Request：请求语法错误或参数无效 401 Unauthorized：请求需身份验证（未提供或无效的认证信息） 403 Forbidden：客户端无权限访问资源 404 Not Found：服务器未找到请求的资源 405 Method Not Allowed：请求方法（如POST）不被服务器允许 408 Request Timeout：客户端请求超时 409 Conflict：请求与服务器资源状态冲突（如尝试创建已存在的资源） 410 Gone：资源已被永久删除且无转发地址 429 Too Many Requests：客户端在限定时间内发送了过多请求（限流） 5xx - 服务器错误状态码（Server Error） 表示服务器在处理请求时发生错误 500 Internal Server Error：服务器遇到未知错误，无法完成请求 501 Not Implemented：服务器不支持请求的功能（如不支持的请求方法） 502 Bad Gateway：作为网关或代理的服务器从上游服务器收到无效响应 503 Service Unavailable：服务器暂时不可用（如维护或过载） 504 Gateway Timeout：网关或代理服务器未及时从上游服务器收到响应 505 HTTP Version Not Supported：服务器不支持请求的HTTP协议版本 其他 总数：约60种标准状态码（由HTTP/1.1、HTTP/2及扩展定义），实际使用中常见约20-30种 扩展状态码：某些服务器或框架可能定义非标准状态码（如Cloudflare的520、522），但不属于官方规范 ">
-<title>HTTP状态码（Status Code）</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="HTTP方法 HTTP方法（也称HTTP动词）主要用于定义对资源的操作类型。根据HTTP/1.1规范（RFC 7231）以及后续扩展，常用的HTTP方法有以下几种：\nGET：请求获取指定资源的表示形式。 POST：向指定资源提交数据，请求服务器处理（如创建资源）。 PUT：更新指定资源的内容，通常是整体替换。 DELETE：请求删除指定的资源。 HEAD：与GET类似，但只返回响应头，不返回主体内容。 OPTIONS：获取服务器支持的HTTP方法或其他选项。 PATCH：对资源进行部分修改。 TRACE：回显服务器收到的请求，用于测试或诊断（较少使用）。 CONNECT：用于建立到资源的隧道，通常用于代理（如HTTPS）。 说明： 以上9种方法是最常见的，涵盖了RESTful API和Web开发中的主要操作。 实际使用中，GET、POST、PUT、DELETE、PATCH最为频繁。 某些方法（如TRACE、CONNECT）因安全或特定场景限制，使用较少。 HTTP规范允许扩展方法，但非标准方法（如WebDAV的PROPFIND、MKCOL）不常见。\nHTTP状态码（Status Code） HTTP状态码（Status Code）是服务器对客户端请求的响应状态，分为五类，一共约60种标准状态码。\n1xx - 信息性状态码（Informational） 表示请求已经被接收，处理仍然在继续，客户端需等待进一步响应 100 Continue：客户端应继续发送请求的剩余部份。 101 Switching Protocols：服务器根据客户端请求切换协议（如HTTP到WebSocket） 102 Processing：服务器正在处理请求，但尚未完成（较少见） 2xx - 成功状态码（Success） 表示请求已经成功被服务器接收、理解并处理 200 OK：请求成功，响应包含请求的数据 201 Created：请求成功并创建了新资源（如POST请求） 202 Accepted：请求已接收但尚未处理完成（常用于异步处理） 204 No Content：请求成功，但无内容返回（如DELETE请求） 206 Partial Content：服务器成功返回部份内容（常用于范围请求，如视频分片） 3xx - 重定向状态码（Redirection） 表示客户端需采取进一步操作（如重定向）以完成请求 300 Multiple Choices：资源有多种表示形式，客户端需选择 301 Moved Permanently：资源永久移动到新URL 302 Found：资源临时移动到新URL（早期称为：Moved Temporarily） 303 See Other：建议客户端使用GET请求访问另一个URL 304 Not Modified：资源未更改，客户端可使用缓存（常用于条件请求） 307 Temporary Redirect：临时重定向，客户端应保留原请求方法 308 Permanent Redirect：永久重定向，客户端应保留原请求方法 4xx - 客户端错误状态码（Client Error） 表示客户端请求有误，服务器无法处理 400 Bad Request：请求语法错误或参数无效 401 Unauthorized：请求需身份验证（未提供或无效的认证信息） 403 Forbidden：客户端无权限访问资源 404 Not Found：服务器未找到请求的资源 405 Method Not Allowed：请求方法（如POST）不被服务器允许 408 Request Timeout：客户端请求超时 409 Conflict：请求与服务器资源状态冲突（如尝试创建已存在的资源） 410 Gone：资源已被永久删除且无转发地址 429 Too Many Requests：客户端在限定时间内发送了过多请求（限流） 5xx - 服务器错误状态码（Server Error） 表示服务器在处理请求时发生错误 500 Internal Server Error：服务器遇到未知错误，无法完成请求 501 Not Implemented：服务器不支持请求的功能（如不支持的请求方法） 502 Bad Gateway：作为网关或代理的服务器从上游服务器收到无效响应 503 Service Unavailable：服务器暂时不可用（如维护或过载） 504 Gateway Timeout：网关或代理服务器未及时从上游服务器收到响应 505 HTTP Version Not Supported：服务器不支持请求的HTTP协议版本 其他 总数：约60种标准状态码（由HTTP/1.1、HTTP/2及扩展定义），实际使用中常见约20-30种 扩展状态码：某些服务器或框架可能定义非标准状态码（如Cloudflare的520、522），但不属于官方规范 ">
+<title>HTTP方法、状态码（Status Code）</title>
 
-<link rel='canonical' href='https://dxjxpr.github.io/p/http%E7%8A%B6%E6%80%81%E7%A0%81status-code/'>
+<link rel='canonical' href='https://dxjxpr.github.io/p/http%E6%96%B9%E6%B3%95%E7%8A%B6%E6%80%81%E7%A0%81status-code/'>
 
-<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="HTTP状态码（Status Code）">
-<meta property='og:description' content="HTTP状态码（Status Code）是服务器对客户端请求的响应状态，分为五类，一共约60种标准状态码。\n1xx - 信息性状态码（Informational） 表示请求已经被接收，处理仍然在继续，客户端需等待进一步响应 100 Continue：客户端应继续发送请求的剩余部份。 101 Switching Protocols：服务器根据客户端请求切换协议（如HTTP到WebSocket） 102 Processing：服务器正在处理请求，但尚未完成（较少见） 2xx - 成功状态码（Success） 表示请求已经成功被服务器接收、理解并处理 200 OK：请求成功，响应包含请求的数据 201 Created：请求成功并创建了新资源（如POST请求） 202 Accepted：请求已接收但尚未处理完成（常用于异步处理） 204 No Content：请求成功，但无内容返回（如DELETE请求） 206 Partial Content：服务器成功返回部份内容（常用于范围请求，如视频分片） 3xx - 重定向状态码（Redirection） 表示客户端需采取进一步操作（如重定向）以完成请求 300 Multiple Choices：资源有多种表示形式，客户端需选择 301 Moved Permanently：资源永久移动到新URL 302 Found：资源临时移动到新URL（早期称为：Moved Temporarily） 303 See Other：建议客户端使用GET请求访问另一个URL 304 Not Modified：资源未更改，客户端可使用缓存（常用于条件请求） 307 Temporary Redirect：临时重定向，客户端应保留原请求方法 308 Permanent Redirect：永久重定向，客户端应保留原请求方法 4xx - 客户端错误状态码（Client Error） 表示客户端请求有误，服务器无法处理 400 Bad Request：请求语法错误或参数无效 401 Unauthorized：请求需身份验证（未提供或无效的认证信息） 403 Forbidden：客户端无权限访问资源 404 Not Found：服务器未找到请求的资源 405 Method Not Allowed：请求方法（如POST）不被服务器允许 408 Request Timeout：客户端请求超时 409 Conflict：请求与服务器资源状态冲突（如尝试创建已存在的资源） 410 Gone：资源已被永久删除且无转发地址 429 Too Many Requests：客户端在限定时间内发送了过多请求（限流） 5xx - 服务器错误状态码（Server Error） 表示服务器在处理请求时发生错误 500 Internal Server Error：服务器遇到未知错误，无法完成请求 501 Not Implemented：服务器不支持请求的功能（如不支持的请求方法） 502 Bad Gateway：作为网关或代理的服务器从上游服务器收到无效响应 503 Service Unavailable：服务器暂时不可用（如维护或过载） 504 Gateway Timeout：网关或代理服务器未及时从上游服务器收到响应 505 HTTP Version Not Supported：服务器不支持请求的HTTP协议版本 其他 总数：约60种标准状态码（由HTTP/1.1、HTTP/2及扩展定义），实际使用中常见约20-30种 扩展状态码：某些服务器或框架可能定义非标准状态码（如Cloudflare的520、522），但不属于官方规范 ">
-<meta property='og:url' content='https://dxjxpr.github.io/p/http%E7%8A%B6%E6%80%81%E7%A0%81status-code/'>
+<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="HTTP方法、状态码（Status Code）">
+<meta property='og:description' content="HTTP方法 HTTP方法（也称HTTP动词）主要用于定义对资源的操作类型。根据HTTP/1.1规范（RFC 7231）以及后续扩展，常用的HTTP方法有以下几种：\nGET：请求获取指定资源的表示形式。 POST：向指定资源提交数据，请求服务器处理（如创建资源）。 PUT：更新指定资源的内容，通常是整体替换。 DELETE：请求删除指定的资源。 HEAD：与GET类似，但只返回响应头，不返回主体内容。 OPTIONS：获取服务器支持的HTTP方法或其他选项。 PATCH：对资源进行部分修改。 TRACE：回显服务器收到的请求，用于测试或诊断（较少使用）。 CONNECT：用于建立到资源的隧道，通常用于代理（如HTTPS）。 说明： 以上9种方法是最常见的，涵盖了RESTful API和Web开发中的主要操作。 实际使用中，GET、POST、PUT、DELETE、PATCH最为频繁。 某些方法（如TRACE、CONNECT）因安全或特定场景限制，使用较少。 HTTP规范允许扩展方法，但非标准方法（如WebDAV的PROPFIND、MKCOL）不常见。\nHTTP状态码（Status Code） HTTP状态码（Status Code）是服务器对客户端请求的响应状态，分为五类，一共约60种标准状态码。\n1xx - 信息性状态码（Informational） 表示请求已经被接收，处理仍然在继续，客户端需等待进一步响应 100 Continue：客户端应继续发送请求的剩余部份。 101 Switching Protocols：服务器根据客户端请求切换协议（如HTTP到WebSocket） 102 Processing：服务器正在处理请求，但尚未完成（较少见） 2xx - 成功状态码（Success） 表示请求已经成功被服务器接收、理解并处理 200 OK：请求成功，响应包含请求的数据 201 Created：请求成功并创建了新资源（如POST请求） 202 Accepted：请求已接收但尚未处理完成（常用于异步处理） 204 No Content：请求成功，但无内容返回（如DELETE请求） 206 Partial Content：服务器成功返回部份内容（常用于范围请求，如视频分片） 3xx - 重定向状态码（Redirection） 表示客户端需采取进一步操作（如重定向）以完成请求 300 Multiple Choices：资源有多种表示形式，客户端需选择 301 Moved Permanently：资源永久移动到新URL 302 Found：资源临时移动到新URL（早期称为：Moved Temporarily） 303 See Other：建议客户端使用GET请求访问另一个URL 304 Not Modified：资源未更改，客户端可使用缓存（常用于条件请求） 307 Temporary Redirect：临时重定向，客户端应保留原请求方法 308 Permanent Redirect：永久重定向，客户端应保留原请求方法 4xx - 客户端错误状态码（Client Error） 表示客户端请求有误，服务器无法处理 400 Bad Request：请求语法错误或参数无效 401 Unauthorized：请求需身份验证（未提供或无效的认证信息） 403 Forbidden：客户端无权限访问资源 404 Not Found：服务器未找到请求的资源 405 Method Not Allowed：请求方法（如POST）不被服务器允许 408 Request Timeout：客户端请求超时 409 Conflict：请求与服务器资源状态冲突（如尝试创建已存在的资源） 410 Gone：资源已被永久删除且无转发地址 429 Too Many Requests：客户端在限定时间内发送了过多请求（限流） 5xx - 服务器错误状态码（Server Error） 表示服务器在处理请求时发生错误 500 Internal Server Error：服务器遇到未知错误，无法完成请求 501 Not Implemented：服务器不支持请求的功能（如不支持的请求方法） 502 Bad Gateway：作为网关或代理的服务器从上游服务器收到无效响应 503 Service Unavailable：服务器暂时不可用（如维护或过载） 504 Gateway Timeout：网关或代理服务器未及时从上游服务器收到响应 505 HTTP Version Not Supported：服务器不支持请求的HTTP协议版本 其他 总数：约60种标准状态码（由HTTP/1.1、HTTP/2及扩展定义），实际使用中常见约20-30种 扩展状态码：某些服务器或框架可能定义非标准状态码（如Cloudflare的520、522），但不属于官方规范 ">
+<meta property='og:url' content='https://dxjxpr.github.io/p/http%E6%96%B9%E6%B3%95%E7%8A%B6%E6%80%81%E7%A0%81status-code/'>
 <meta property='og:site_name' content='I&#39;m Mr.Liu'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='HTTP' /><meta property='article:published_time' content='2025-05-10T12:00:00&#43;08:00'/><meta property='article:modified_time' content='2025-05-10T12:00:00&#43;08:00'/><meta property='og:image' content='https://dxjxpr.github.io/p/http%E7%8A%B6%E6%80%81%E7%A0%81status-code/cover.jpg' />
-<meta name="twitter:title" content="HTTP状态码（Status Code）">
-<meta name="twitter:description" content="HTTP状态码（Status Code）是服务器对客户端请求的响应状态，分为五类，一共约60种标准状态码。\n1xx - 信息性状态码（Informational） 表示请求已经被接收，处理仍然在继续，客户端需等待进一步响应 100 Continue：客户端应继续发送请求的剩余部份。 101 Switching Protocols：服务器根据客户端请求切换协议（如HTTP到WebSocket） 102 Processing：服务器正在处理请求，但尚未完成（较少见） 2xx - 成功状态码（Success） 表示请求已经成功被服务器接收、理解并处理 200 OK：请求成功，响应包含请求的数据 201 Created：请求成功并创建了新资源（如POST请求） 202 Accepted：请求已接收但尚未处理完成（常用于异步处理） 204 No Content：请求成功，但无内容返回（如DELETE请求） 206 Partial Content：服务器成功返回部份内容（常用于范围请求，如视频分片） 3xx - 重定向状态码（Redirection） 表示客户端需采取进一步操作（如重定向）以完成请求 300 Multiple Choices：资源有多种表示形式，客户端需选择 301 Moved Permanently：资源永久移动到新URL 302 Found：资源临时移动到新URL（早期称为：Moved Temporarily） 303 See Other：建议客户端使用GET请求访问另一个URL 304 Not Modified：资源未更改，客户端可使用缓存（常用于条件请求） 307 Temporary Redirect：临时重定向，客户端应保留原请求方法 308 Permanent Redirect：永久重定向，客户端应保留原请求方法 4xx - 客户端错误状态码（Client Error） 表示客户端请求有误，服务器无法处理 400 Bad Request：请求语法错误或参数无效 401 Unauthorized：请求需身份验证（未提供或无效的认证信息） 403 Forbidden：客户端无权限访问资源 404 Not Found：服务器未找到请求的资源 405 Method Not Allowed：请求方法（如POST）不被服务器允许 408 Request Timeout：客户端请求超时 409 Conflict：请求与服务器资源状态冲突（如尝试创建已存在的资源） 410 Gone：资源已被永久删除且无转发地址 429 Too Many Requests：客户端在限定时间内发送了过多请求（限流） 5xx - 服务器错误状态码（Server Error） 表示服务器在处理请求时发生错误 500 Internal Server Error：服务器遇到未知错误，无法完成请求 501 Not Implemented：服务器不支持请求的功能（如不支持的请求方法） 502 Bad Gateway：作为网关或代理的服务器从上游服务器收到无效响应 503 Service Unavailable：服务器暂时不可用（如维护或过载） 504 Gateway Timeout：网关或代理服务器未及时从上游服务器收到响应 505 HTTP Version Not Supported：服务器不支持请求的HTTP协议版本 其他 总数：约60种标准状态码（由HTTP/1.1、HTTP/2及扩展定义），实际使用中常见约20-30种 扩展状态码：某些服务器或框架可能定义非标准状态码（如Cloudflare的520、522），但不属于官方规范 "><meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content='https://dxjxpr.github.io/p/http%E7%8A%B6%E6%80%81%E7%A0%81status-code/cover.jpg' />
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='HTTP' /><meta property='article:published_time' content='2025-05-10T12:00:00&#43;08:00'/><meta property='article:modified_time' content='2025-05-10T12:00:00&#43;08:00'/><meta property='og:image' content='https://dxjxpr.github.io/p/http%E6%96%B9%E6%B3%95%E7%8A%B6%E6%80%81%E7%A0%81status-code/cover.jpg' />
+<meta name="twitter:title" content="HTTP方法、状态码（Status Code）">
+<meta name="twitter:description" content="HTTP方法 HTTP方法（也称HTTP动词）主要用于定义对资源的操作类型。根据HTTP/1.1规范（RFC 7231）以及后续扩展，常用的HTTP方法有以下几种：\nGET：请求获取指定资源的表示形式。 POST：向指定资源提交数据，请求服务器处理（如创建资源）。 PUT：更新指定资源的内容，通常是整体替换。 DELETE：请求删除指定的资源。 HEAD：与GET类似，但只返回响应头，不返回主体内容。 OPTIONS：获取服务器支持的HTTP方法或其他选项。 PATCH：对资源进行部分修改。 TRACE：回显服务器收到的请求，用于测试或诊断（较少使用）。 CONNECT：用于建立到资源的隧道，通常用于代理（如HTTPS）。 说明： 以上9种方法是最常见的，涵盖了RESTful API和Web开发中的主要操作。 实际使用中，GET、POST、PUT、DELETE、PATCH最为频繁。 某些方法（如TRACE、CONNECT）因安全或特定场景限制，使用较少。 HTTP规范允许扩展方法，但非标准方法（如WebDAV的PROPFIND、MKCOL）不常见。\nHTTP状态码（Status Code） HTTP状态码（Status Code）是服务器对客户端请求的响应状态，分为五类，一共约60种标准状态码。\n1xx - 信息性状态码（Informational） 表示请求已经被接收，处理仍然在继续，客户端需等待进一步响应 100 Continue：客户端应继续发送请求的剩余部份。 101 Switching Protocols：服务器根据客户端请求切换协议（如HTTP到WebSocket） 102 Processing：服务器正在处理请求，但尚未完成（较少见） 2xx - 成功状态码（Success） 表示请求已经成功被服务器接收、理解并处理 200 OK：请求成功，响应包含请求的数据 201 Created：请求成功并创建了新资源（如POST请求） 202 Accepted：请求已接收但尚未处理完成（常用于异步处理） 204 No Content：请求成功，但无内容返回（如DELETE请求） 206 Partial Content：服务器成功返回部份内容（常用于范围请求，如视频分片） 3xx - 重定向状态码（Redirection） 表示客户端需采取进一步操作（如重定向）以完成请求 300 Multiple Choices：资源有多种表示形式，客户端需选择 301 Moved Permanently：资源永久移动到新URL 302 Found：资源临时移动到新URL（早期称为：Moved Temporarily） 303 See Other：建议客户端使用GET请求访问另一个URL 304 Not Modified：资源未更改，客户端可使用缓存（常用于条件请求） 307 Temporary Redirect：临时重定向，客户端应保留原请求方法 308 Permanent Redirect：永久重定向，客户端应保留原请求方法 4xx - 客户端错误状态码（Client Error） 表示客户端请求有误，服务器无法处理 400 Bad Request：请求语法错误或参数无效 401 Unauthorized：请求需身份验证（未提供或无效的认证信息） 403 Forbidden：客户端无权限访问资源 404 Not Found：服务器未找到请求的资源 405 Method Not Allowed：请求方法（如POST）不被服务器允许 408 Request Timeout：客户端请求超时 409 Conflict：请求与服务器资源状态冲突（如尝试创建已存在的资源） 410 Gone：资源已被永久删除且无转发地址 429 Too Many Requests：客户端在限定时间内发送了过多请求（限流） 5xx - 服务器错误状态码（Server Error） 表示服务器在处理请求时发生错误 500 Internal Server Error：服务器遇到未知错误，无法完成请求 501 Not Implemented：服务器不支持请求的功能（如不支持的请求方法） 502 Bad Gateway：作为网关或代理的服务器从上游服务器收到无效响应 503 Service Unavailable：服务器暂时不可用（如维护或过载） 504 Gateway Timeout：网关或代理服务器未及时从上游服务器收到响应 505 HTTP Version Not Supported：服务器不支持请求的HTTP协议版本 其他 总数：约60种标准状态码（由HTTP/1.1、HTTP/2及扩展定义），实际使用中常见约20-30种 扩展状态码：某些服务器或框架可能定义非标准状态码（如Cloudflare的520、522），但不属于官方规范 "><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://dxjxpr.github.io/p/http%E6%96%B9%E6%B3%95%E7%8A%B6%E6%80%81%E7%A0%81status-code/cover.jpg' />
     <link rel="shortcut icon" href="/favicon.ico" />
 
     </head>
@@ -262,13 +262,13 @@
     <article class="has-image main-article">
     <header class="article-header">
         <div class="article-image">
-            <a href="/p/http%E7%8A%B6%E6%80%81%E7%A0%81status-code/">
-                <img src="/p/http%E7%8A%B6%E6%80%81%E7%A0%81status-code/cover_hu_12e8c9e4a2678de5.jpg"
-                        srcset="/p/http%E7%8A%B6%E6%80%81%E7%A0%81status-code/cover_hu_12e8c9e4a2678de5.jpg 800w, /p/http%E7%8A%B6%E6%80%81%E7%A0%81status-code/cover_hu_444f247f558922be.jpg 1600w"
+            <a href="/p/http%E6%96%B9%E6%B3%95%E7%8A%B6%E6%80%81%E7%A0%81status-code/">
+                <img src="/p/http%E6%96%B9%E6%B3%95%E7%8A%B6%E6%80%81%E7%A0%81status-code/cover_hu_12e8c9e4a2678de5.jpg"
+                        srcset="/p/http%E6%96%B9%E6%B3%95%E7%8A%B6%E6%80%81%E7%A0%81status-code/cover_hu_12e8c9e4a2678de5.jpg 800w, /p/http%E6%96%B9%E6%B3%95%E7%8A%B6%E6%80%81%E7%A0%81status-code/cover_hu_444f247f558922be.jpg 1600w"
                         width="800" 
                         height="457" 
                         loading="lazy"
-                        alt="Featured image of post HTTP状态码（Status Code）" />
+                        alt="Featured image of post HTTP方法、状态码（Status Code）" />
                 
             </a>
         </div>
@@ -287,7 +287,7 @@
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="/p/http%E7%8A%B6%E6%80%81%E7%A0%81status-code/">HTTP状态码（Status Code）</a>
+            <a href="/p/http%E6%96%B9%E6%B3%95%E7%8A%B6%E6%80%81%E7%A0%81status-code/">HTTP方法、状态码（Status Code）</a>
         </h2>
     
         
@@ -339,7 +339,26 @@
     <section class="article-content">
     
     
-    <p>HTTP状态码（Status Code）是服务器对客户端请求的响应状态，分为五类，一共约60种标准状态码。</p>
+    <h1 id="http方法">HTTP方法
+</h1><p>HTTP方法（也称HTTP动词）主要用于定义对资源的操作类型。根据HTTP/1.1规范（RFC 7231）以及后续扩展，常用的HTTP方法有以下几种：</p>
+<ul>
+<li>GET：请求获取指定资源的表示形式。</li>
+<li>POST：向指定资源提交数据，请求服务器处理（如创建资源）。</li>
+<li>PUT：更新指定资源的内容，通常是整体替换。</li>
+<li>DELETE：请求删除指定的资源。</li>
+<li>HEAD：与GET类似，但只返回响应头，不返回主体内容。</li>
+<li>OPTIONS：获取服务器支持的HTTP方法或其他选项。</li>
+<li>PATCH：对资源进行部分修改。</li>
+<li>TRACE：回显服务器收到的请求，用于测试或诊断（较少使用）。</li>
+<li>CONNECT：用于建立到资源的隧道，通常用于代理（如HTTPS）。</li>
+</ul>
+<p>说明：
+以上9种方法是最常见的，涵盖了RESTful API和Web开发中的主要操作。
+实际使用中，GET、POST、PUT、DELETE、PATCH最为频繁。
+某些方法（如TRACE、CONNECT）因安全或特定场景限制，使用较少。
+HTTP规范允许扩展方法，但非标准方法（如WebDAV的PROPFIND、MKCOL）不常见。</p>
+<h1 id="http状态码status-code">HTTP状态码（Status Code）
+</h1><p>HTTP状态码（Status Code）是服务器对客户端请求的响应状态，分为五类，一共约60种标准状态码。</p>
 <h2 id="1xx---信息性状态码informational">1xx - 信息性状态码（Informational）
 </h2><ul>
 <li>表示请求已经被接收，处理仍然在继续，客户端需等待进一步响应

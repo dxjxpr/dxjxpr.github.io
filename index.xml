@@ -8,12 +8,31 @@
         <language>en</language>
         <copyright>dxjxpr All Rights Reserved</copyright>
         <lastBuildDate>Sat, 10 May 2025 12:00:00 +0800</lastBuildDate><atom:link href="https://dxjxpr.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>HTTP状态码（Status Code）</title>
-        <link>https://dxjxpr.github.io/p/http%E7%8A%B6%E6%80%81%E7%A0%81status-code/</link>
+        <title>HTTP方法、状态码（Status Code）</title>
+        <link>https://dxjxpr.github.io/p/http%E6%96%B9%E6%B3%95%E7%8A%B6%E6%80%81%E7%A0%81status-code/</link>
         <pubDate>Sat, 10 May 2025 12:00:00 +0800</pubDate>
         
-        <guid>https://dxjxpr.github.io/p/http%E7%8A%B6%E6%80%81%E7%A0%81status-code/</guid>
-        <description>&lt;img src="https://dxjxpr.github.io/p/http%E7%8A%B6%E6%80%81%E7%A0%81status-code/cover.jpg" alt="Featured image of post HTTP状态码（Status Code）" /&gt;&lt;p&gt;HTTP状态码（Status Code）是服务器对客户端请求的响应状态，分为五类，一共约60种标准状态码。&lt;/p&gt;
+        <guid>https://dxjxpr.github.io/p/http%E6%96%B9%E6%B3%95%E7%8A%B6%E6%80%81%E7%A0%81status-code/</guid>
+        <description>&lt;img src="https://dxjxpr.github.io/p/http%E6%96%B9%E6%B3%95%E7%8A%B6%E6%80%81%E7%A0%81status-code/cover.jpg" alt="Featured image of post HTTP方法、状态码（Status Code）" /&gt;&lt;h1 id=&#34;http方法&#34;&gt;HTTP方法
+&lt;/h1&gt;&lt;p&gt;HTTP方法（也称HTTP动词）主要用于定义对资源的操作类型。根据HTTP/1.1规范（RFC 7231）以及后续扩展，常用的HTTP方法有以下几种：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;GET：请求获取指定资源的表示形式。&lt;/li&gt;
+&lt;li&gt;POST：向指定资源提交数据，请求服务器处理（如创建资源）。&lt;/li&gt;
+&lt;li&gt;PUT：更新指定资源的内容，通常是整体替换。&lt;/li&gt;
+&lt;li&gt;DELETE：请求删除指定的资源。&lt;/li&gt;
+&lt;li&gt;HEAD：与GET类似，但只返回响应头，不返回主体内容。&lt;/li&gt;
+&lt;li&gt;OPTIONS：获取服务器支持的HTTP方法或其他选项。&lt;/li&gt;
+&lt;li&gt;PATCH：对资源进行部分修改。&lt;/li&gt;
+&lt;li&gt;TRACE：回显服务器收到的请求，用于测试或诊断（较少使用）。&lt;/li&gt;
+&lt;li&gt;CONNECT：用于建立到资源的隧道，通常用于代理（如HTTPS）。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;说明：
+以上9种方法是最常见的，涵盖了RESTful API和Web开发中的主要操作。
+实际使用中，GET、POST、PUT、DELETE、PATCH最为频繁。
+某些方法（如TRACE、CONNECT）因安全或特定场景限制，使用较少。
+HTTP规范允许扩展方法，但非标准方法（如WebDAV的PROPFIND、MKCOL）不常见。&lt;/p&gt;
+&lt;h1 id=&#34;http状态码status-code&#34;&gt;HTTP状态码（Status Code）
+&lt;/h1&gt;&lt;p&gt;HTTP状态码（Status Code）是服务器对客户端请求的响应状态，分为五类，一共约60种标准状态码。&lt;/p&gt;
 &lt;h2 id=&#34;1xx---信息性状态码informational&#34;&gt;1xx - 信息性状态码（Informational）
 &lt;/h2&gt;&lt;ul&gt;
 &lt;li&gt;表示请求已经被接收，处理仍然在继续，客户端需等待进一步响应
