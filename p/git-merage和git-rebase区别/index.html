@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="git merge和git rebase 在Git中merge和rebase都是git在管理整合分支的两种主要工具，但是他们的工作方式、提交历史影响和使用场景不同。\ngit merge 定义\n将两个分支的提交历史合并，创建一个新的合并提交（merge commit），保留两个分支的完整历史。但是在快进合并（fast-foward）情况下直接移动指针，保持线性历史 通常是将特性分支（feature branch）合并到主分支（如main分支） 工作原理\nGit首先会找到两个分支的共同祖先节点，计算差异，然后合并代码 如果没有冲突，自动合并 如果有冲突，需要手动解决该冲突后生成合并提交 快进模式：若目标分支无新提交，直接将指针移动到源分支，历史线性。 非快进模式：生成合并提交，历史非线性，保留分支拓扑 示例\n1 2 3 # 将feature分支合并到main分支上 git checkout main git merge feature 快进合并（若main无新提交）\nmain指针移动到feature最新提交，历史线性 非快进合并（默认或指定&ndash;no-ff）\n创建合并提交，历史非线性 提交历史图\n快进合并（线性历史，修正后在一条直线上）\n1 2 3 # 初始：main和feature指向A；feature新增B、C。 # 合并后：main快进到C，历史为单条直线。 A---B---C (main, feature) 非快进合并（非线性历史）\n1 2 3 4 5 6 # 合并后：M为合并提交，指向B和D A---B (main) \\ C---D (feature) \\ M (main, 合并提交) 优点\n">
+<title>Git Merage和Git Rebase区别</title>
+
+<link rel='canonical' href='https://dxjxpr.github.io/p/git-merage%E5%92%8Cgit-rebase%E5%8C%BA%E5%88%AB/'>
+
+<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="Git Merage和Git Rebase区别">
+<meta property='og:description' content="git merge和git rebase 在Git中merge和rebase都是git在管理整合分支的两种主要工具，但是他们的工作方式、提交历史影响和使用场景不同。\ngit merge 定义\n将两个分支的提交历史合并，创建一个新的合并提交（merge commit），保留两个分支的完整历史。但是在快进合并（fast-foward）情况下直接移动指针，保持线性历史 通常是将特性分支（feature branch）合并到主分支（如main分支） 工作原理\nGit首先会找到两个分支的共同祖先节点，计算差异，然后合并代码 如果没有冲突，自动合并 如果有冲突，需要手动解决该冲突后生成合并提交 快进模式：若目标分支无新提交，直接将指针移动到源分支，历史线性。 非快进模式：生成合并提交，历史非线性，保留分支拓扑 示例\n1 2 3 # 将feature分支合并到main分支上 git checkout main git merge feature 快进合并（若main无新提交）\nmain指针移动到feature最新提交，历史线性 非快进合并（默认或指定&ndash;no-ff）\n创建合并提交，历史非线性 提交历史图\n快进合并（线性历史，修正后在一条直线上）\n1 2 3 # 初始：main和feature指向A；feature新增B、C。 # 合并后：main快进到C，历史为单条直线。 A---B---C (main, feature) 非快进合并（非线性历史）\n1 2 3 4 5 6 # 合并后：M为合并提交，指向B和D A---B (main) \\ C---D (feature) \\ M (main, 合并提交) 优点\n">
+<meta property='og:url' content='https://dxjxpr.github.io/p/git-merage%E5%92%8Cgit-rebase%E5%8C%BA%E5%88%AB/'>
+<meta property='og:site_name' content='I&#39;m Mr.Liu'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Git' /><meta property='article:published_time' content='2025-05-12T12:00:00&#43;08:00'/><meta property='article:modified_time' content='2025-05-12T12:00:00&#43;08:00'/><meta property='og:image' content='https://dxjxpr.github.io/p/git-merage%E5%92%8Cgit-rebase%E5%8C%BA%E5%88%AB/cover.jpg' />
+<meta name="twitter:title" content="Git Merage和Git Rebase区别">
+<meta name="twitter:description" content="git merge和git rebase 在Git中merge和rebase都是git在管理整合分支的两种主要工具，但是他们的工作方式、提交历史影响和使用场景不同。\ngit merge 定义\n将两个分支的提交历史合并，创建一个新的合并提交（merge commit），保留两个分支的完整历史。但是在快进合并（fast-foward）情况下直接移动指针，保持线性历史 通常是将特性分支（feature branch）合并到主分支（如main分支） 工作原理\nGit首先会找到两个分支的共同祖先节点，计算差异，然后合并代码 如果没有冲突，自动合并 如果有冲突，需要手动解决该冲突后生成合并提交 快进模式：若目标分支无新提交，直接将指针移动到源分支，历史线性。 非快进模式：生成合并提交，历史非线性，保留分支拓扑 示例\n1 2 3 # 将feature分支合并到main分支上 git checkout main git merge feature 快进合并（若main无新提交）\nmain指针移动到feature最新提交，历史线性 非快进合并（默认或指定&ndash;no-ff）\n创建合并提交，历史非线性 提交历史图\n快进合并（线性历史，修正后在一条直线上）\n1 2 3 # 初始：main和feature指向A；feature新增B、C。 # 合并后：main快进到C，历史为单条直线。 A---B---C (main, feature) 非快进合并（非线性历史）\n1 2 3 4 5 6 # 合并后：M为合并提交，指向B和D A---B (main) \\ C---D (feature) \\ M (main, 合并提交) 优点\n"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://dxjxpr.github.io/p/git-merage%E5%92%8Cgit-rebase%E5%8C%BA%E5%88%AB/cover.jpg' />
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_defd7c575e91cf12.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🏃‍➡️</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">I&#39;m Mr.Liu</a></h1>
+            <h2 class="site-description">B What U Wanna B! Just Do It!</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/dxjxpr'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1723043422785" class="icon" viewBox="0 0 1049 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4723" xmlns:xlink="http://www.w3.org/1999/xlink" width="204.8828125" height="200"><path d="M524.979332 0C234.676191 0 0 234.676191 0 524.979332c0 232.068678 150.366597 428.501342 358.967656 498.035028 26.075132 5.215026 35.636014-11.299224 35.636014-25.205961 0-12.168395-0.869171-53.888607-0.869171-97.347161-146.020741 31.290159-176.441729-62.580318-176.441729-62.580318-23.467619-60.841976-58.234462-76.487055-58.234463-76.487055-47.804409-32.15933 3.476684-32.15933 3.476685-32.15933 53.019436 3.476684 80.83291 53.888607 80.83291 53.888607 46.935238 79.963739 122.553122 57.365291 152.97411 43.458554 4.345855-33.897672 18.252593-57.365291 33.028501-70.402857-116.468925-12.168395-239.022047-57.365291-239.022047-259.012982 0-57.365291 20.860106-104.300529 53.888607-140.805715-5.215026-13.037566-23.467619-66.926173 5.215027-139.067372 0 0 44.327725-13.906737 144.282399 53.888607 41.720212-11.299224 86.917108-17.383422 131.244833-17.383422s89.524621 6.084198 131.244833 17.383422C756.178839 203.386032 800.506564 217.29277 800.506564 217.29277c28.682646 72.1412 10.430053 126.029806 5.215026 139.067372 33.897672 36.505185 53.888607 83.440424 53.888607 140.805715 0 201.64769-122.553122 245.975415-239.891218 259.012982 19.121764 16.514251 35.636014 47.804409 35.636015 97.347161 0 70.402857-0.869171 126.898978-0.869172 144.282399 0 13.906737 9.560882 30.420988 35.636015 25.205961 208.601059-69.533686 358.967656-265.96635 358.967655-498.035028C1049.958663 234.676191 814.413301 0 524.979332 0z" fill="#191717" p-id="4724"></path><path d="M199.040177 753.571326c-0.869171 2.607513-5.215026 3.476684-8.691711 1.738342s-6.084198-5.215026-4.345855-7.82254c0.869171-2.607513 5.215026-3.476684 8.691711-1.738342s5.215026 5.215026 4.345855 7.82254z m-6.953369-4.345856M219.900283 777.038945c-2.607513 2.607513-7.82254 0.869171-10.430053-2.607514-3.476684-3.476684-4.345855-8.691711-1.738342-11.299224 2.607513-2.607513 6.953369-0.869171 10.430053 2.607514 3.476684 4.345855 4.345855 9.560882 1.738342 11.299224z m-5.215026-5.215027M240.760389 807.459932c-3.476684 2.607513-8.691711 0-11.299224-4.345855-3.476684-4.345855-3.476684-10.430053 0-12.168395 3.476684-2.607513 8.691711 0 11.299224 4.345855 3.476684 4.345855 3.476684 9.560882 0 12.168395z m0 0M269.443034 837.011749c-2.607513 3.476684-8.691711 2.607513-13.906737-1.738342-4.345855-4.345855-6.084198-10.430053-2.607513-13.037566 2.607513-3.476684 8.691711-2.607513 13.906737 1.738342 4.345855 3.476684 5.215026 9.560882 2.607513 13.037566z m0 0M308.555733 853.526c-0.869171 4.345855-6.953369 6.084198-13.037566 4.345855-6.084198-1.738342-9.560882-6.953369-8.691711-10.430053 0.869171-4.345855 6.953369-6.084198 13.037566-4.345855 6.084198 1.738342 9.560882 6.084198 8.691711 10.430053z m0 0M351.145116 857.002684c0 4.345855-5.215026 7.82254-11.299224 7.82254-6.084198 0-11.299224-3.476684-11.299224-7.82254s5.215026-7.82254 11.299224-7.82254c6.084198 0 11.299224 3.476684 11.299224 7.82254z m0 0M391.126986 850.049315c0.869171 4.345855-3.476684 8.691711-9.560882 9.560882-6.084198 0.869171-11.299224-1.738342-12.168395-6.084197-0.869171-4.345855 3.476684-8.691711 9.560881-9.560882 6.084198-0.869171 11.299224 1.738342 12.168396 6.084197z m0 0" fill="#191717" p-id="4725"></path></svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/about-me/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About Me</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#git-merge">git merge</a></li>
+    <li><a href="#git-rebase">git rebase</a></li>
+    <li><a href="#关键区别">关键区别</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/git-merage%E5%92%8Cgit-rebase%E5%8C%BA%E5%88%AB/">
+                <img src="/p/git-merage%E5%92%8Cgit-rebase%E5%8C%BA%E5%88%AB/cover_hu_7ee0fb2130540674.jpg"
+                        srcset="/p/git-merage%E5%92%8Cgit-rebase%E5%8C%BA%E5%88%AB/cover_hu_7ee0fb2130540674.jpg 800w, /p/git-merage%E5%92%8Cgit-rebase%E5%8C%BA%E5%88%AB/cover_hu_2b8247eb93295eee.jpg 1600w"
+                        width="800" 
+                        height="559" 
+                        loading="lazy"
+                        alt="Featured image of post Git Merage和Git Rebase区别" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/git/" >
+                Git
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/git-merage%E5%92%8Cgit-rebase%E5%8C%BA%E5%88%AB/">Git Merage和Git Rebase区别</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">May 12, 2025</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    1 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h1 id="git-merge和git-rebase">git merge和git rebase
+</h1><p>在Git中merge和rebase都是git在管理整合分支的两种主要工具，但是他们的工作方式、提交历史影响和使用场景不同。</p>
+<h2 id="git-merge">git merge
+</h2><p><img src="/p/git-merage%E5%92%8Cgit-rebase%E5%8C%BA%E5%88%AB/image-20250513182704070.png"
+	width="2274"
+	height="1542"
+	srcset="/p/git-merage%E5%92%8Cgit-rebase%E5%8C%BA%E5%88%AB/image-20250513182704070_hu_fbb9a4492bc8a094.png 480w, /p/git-merage%E5%92%8Cgit-rebase%E5%8C%BA%E5%88%AB/image-20250513182704070_hu_9c436ad7fa03cde7.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250513182704070"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="147"
+		data-flex-basis="353px"
+	
+></p>
+<ul>
+<li>
+<p>定义</p>
+<ul>
+<li>将两个分支的提交历史合并，创建一个新的合并提交（merge commit），保留两个分支的完整历史。但是在快进合并（fast-foward）情况下直接移动指针，保持线性历史</li>
+<li>通常是将特性分支（feature branch）合并到主分支（如main分支）</li>
+</ul>
+</li>
+<li>
+<p>工作原理</p>
+<ul>
+<li>Git首先会找到两个分支的共同祖先节点，计算差异，然后合并代码</li>
+<li>如果没有冲突，自动合并</li>
+<li>如果有冲突，需要手动解决该冲突后生成合并提交</li>
+<li>快进模式：若目标分支无新提交，直接将指针移动到源分支，历史线性。</li>
+<li>非快进模式：生成合并提交，历史非线性，保留分支拓扑</li>
+</ul>
+</li>
+<li>
+<p>示例</p>
+<ul>
+<li>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 将feature分支合并到main分支上</span>
+</span></span><span class="line"><span class="cl">git checkout main
+</span></span><span class="line"><span class="cl">git merge feature
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+</li>
+<li>
+<p>快进合并（若main无新提交）</p>
+<ul>
+<li>main指针移动到feature最新提交，历史线性</li>
+</ul>
+</li>
+<li>
+<p>非快进合并（默认或指定&ndash;no-ff）</p>
+<ul>
+<li>创建合并提交，历史非线性</li>
+</ul>
+</li>
+<li>
+<p>提交历史图</p>
+<ul>
+<li>
+<p>快进合并（线性历史，修正后在一条直线上）</p>
+<ul>
+<li>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 初始：main和feature指向A；feature新增B、C。</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 合并后：main快进到C，历史为单条直线。</span>
+</span></span><span class="line"><span class="cl">A---B---C  <span class="o">(</span>main, feature<span class="o">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+</li>
+<li>
+<p>非快进合并（非线性历史）</p>
+<ul>
+<li>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 合并后：M为合并提交，指向B和D</span>
+</span></span><span class="line"><span class="cl">A---B  <span class="o">(</span>main<span class="o">)</span>
+</span></span><span class="line"><span class="cl"> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  C---D  <span class="o">(</span>feature<span class="o">)</span>
+</span></span><span class="line"><span class="cl">       <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>        M  <span class="o">(</span>main, 合并提交<span class="o">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>优点</p>
+<ul>
+<li>
+<p>快进合并：生成线性历史，干净简单，适合简单整合。</p>
+</li>
+<li>
+<p>非快进合并：保留分支历史，反映开发过程，便于追溯。</p>
+</li>
+<li>
+<p>团队协作：合并提交记录分支整合，适合多人项目。</p>
+</li>
+<li>
+<p>简单冲突处理：冲突集中解决，生成单一提交。</p>
+</li>
+<li>
+<p>非破坏性：不改写历史，安全用于共享分支。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>缺点:</p>
+<ul>
+<li>非快进历史复杂：频繁非快进合并导致历史杂乱，合并提交多。</li>
+<li>非快进非线性：分支分叉增加历史图复杂度。</li>
+<li>快进需条件：仅当目标分支无新提交时快进，否则需手动指定&ndash;ff。</li>
+</ul>
+</li>
+<li>
+<p>适用场景</p>
+<ul>
+<li>团队开发，保留清晰的历史提交记录</li>
+</ul>
+</li>
+</ul>
+<h2 id="git-rebase">git rebase
+</h2><p><img src="/p/git-merage%E5%92%8Cgit-rebase%E5%8C%BA%E5%88%AB/image-20250513182637026.png"
+	width="2146"
+	height="1252"
+	srcset="/p/git-merage%E5%92%8Cgit-rebase%E5%8C%BA%E5%88%AB/image-20250513182637026_hu_62e5fc5646b69e5e.png 480w, /p/git-merage%E5%92%8Cgit-rebase%E5%8C%BA%E5%88%AB/image-20250513182637026_hu_90576749f4ab5178.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250513182637026"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="171"
+		data-flex-basis="411px"
+	
+></p>
+<p><img src="/p/git-merage%E5%92%8Cgit-rebase%E5%8C%BA%E5%88%AB/image-20250513182721616.png"
+	width="2278"
+	height="1574"
+	srcset="/p/git-merage%E5%92%8Cgit-rebase%E5%8C%BA%E5%88%AB/image-20250513182721616_hu_5697819850c3a6d2.png 480w, /p/git-merage%E5%92%8Cgit-rebase%E5%8C%BA%E5%88%AB/image-20250513182721616_hu_faf3c528ddb84210.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250513182721616"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="144"
+		data-flex-basis="347px"
+	
+></p>
+<ul>
+<li>
+<p>定义</p>
+<ul>
+<li>将当前分支的提交&quot;嫁接&quot;到目标分支最新提交上，改写历史，始终生成线性历史</li>
+<li>用于清理本地分支或平滑整合提交</li>
+</ul>
+</li>
+<li>
+<p>工作原理</p>
+<ul>
+<li>Git将当前分支的提交逐一应用到目标分支最新提交，生成新提交（SHA值变化）</li>
+<li>冲突需要逐一提交解决，完成后历史性</li>
+</ul>
+</li>
+<li>
+<p>示例</p>
+<ul>
+<li>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">git checkout feature
+</span></span><span class="line"><span class="cl">git rebase main
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+</li>
+<li>
+<p>结果：feature的提交重放至main最新提交，历史线性。</p>
+</li>
+<li>
+<p>可快进合并到main</p>
+<ul>
+<li>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">git checkout main
+</span></span><span class="line"><span class="cl">git merge feature
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+</li>
+<li>
+<p>提交历史图示（线性历史）</p>
+<ul>
+<li>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">A---B---C<span class="s1">&#39;---D&#39;</span>  <span class="o">(</span>main, feature<span class="o">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+</li>
+<li>
+<p>初始：main在A，feature有A&mdash;C&mdash;D。</p>
+</li>
+<li>
+<p>重放后：feature变为A&mdash;C&rsquo;&mdash;D&rsquo;，main快进到D&rsquo;，历史为单条直线。</p>
+</li>
+<li>
+<p>优点</p>
+<ul>
+<li>
+<p>干净线性历史：历史简洁，易于审查和版本管理。</p>
+</li>
+<li>
+<p>简化提交：可整理提交（如git rebase -i合并小提交）。</p>
+</li>
+<li>
+<p>便于快进合并：重放后主分支可直接快进。</p>
+</li>
+<li>
+<p>适合单人开发：清理本地分支，提升提交质量。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>缺点:</p>
+<ul>
+<li>历史重写：改写提交SHA值，破坏共享分支，影响协作。</li>
+<li>冲突复杂：逐提交解决冲突，工作量可能大。</li>
+<li>丢失上下文：线性历史隐藏分支来源，追溯困难。</li>
+<li>高风险：误操作可能丢失提交。</li>
+</ul>
+</li>
+<li>
+<p>适用场景</p>
+<ul>
+<li>适合个人开发，可以保留干净的历史提交记录</li>
+</ul>
+</li>
+</ul>
+<h2 id="关键区别">关键区别
+</h2><div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th>特性</th>
+          <th>git merge</th>
+          <th>git rebase</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>历史结构</strong></td>
+          <td>快进合并：线性；非快进合并：非线性</td>
+          <td>始终线性</td>
+      </tr>
+      <tr>
+          <td><strong>提交记录</strong></td>
+          <td>快进：无新提交；非快进：合并提交</td>
+          <td>重写提交，无合并提交</td>
+      </tr>
+      <tr>
+          <td><strong>冲突处理</strong></td>
+          <td>一次性解决所有冲突</td>
+          <td>逐提交解决冲突</td>
+      </tr>
+      <tr>
+          <td><strong>历史清晰度</strong></td>
+          <td>快进：干净；非快进：保留分支上下文</td>
+          <td>干净，但丢失分支上下文</td>
+      </tr>
+      <tr>
+          <td><strong>使用场景</strong></td>
+          <td>协作开发，需保留历史或快进合并</td>
+          <td>单人开发，追求干净历史</td>
+      </tr>
+  </tbody>
+</table></div>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/git/">Git</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+	const mainArticleElement = document.querySelector(".main-article");
+        renderMathInElement(mainArticleElement, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/p/git%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9B%B8%E5%85%B3%E9%85%8D%E7%BD%AE/">
+        
+        
+            <div class="article-image">
+                <img src="/p/git%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9B%B8%E5%85%B3%E9%85%8D%E7%BD%AE/cover.955825fe98d8d607ca24e6e0e29feb29_hu_cdfe1047f9de0a33.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Git初始化相关配置"
+                        
+                        data-hash="md5-lVgl/pjY1gfKJObg4p/rKQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Git初始化相关配置</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/p/git%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9B%B8%E5%85%B3%E9%85%8D%E7%BD%AE/">
+        
+        
+            <div class="article-image">
+                <img src="/p/git%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9B%B8%E5%85%B3%E9%85%8D%E7%BD%AE/cover.955825fe98d8d607ca24e6e0e29feb29_hu_cdfe1047f9de0a33.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Git初始化相关配置"
+                        
+                        data-hash="md5-lVgl/pjY1gfKJObg4p/rKQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Git初始化相关配置</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/p/git%E7%AE%80%E4%BB%8B-%E5%8F%91%E5%B1%95/">
+        
+        
+            <div class="article-image">
+                <img src="/p/git%E7%AE%80%E4%BB%8B-%E5%8F%91%E5%B1%95/cover.9a14074f24b3e283cdfa89deb7fb7ec1_hu_a31a867bf480d11c.jpg" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Git简介-发展"
+                        
+                        data-hash="md5-mhQHTySz4oPN&#43;onet/t&#43;wQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Git简介-发展</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2024 - 
+        
+        2025 dxjxpr All Rights Reserved
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
