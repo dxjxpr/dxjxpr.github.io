@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="单例模式（Singleton Pattern）是设计模式中一种创建型模式，广泛应用于软件开发中。一以下以故事化的方式，结合详细的技术讲解，介绍单例模式的背景、定义、适用场景，并提供python的示例代码。\n故事1:皇帝的玉玺\n在古代的龙国，皇帝是国家的唯一最高统治者，象征权力的玉玺也只有一块。无论多少大臣、多少事务需要盖章，所有人都必须使用同一块玉玺。皇帝下令：这块玉玺是独一无二的，不能有第二块！谁敢私自造玉玺，格杀勿论！ 于是，为了确保玉玺的唯一性，皇帝派专人保管，任何人需要盖章时，都得向保管者申请使用这块玉玺。这样，全国上下都用同一块玉玺，保证了权力的统一性和一致性。 有一天，邻国的使者来访，带来了一个问题：如果多个大臣同时需要盖章，玉玺如何分配？皇帝想了想，决定让保管者记录玉玺的使用情况，确保每次只有一个人能拿到玉玺使用，其他人必须排队等待。这不仅保证了玉玺的唯一行，还避免了混乱。\n这个故事中的玉玺，就是单例模式的完全体现：全局唯一、受控访问。\n在古代的一个小村庄里，有一口古老的“智慧之井”，据说井水能赋予饮用者无穷的智慧。村民们都想喝到井水，但村长发现，如果每个人都随意打水，井水很快就会干涸。于是，村长宣布：全村只能有一个“水官”负责管理井水，每天只打一桶水，供大家享用。这个“水官”就是全村唯一的井水管理者，任何时候只有他能接触到井水，确保井水不会被滥用。\n这个故事就像程序设计中的单例模式。在软件开发中，有些资源（如数据库连接、配置文件、线程池等），就像“智慧之井”，如果每次都创建新实例，会浪费资源或导致冲突。单例模式就像村里的“水官”，确保全局只有一个实例，统一管理资源。\n单例模式是什么？\n单例模式（Singleton Pattern）是一种创建型设计模式，它保证一个类只有一个实例，并提供一个全局访问点来获取该实例。单例模式的核心是控制对象的创建过程，确保系统中该类的对象始终只有一个。\n解决什么样的问题\n单例模式主要解决以下问题：\n1、资源共享：避免多次创建对象导致的资源浪费（如数据库连接池、日志对象）\n2、全局状态管理：需要一个全局唯一的对象来协调系统行为（如配置管理器、计数器）\n3、控制并发访问：防止多个实例同时操作同一资源导致的数据不一致（如线程池）\n4、减少系统开销：避免频繁创建和销毁对象，提升性能\n适用场景\n单例模式适用于以下场景\n1、需要全局唯一实例的资源\n配置文件管理器：整个应用共享同一份配置 日志记录器：统一管理日志输出 数据库连接池：避免重复创建连接 2、需要控制资源访问\n线程池：统一管理线程资源 缓存管理器：全局共享缓存数据 3、需要全局协调的场景\n计数器：记录系统中某些操作的次数 状态管理器：维护系统的全局状态 优缺点\n优点：\n节省资源：只创建一个实例，减少内存和系统开销 全局访问点：提供统一的访问入口，方便管理 严格控制实例：避免多实例带来的冲突或数据不一致 缺点\n单点故障：如果单例对象出现问题，可能影响整个系统 难以测试：单例的全局状态可能导致单元测试复杂化 违反单一职责原则：单例既负责自身逻辑，又负责实例管理 扩展性差：难以继承或修改，因为单例通常是静态的 实现方式\n单例模式有几种常见实现方式\n饿汉式：类加载时酒创建实例（线程安全，但可能浪费资源） 懒汉式：需要时才创建实例（需考虑线程安全） 双检锁：懒汉式的线程安全优化 静态内部类：结合饿汉式和懒汉式的优点（Java常用） 模块级单例：Python的模块天然支持单例 Python示例代码\n以下展示几种Python实现单例模式的方式，并附上详细注释，为了贴合故事，代码以“皇帝的玉玺”作为类名\n方式1:经典懒汉式（线程不安全）\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 class ImperialSeal: # 私有类变量，存储唯一实例 _instance = None def __new__(cls): # 如果实例不存在，则创建 if cls._instance is None: cls._instance = super().__new__(cls) return cls._instance def __init__(self): # 出事话只执行一次，防止重复初始化 if not hasattr(self, &#39;_initialized&#39;): self._initialized = True self.seal_name = &#34;Dragon Seal&#34; def use_seal(self): print(f&#34;Using the {self.seal_name} to stamp a decree!&#34;) # 测试代码 if __name__ == &#34;__main__&#34;: seal1 = ImperialSeal() seal2 = ImperialSeal() # True print(f&#34;Same instance: {seal1 is seal2}&#34;) # Using the Dragon Seal to stamp a decree! seal1.use_seal() 说明\n">
+<title>单例模式</title>
+
+<link rel='canonical' href='https://dxjxpr.github.io/p/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/'>
+
+<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="单例模式">
+<meta property='og:description' content="单例模式（Singleton Pattern）是设计模式中一种创建型模式，广泛应用于软件开发中。一以下以故事化的方式，结合详细的技术讲解，介绍单例模式的背景、定义、适用场景，并提供python的示例代码。\n故事1:皇帝的玉玺\n在古代的龙国，皇帝是国家的唯一最高统治者，象征权力的玉玺也只有一块。无论多少大臣、多少事务需要盖章，所有人都必须使用同一块玉玺。皇帝下令：这块玉玺是独一无二的，不能有第二块！谁敢私自造玉玺，格杀勿论！ 于是，为了确保玉玺的唯一性，皇帝派专人保管，任何人需要盖章时，都得向保管者申请使用这块玉玺。这样，全国上下都用同一块玉玺，保证了权力的统一性和一致性。 有一天，邻国的使者来访，带来了一个问题：如果多个大臣同时需要盖章，玉玺如何分配？皇帝想了想，决定让保管者记录玉玺的使用情况，确保每次只有一个人能拿到玉玺使用，其他人必须排队等待。这不仅保证了玉玺的唯一行，还避免了混乱。\n这个故事中的玉玺，就是单例模式的完全体现：全局唯一、受控访问。\n在古代的一个小村庄里，有一口古老的“智慧之井”，据说井水能赋予饮用者无穷的智慧。村民们都想喝到井水，但村长发现，如果每个人都随意打水，井水很快就会干涸。于是，村长宣布：全村只能有一个“水官”负责管理井水，每天只打一桶水，供大家享用。这个“水官”就是全村唯一的井水管理者，任何时候只有他能接触到井水，确保井水不会被滥用。\n这个故事就像程序设计中的单例模式。在软件开发中，有些资源（如数据库连接、配置文件、线程池等），就像“智慧之井”，如果每次都创建新实例，会浪费资源或导致冲突。单例模式就像村里的“水官”，确保全局只有一个实例，统一管理资源。\n单例模式是什么？\n单例模式（Singleton Pattern）是一种创建型设计模式，它保证一个类只有一个实例，并提供一个全局访问点来获取该实例。单例模式的核心是控制对象的创建过程，确保系统中该类的对象始终只有一个。\n解决什么样的问题\n单例模式主要解决以下问题：\n1、资源共享：避免多次创建对象导致的资源浪费（如数据库连接池、日志对象）\n2、全局状态管理：需要一个全局唯一的对象来协调系统行为（如配置管理器、计数器）\n3、控制并发访问：防止多个实例同时操作同一资源导致的数据不一致（如线程池）\n4、减少系统开销：避免频繁创建和销毁对象，提升性能\n适用场景\n单例模式适用于以下场景\n1、需要全局唯一实例的资源\n配置文件管理器：整个应用共享同一份配置 日志记录器：统一管理日志输出 数据库连接池：避免重复创建连接 2、需要控制资源访问\n线程池：统一管理线程资源 缓存管理器：全局共享缓存数据 3、需要全局协调的场景\n计数器：记录系统中某些操作的次数 状态管理器：维护系统的全局状态 优缺点\n优点：\n节省资源：只创建一个实例，减少内存和系统开销 全局访问点：提供统一的访问入口，方便管理 严格控制实例：避免多实例带来的冲突或数据不一致 缺点\n单点故障：如果单例对象出现问题，可能影响整个系统 难以测试：单例的全局状态可能导致单元测试复杂化 违反单一职责原则：单例既负责自身逻辑，又负责实例管理 扩展性差：难以继承或修改，因为单例通常是静态的 实现方式\n单例模式有几种常见实现方式\n饿汉式：类加载时酒创建实例（线程安全，但可能浪费资源） 懒汉式：需要时才创建实例（需考虑线程安全） 双检锁：懒汉式的线程安全优化 静态内部类：结合饿汉式和懒汉式的优点（Java常用） 模块级单例：Python的模块天然支持单例 Python示例代码\n以下展示几种Python实现单例模式的方式，并附上详细注释，为了贴合故事，代码以“皇帝的玉玺”作为类名\n方式1:经典懒汉式（线程不安全）\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 class ImperialSeal: # 私有类变量，存储唯一实例 _instance = None def __new__(cls): # 如果实例不存在，则创建 if cls._instance is None: cls._instance = super().__new__(cls) return cls._instance def __init__(self): # 出事话只执行一次，防止重复初始化 if not hasattr(self, &#39;_initialized&#39;): self._initialized = True self.seal_name = &#34;Dragon Seal&#34; def use_seal(self): print(f&#34;Using the {self.seal_name} to stamp a decree!&#34;) # 测试代码 if __name__ == &#34;__main__&#34;: seal1 = ImperialSeal() seal2 = ImperialSeal() # True print(f&#34;Same instance: {seal1 is seal2}&#34;) # Using the Dragon Seal to stamp a decree! seal1.use_seal() 说明\n">
+<meta property='og:url' content='https://dxjxpr.github.io/p/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/'>
+<meta property='og:site_name' content='I&#39;m Mr.Liu'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Design Pattern' /><meta property='article:tag' content='Singleton Pattern' /><meta property='article:published_time' content='2025-06-22T12:00:00&#43;08:00'/><meta property='article:modified_time' content='2025-06-22T12:00:00&#43;08:00'/><meta property='og:image' content='https://dxjxpr.github.io/p/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/cover.png' />
+<meta name="twitter:title" content="单例模式">
+<meta name="twitter:description" content="单例模式（Singleton Pattern）是设计模式中一种创建型模式，广泛应用于软件开发中。一以下以故事化的方式，结合详细的技术讲解，介绍单例模式的背景、定义、适用场景，并提供python的示例代码。\n故事1:皇帝的玉玺\n在古代的龙国，皇帝是国家的唯一最高统治者，象征权力的玉玺也只有一块。无论多少大臣、多少事务需要盖章，所有人都必须使用同一块玉玺。皇帝下令：这块玉玺是独一无二的，不能有第二块！谁敢私自造玉玺，格杀勿论！ 于是，为了确保玉玺的唯一性，皇帝派专人保管，任何人需要盖章时，都得向保管者申请使用这块玉玺。这样，全国上下都用同一块玉玺，保证了权力的统一性和一致性。 有一天，邻国的使者来访，带来了一个问题：如果多个大臣同时需要盖章，玉玺如何分配？皇帝想了想，决定让保管者记录玉玺的使用情况，确保每次只有一个人能拿到玉玺使用，其他人必须排队等待。这不仅保证了玉玺的唯一行，还避免了混乱。\n这个故事中的玉玺，就是单例模式的完全体现：全局唯一、受控访问。\n在古代的一个小村庄里，有一口古老的“智慧之井”，据说井水能赋予饮用者无穷的智慧。村民们都想喝到井水，但村长发现，如果每个人都随意打水，井水很快就会干涸。于是，村长宣布：全村只能有一个“水官”负责管理井水，每天只打一桶水，供大家享用。这个“水官”就是全村唯一的井水管理者，任何时候只有他能接触到井水，确保井水不会被滥用。\n这个故事就像程序设计中的单例模式。在软件开发中，有些资源（如数据库连接、配置文件、线程池等），就像“智慧之井”，如果每次都创建新实例，会浪费资源或导致冲突。单例模式就像村里的“水官”，确保全局只有一个实例，统一管理资源。\n单例模式是什么？\n单例模式（Singleton Pattern）是一种创建型设计模式，它保证一个类只有一个实例，并提供一个全局访问点来获取该实例。单例模式的核心是控制对象的创建过程，确保系统中该类的对象始终只有一个。\n解决什么样的问题\n单例模式主要解决以下问题：\n1、资源共享：避免多次创建对象导致的资源浪费（如数据库连接池、日志对象）\n2、全局状态管理：需要一个全局唯一的对象来协调系统行为（如配置管理器、计数器）\n3、控制并发访问：防止多个实例同时操作同一资源导致的数据不一致（如线程池）\n4、减少系统开销：避免频繁创建和销毁对象，提升性能\n适用场景\n单例模式适用于以下场景\n1、需要全局唯一实例的资源\n配置文件管理器：整个应用共享同一份配置 日志记录器：统一管理日志输出 数据库连接池：避免重复创建连接 2、需要控制资源访问\n线程池：统一管理线程资源 缓存管理器：全局共享缓存数据 3、需要全局协调的场景\n计数器：记录系统中某些操作的次数 状态管理器：维护系统的全局状态 优缺点\n优点：\n节省资源：只创建一个实例，减少内存和系统开销 全局访问点：提供统一的访问入口，方便管理 严格控制实例：避免多实例带来的冲突或数据不一致 缺点\n单点故障：如果单例对象出现问题，可能影响整个系统 难以测试：单例的全局状态可能导致单元测试复杂化 违反单一职责原则：单例既负责自身逻辑，又负责实例管理 扩展性差：难以继承或修改，因为单例通常是静态的 实现方式\n单例模式有几种常见实现方式\n饿汉式：类加载时酒创建实例（线程安全，但可能浪费资源） 懒汉式：需要时才创建实例（需考虑线程安全） 双检锁：懒汉式的线程安全优化 静态内部类：结合饿汉式和懒汉式的优点（Java常用） 模块级单例：Python的模块天然支持单例 Python示例代码\n以下展示几种Python实现单例模式的方式，并附上详细注释，为了贴合故事，代码以“皇帝的玉玺”作为类名\n方式1:经典懒汉式（线程不安全）\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 class ImperialSeal: # 私有类变量，存储唯一实例 _instance = None def __new__(cls): # 如果实例不存在，则创建 if cls._instance is None: cls._instance = super().__new__(cls) return cls._instance def __init__(self): # 出事话只执行一次，防止重复初始化 if not hasattr(self, &#39;_initialized&#39;): self._initialized = True self.seal_name = &#34;Dragon Seal&#34; def use_seal(self): print(f&#34;Using the {self.seal_name} to stamp a decree!&#34;) # 测试代码 if __name__ == &#34;__main__&#34;: seal1 = ImperialSeal() seal2 = ImperialSeal() # True print(f&#34;Same instance: {seal1 is seal2}&#34;) # Using the Dragon Seal to stamp a decree! seal1.use_seal() 说明\n"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://dxjxpr.github.io/p/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/cover.png' />
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_defd7c575e91cf12.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🏃‍➡️</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">I&#39;m Mr.Liu</a></h1>
+            <h2 class="site-description">B What U Wanna B! Just Do It!</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/dxjxpr'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1723043422785" class="icon" viewBox="0 0 1049 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4723" xmlns:xlink="http://www.w3.org/1999/xlink" width="204.8828125" height="200"><path d="M524.979332 0C234.676191 0 0 234.676191 0 524.979332c0 232.068678 150.366597 428.501342 358.967656 498.035028 26.075132 5.215026 35.636014-11.299224 35.636014-25.205961 0-12.168395-0.869171-53.888607-0.869171-97.347161-146.020741 31.290159-176.441729-62.580318-176.441729-62.580318-23.467619-60.841976-58.234462-76.487055-58.234463-76.487055-47.804409-32.15933 3.476684-32.15933 3.476685-32.15933 53.019436 3.476684 80.83291 53.888607 80.83291 53.888607 46.935238 79.963739 122.553122 57.365291 152.97411 43.458554 4.345855-33.897672 18.252593-57.365291 33.028501-70.402857-116.468925-12.168395-239.022047-57.365291-239.022047-259.012982 0-57.365291 20.860106-104.300529 53.888607-140.805715-5.215026-13.037566-23.467619-66.926173 5.215027-139.067372 0 0 44.327725-13.906737 144.282399 53.888607 41.720212-11.299224 86.917108-17.383422 131.244833-17.383422s89.524621 6.084198 131.244833 17.383422C756.178839 203.386032 800.506564 217.29277 800.506564 217.29277c28.682646 72.1412 10.430053 126.029806 5.215026 139.067372 33.897672 36.505185 53.888607 83.440424 53.888607 140.805715 0 201.64769-122.553122 245.975415-239.891218 259.012982 19.121764 16.514251 35.636014 47.804409 35.636015 97.347161 0 70.402857-0.869171 126.898978-0.869172 144.282399 0 13.906737 9.560882 30.420988 35.636015 25.205961 208.601059-69.533686 358.967656-265.96635 358.967655-498.035028C1049.958663 234.676191 814.413301 0 524.979332 0z" fill="#191717" p-id="4724"></path><path d="M199.040177 753.571326c-0.869171 2.607513-5.215026 3.476684-8.691711 1.738342s-6.084198-5.215026-4.345855-7.82254c0.869171-2.607513 5.215026-3.476684 8.691711-1.738342s5.215026 5.215026 4.345855 7.82254z m-6.953369-4.345856M219.900283 777.038945c-2.607513 2.607513-7.82254 0.869171-10.430053-2.607514-3.476684-3.476684-4.345855-8.691711-1.738342-11.299224 2.607513-2.607513 6.953369-0.869171 10.430053 2.607514 3.476684 4.345855 4.345855 9.560882 1.738342 11.299224z m-5.215026-5.215027M240.760389 807.459932c-3.476684 2.607513-8.691711 0-11.299224-4.345855-3.476684-4.345855-3.476684-10.430053 0-12.168395 3.476684-2.607513 8.691711 0 11.299224 4.345855 3.476684 4.345855 3.476684 9.560882 0 12.168395z m0 0M269.443034 837.011749c-2.607513 3.476684-8.691711 2.607513-13.906737-1.738342-4.345855-4.345855-6.084198-10.430053-2.607513-13.037566 2.607513-3.476684 8.691711-2.607513 13.906737 1.738342 4.345855 3.476684 5.215026 9.560882 2.607513 13.037566z m0 0M308.555733 853.526c-0.869171 4.345855-6.953369 6.084198-13.037566 4.345855-6.084198-1.738342-9.560882-6.953369-8.691711-10.430053 0.869171-4.345855 6.953369-6.084198 13.037566-4.345855 6.084198 1.738342 9.560882 6.084198 8.691711 10.430053z m0 0M351.145116 857.002684c0 4.345855-5.215026 7.82254-11.299224 7.82254-6.084198 0-11.299224-3.476684-11.299224-7.82254s5.215026-7.82254 11.299224-7.82254c6.084198 0 11.299224 3.476684 11.299224 7.82254z m0 0M391.126986 850.049315c0.869171 4.345855-3.476684 8.691711-9.560882 9.560882-6.084198 0.869171-11.299224-1.738342-12.168395-6.084197-0.869171-4.345855 3.476684-8.691711 9.560881-9.560882 6.084198-0.869171 11.299224 1.738342 12.168396 6.084197z m0 0" fill="#191717" p-id="4725"></path></svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/about-me/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About Me</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">
+                <img src="/p/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/cover_hu_84bfdf1aa9223589.png"
+                        srcset="/p/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/cover_hu_84bfdf1aa9223589.png 800w, /p/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/cover_hu_26784e62a581df7c.png 1600w"
+                        width="800" 
+                        height="444" 
+                        loading="lazy"
+                        alt="Featured image of post 单例模式" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/desing-pattern/" >
+                Desing Pattern
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">单例模式</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jun 22, 2025</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    3 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <p>单例模式（Singleton Pattern）是设计模式中一种创建型模式，广泛应用于软件开发中。一以下以故事化的方式，结合详细的技术讲解，介绍单例模式的背景、定义、适用场景，并提供python的示例代码。</p>
+<p>故事1:皇帝的玉玺</p>
+<p>在古代的龙国，皇帝是国家的唯一最高统治者，象征权力的玉玺也只有一块。无论多少大臣、多少事务需要盖章，所有人都必须使用同一块玉玺。皇帝下令：这块玉玺是独一无二的，不能有第二块！谁敢私自造玉玺，格杀勿论！
+于是，为了确保玉玺的唯一性，皇帝派专人保管，任何人需要盖章时，都得向保管者申请使用这块玉玺。这样，全国上下都用同一块玉玺，保证了权力的统一性和一致性。
+有一天，邻国的使者来访，带来了一个问题：如果多个大臣同时需要盖章，玉玺如何分配？皇帝想了想，决定让保管者记录玉玺的使用情况，确保每次只有一个人能拿到玉玺使用，其他人必须排队等待。这不仅保证了玉玺的唯一行，还避免了混乱。</p>
+<p>这个故事中的玉玺，就是单例模式的完全体现：全局唯一、受控访问。</p>
+<p>在古代的一个小村庄里，有一口古老的“智慧之井”，据说井水能赋予饮用者无穷的智慧。村民们都想喝到井水，但村长发现，如果每个人都随意打水，井水很快就会干涸。于是，村长宣布：全村只能有一个“水官”负责管理井水，每天只打一桶水，供大家享用。这个“水官”就是全村唯一的井水管理者，任何时候只有他能接触到井水，确保井水不会被滥用。</p>
+<p>这个故事就像程序设计中的单例模式。在软件开发中，有些资源（如数据库连接、配置文件、线程池等），就像“智慧之井”，如果每次都创建新实例，会浪费资源或导致冲突。单例模式就像村里的“水官”，确保全局只有一个实例，统一管理资源。</p>
+<p>单例模式是什么？</p>
+<p>单例模式（Singleton Pattern）是一种创建型设计模式，它保证一个类只有一个实例，并提供一个全局访问点来获取该实例。单例模式的核心是控制对象的创建过程，确保系统中该类的对象始终只有一个。</p>
+<p>解决什么样的问题</p>
+<p>单例模式主要解决以下问题：</p>
+<p>1、资源共享：避免多次创建对象导致的资源浪费（如数据库连接池、日志对象）</p>
+<p>2、全局状态管理：需要一个全局唯一的对象来协调系统行为（如配置管理器、计数器）</p>
+<p>3、控制并发访问：防止多个实例同时操作同一资源导致的数据不一致（如线程池）</p>
+<p>4、减少系统开销：避免频繁创建和销毁对象，提升性能</p>
+<p>适用场景</p>
+<p>单例模式适用于以下场景</p>
+<p>1、需要全局唯一实例的资源</p>
+<ul>
+<li>配置文件管理器：整个应用共享同一份配置</li>
+<li>日志记录器：统一管理日志输出</li>
+<li>数据库连接池：避免重复创建连接</li>
+</ul>
+<p>2、需要控制资源访问</p>
+<ul>
+<li>线程池：统一管理线程资源</li>
+<li>缓存管理器：全局共享缓存数据</li>
+</ul>
+<p>3、需要全局协调的场景</p>
+<ul>
+<li>计数器：记录系统中某些操作的次数</li>
+<li>状态管理器：维护系统的全局状态</li>
+</ul>
+<p>优缺点</p>
+<p>优点：</p>
+<ul>
+<li>节省资源：只创建一个实例，减少内存和系统开销</li>
+<li>全局访问点：提供统一的访问入口，方便管理</li>
+<li>严格控制实例：避免多实例带来的冲突或数据不一致</li>
+</ul>
+<p>缺点</p>
+<ul>
+<li>单点故障：如果单例对象出现问题，可能影响整个系统</li>
+<li>难以测试：单例的全局状态可能导致单元测试复杂化</li>
+<li>违反单一职责原则：单例既负责自身逻辑，又负责实例管理</li>
+<li>扩展性差：难以继承或修改，因为单例通常是静态的</li>
+</ul>
+<p>实现方式</p>
+<p>单例模式有几种常见实现方式</p>
+<ul>
+<li>饿汉式：类加载时酒创建实例（线程安全，但可能浪费资源）</li>
+<li>懒汉式：需要时才创建实例（需考虑线程安全）</li>
+<li>双检锁：懒汉式的线程安全优化</li>
+<li>静态内部类：结合饿汉式和懒汉式的优点（Java常用）</li>
+<li>模块级单例：Python的模块天然支持单例</li>
+</ul>
+<p>Python示例代码</p>
+<p>以下展示几种Python实现单例模式的方式，并附上详细注释，为了贴合故事，代码以“皇帝的玉玺”作为类名</p>
+<p>方式1:经典懒汉式（线程不安全）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">ImperialSeal</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 私有类变量，存储唯一实例</span>
+</span></span><span class="line"><span class="cl">    <span class="n">_instance</span> <span class="o">=</span> <span class="kc">None</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 如果实例不存在，则创建</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_instance</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">cls</span><span class="o">.</span><span class="n">_instance</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_instance</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 出事话只执行一次，防止重复初始化</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_initialized&#39;</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">_initialized</span> <span class="o">=</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">seal_name</span> <span class="o">=</span> <span class="s2">&#34;Dragon Seal&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">use_seal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Using the </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">seal_name</span><span class="si">}</span><span class="s2"> to stamp a decree!&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 测试代码</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">seal1</span> <span class="o">=</span> <span class="n">ImperialSeal</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">seal2</span> <span class="o">=</span> <span class="n">ImperialSeal</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># True</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Same instance: </span><span class="si">{</span><span class="n">seal1</span> <span class="ow">is</span> <span class="n">seal2</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># Using the Dragon Seal to stamp a decree!</span>
+</span></span><span class="line"><span class="cl">    <span class="n">seal1</span><span class="o">.</span><span class="n">use_seal</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>说明</p>
+<ul>
+<li>new方法控制实例创建，确保只有一个实例</li>
+<li>init适用_initialized防止重复初始化_</li>
+<li>缺点：多线程环境下可能创建多个实例（线程不安全）</li>
+</ul>
+<p>方式2:线程安全的懒汉式（使用锁）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">threading</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">threading</span> <span class="kn">import</span> <span class="n">Lock</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">ImperialSeal</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 私有类变量，存储唯一实例</span>
+</span></span><span class="line"><span class="cl">    <span class="n">_instance</span> <span class="o">=</span> <span class="kc">None</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 锁，用于线程安全</span>
+</span></span><span class="line"><span class="cl">    <span class="n">_lock</span> <span class="o">=</span> <span class="n">Lock</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">with</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_lock</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_instance</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="bp">cls</span><span class="o">.</span><span class="n">_instance</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_instance</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_initialized&#39;</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">_initialized</span> <span class="o">=</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">seal_name</span> <span class="o">=</span> <span class="s2">&#34;Dragon Seal&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">use_seal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Using the </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">seal_name</span><span class="si">}</span><span class="s2"> to stamp a decree!&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">create_seal</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="n">seal</span> <span class="o">=</span> <span class="n">ImperialSeal</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Created seal: </span><span class="si">{</span><span class="nb">id</span><span class="p">(</span><span class="n">seal</span><span class="p">)</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 测试代码</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">threads</span> <span class="o">=</span> <span class="p">[</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">create_seal</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">threads</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">threads</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">t</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">seal1</span> <span class="o">=</span> <span class="n">ImperialSeal</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">seal2</span> <span class="o">=</span> <span class="n">ImperialSeal</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># True</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Same instance: </span><span class="si">{</span><span class="n">seal1</span> <span class="ow">is</span> <span class="n">seal2</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># Using the Dragon Seal to stamp a decree!</span>
+</span></span><span class="line"><span class="cl">    <span class="n">seal1</span><span class="o">.</span><span class="n">use_seal</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>说明</p>
+<ul>
+<li>使用threading.Lock确保多线程环境下之创建一次实例</li>
+<li>with cis.<em>lock保证线程安全，但加锁可能影响性能</em></li>
+<li>适合多线程场景，如web服务器中的全局配置管理</li>
+</ul>
+<p>方式3:Python模块单例</p>
+<p>Python的模块本身是天然的单例，因为模块只加载一次。以下展示如何利用模块实现单例</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># 单例模式 - 模块级单例实现</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 通过在模块级别定义全局唯一实例来实现单例模式</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">ImperialSeal</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">seal_name</span> <span class="o">=</span> <span class="s2">&#34;Dragon Seal&#34;</span>  <span class="c1"># 玉玺名称</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">use_seal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;使用 </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">seal_name</span><span class="si">}</span><span class="s2"> 盖章于圣旨！&#34;</span><span class="p">)</span>  <span class="c1"># 使用玉玺盖章</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 定义全局唯一实例</span>
+</span></span><span class="line"><span class="cl"><span class="n">seal</span> <span class="o">=</span> <span class="n">ImperialSeal</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 测试代码</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 直接引用模块中的 seal 实例，模拟多次导入</span>
+</span></span><span class="line"><span class="cl">    <span class="n">seal1</span> <span class="o">=</span> <span class="n">seal</span>
+</span></span><span class="line"><span class="cl">    <span class="n">seal2</span> <span class="o">=</span> <span class="n">seal</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;是否为同一实例: </span><span class="si">{</span><span class="n">seal1</span> <span class="ow">is</span> <span class="n">seal2</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>  <span class="c1"># 应输出 True</span>
+</span></span><span class="line"><span class="cl">    <span class="n">seal1</span><span class="o">.</span><span class="n">use_seal</span><span class="p">()</span>  <span class="c1"># 输出: 使用 Dragon Seal 盖章于圣旨！</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>说明</p>
+<ul>
+<li>Python模块在程序运行期间只加载一次，seal变量天然全局唯一</li>
+<li>简单高效，无需显式控制实例创建</li>
+<li>适合简单场景，但不适合需要复杂初始化逻辑的情况</li>
+</ul>
+<p>故事续篇：玉玺的挑战</p>
+<p>龙国的玉玺管理逐渐复杂，大臣们发现</p>
+<ul>
+<li>并发问题：多个大臣同时申请玉玺，导致盖章混乱（线程安全问题）</li>
+<li>测试麻烦：玉玺的全局性让模拟测试变的困难（单例的全局状态问题）</li>
+<li>扩展需求：邻国提议联合使用玉玺，但玉玺无法轻易扩展（单例扩展性差）</li>
+</ul>
+<p>皇帝召集智囊团，决定</p>
+<ul>
+<li>使用“锁匠”（线程锁）确保玉玺一次只被一人使用（线程安全单例）</li>
+<li>编写“玉玺副本”用于测试（依赖注入替换单例）</li>
+<li>对于新需求，考虑“多玉玺模式”（非单例设计）</li>
+</ul>
+<p>这个故事告诉我们：单例模式虽然简单有效，但需谨慎使用，避免滥用导致维护困难</p>
+<p>适用场景举例</p>
+<p>1、日志管理器：全局唯一的日志对象，确保日志写入一致</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">logging</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># logging 模块天然单例</span>
+</span></span><span class="line"><span class="cl"><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&#34;app&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>2、数据库连接池</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pymysql</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">DBConnection</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">_instance</span> <span class="o">=</span> <span class="kc">None</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_instance</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">cls</span><span class="o">.</span><span class="n">_instance</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">cls</span><span class="o">.</span><span class="n">_instance</span><span class="o">.</span><span class="n">conn</span> <span class="o">=</span> <span class="n">pymysql</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s2">&#34;localhost&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                                                 <span class="n">user</span><span class="o">=</span><span class="s2">&#34;root&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                                                 <span class="n">password</span><span class="o">=</span><span class="s2">&#34;123456&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                                                 <span class="n">database</span><span class="o">=</span><span class="s2">&#34;test&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_instance</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>3、配置管理：全局读取配置，避免重复加载</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">_instance</span> <span class="o">=</span> <span class="kc">None</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_instance</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">cls</span><span class="o">.</span><span class="n">_instance</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">Config</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">cls</span><span class="o">.</span><span class="n">_instance</span><span class="o">.</span><span class="n">settings</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&#34;api_key&#34;</span><span class="p">:</span> <span class="s2">&#34;12345&#34;</span><span class="p">,</span> <span class="s2">&#34;timeout&#34;</span><span class="p">:</span> <span class="mi">30</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_instance</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>注意事项</p>
+<ul>
+<li>线程安全：多线程环境下，有限适用锁或模块级单例</li>
+<li>测试问题：单例的全局状态可能影响单元测试，建议结合依赖注入</li>
+<li>滥用风险：不宜将所有全局对象都用单例，可能导致单例过多，增加复杂性</li>
+<li>Python特性：Python的模块机制天然支持单例，优先考虑模块级单例以简化代码</li>
+</ul>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/design-pattern/">Design Pattern</a>
+        
+            <a href="/tags/singleton-pattern/">Singleton Pattern</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+	const mainArticleElement = document.querySelector(".main-article");
+        renderMathInElement(mainArticleElement, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2024 - 
+        
+        2025 dxjxpr All Rights Reserved
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
