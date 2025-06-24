@@ -7,10 +7,10 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
         <copyright>dxjxpr All Rights Reserved</copyright>
-        <lastBuildDate>Sun, 22 Jun 2025 12:00:00 +0800</lastBuildDate><atom:link href="https://dxjxpr.github.io/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Tue, 24 Jun 2025 12:00:00 +0800</lastBuildDate><atom:link href="https://dxjxpr.github.io/post/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Python多继承</title>
         <link>https://dxjxpr.github.io/p/python%E5%A4%9A%E7%BB%A7%E6%89%BF/</link>
-        <pubDate>Sun, 22 Jun 2025 12:00:00 +0800</pubDate>
+        <pubDate>Tue, 24 Jun 2025 12:00:00 +0800</pubDate>
         
         <guid>https://dxjxpr.github.io/p/python%E5%A4%9A%E7%BB%A7%E6%89%BF/</guid>
         <description>&lt;img src="https://dxjxpr.github.io/p/python%E5%A4%9A%E7%BB%A7%E6%89%BF/cover.png" alt="Featured image of post Python多继承" /&gt;&lt;h1 id=&#34;python的多继承&#34;&gt;Python的多继承
@@ -312,6 +312,15 @@
 &lt;li&gt;使用&lt;code&gt;super()&lt;/code&gt;或显式调用父类方法来处理继承关系&lt;/li&gt;
 &lt;li&gt;优先考虑组合而非多继承，保持代码清晰简洁&lt;/li&gt;
 &lt;/ul&gt;
+</description>
+        </item>
+        <item>
+        <title>非Blog，单纯记录文档</title>
+        <link>https://dxjxpr.github.io/p/%E9%9D%9Eblog%E5%8D%95%E7%BA%AF%E8%AE%B0%E5%BD%95%E6%96%87%E6%A1%A3/</link>
+        <pubDate>Mon, 23 Jun 2025 12:00:00 +0800</pubDate>
+        
+        <guid>https://dxjxpr.github.io/p/%E9%9D%9Eblog%E5%8D%95%E7%BA%AF%E8%AE%B0%E5%BD%95%E6%96%87%E6%A1%A3/</guid>
+        <description>&lt;img src="https://dxjxpr.github.io/p/%E9%9D%9Eblog%E5%8D%95%E7%BA%AF%E8%AE%B0%E5%BD%95%E6%96%87%E6%A1%A3/cover.png" alt="Featured image of post 非Blog，单纯记录文档" /&gt;&lt;p&gt;当前文章并非博客，是为了记录这个目录下的阿里云部署openstak的文章，保存为目录，以后有机会了再来重新尝试部署和重新整理这个博客&lt;/p&gt;
 </description>
         </item>
         <item>

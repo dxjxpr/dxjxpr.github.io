@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Record on I&#39;m Mr.Liu</title>
+        <link>https://dxjxpr.github.io/tags/record/</link>
+        <description>Recent content in Record on I&#39;m Mr.Liu</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en</language>
+        <copyright>dxjxpr All Rights Reserved</copyright>
+        <lastBuildDate>Mon, 23 Jun 2025 12:00:00 +0800</lastBuildDate><atom:link href="https://dxjxpr.github.io/tags/record/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>非Blog，单纯记录文档</title>
+        <link>https://dxjxpr.github.io/p/%E9%9D%9Eblog%E5%8D%95%E7%BA%AF%E8%AE%B0%E5%BD%95%E6%96%87%E6%A1%A3/</link>
+        <pubDate>Mon, 23 Jun 2025 12:00:00 +0800</pubDate>
+        
+        <guid>https://dxjxpr.github.io/p/%E9%9D%9Eblog%E5%8D%95%E7%BA%AF%E8%AE%B0%E5%BD%95%E6%96%87%E6%A1%A3/</guid>
+        <description>&lt;img src="https://dxjxpr.github.io/p/%E9%9D%9Eblog%E5%8D%95%E7%BA%AF%E8%AE%B0%E5%BD%95%E6%96%87%E6%A1%A3/cover.png" alt="Featured image of post 非Blog，单纯记录文档" /&gt;&lt;p&gt;当前文章并非博客，是为了记录这个目录下的阿里云部署openstak的文章，保存为目录，以后有机会了再来重新尝试部署和重新整理这个博客&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>
