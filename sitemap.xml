@@ -3,13 +3,34 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://dxjxpr.github.io/</loc>
-    <lastmod>2025-06-24T12:00:00+08:00</lastmod>
+    <lastmod>2025-06-28T12:00:00+08:00</lastmod>
   </url><url>
     <loc>https://dxjxpr.github.io/categories/</loc>
-    <lastmod>2025-06-24T12:00:00+08:00</lastmod>
+    <lastmod>2025-06-28T12:00:00+08:00</lastmod>
+  </url><url>
+    <loc>https://dxjxpr.github.io/p/centos%E6%90%AD%E5%BB%BAgitlab-jenkins-sonarqube%E5%AE%9E%E7%8E%B0ci/cd/</loc>
+    <lastmod>2025-06-28T12:00:00+08:00</lastmod>
+  </url><url>
+    <loc>https://dxjxpr.github.io/categories/ci/cd/</loc>
+    <lastmod>2025-06-28T12:00:00+08:00</lastmod>
+  </url><url>
+    <loc>https://dxjxpr.github.io/categories/devops/</loc>
+    <lastmod>2025-06-28T12:00:00+08:00</lastmod>
+  </url><url>
+    <loc>https://dxjxpr.github.io/tags/gitlab/</loc>
+    <lastmod>2025-06-28T12:00:00+08:00</lastmod>
+  </url><url>
+    <loc>https://dxjxpr.github.io/tags/jenkins/</loc>
+    <lastmod>2025-06-28T12:00:00+08:00</lastmod>
   </url><url>
     <loc>https://dxjxpr.github.io/post/</loc>
-    <lastmod>2025-06-24T12:00:00+08:00</lastmod>
+    <lastmod>2025-06-28T12:00:00+08:00</lastmod>
+  </url><url>
+    <loc>https://dxjxpr.github.io/tags/sonarqube/</loc>
+    <lastmod>2025-06-28T12:00:00+08:00</lastmod>
+  </url><url>
+    <loc>https://dxjxpr.github.io/tags/</loc>
+    <lastmod>2025-06-28T12:00:00+08:00</lastmod>
   </url><url>
     <loc>https://dxjxpr.github.io/categories/python/</loc>
     <lastmod>2025-06-24T12:00:00+08:00</lastmod>
@@ -18,9 +39,6 @@
     <lastmod>2025-06-24T12:00:00+08:00</lastmod>
   </url><url>
     <loc>https://dxjxpr.github.io/p/python%E5%A4%9A%E7%BB%A7%E6%89%BF/</loc>
-    <lastmod>2025-06-24T12:00:00+08:00</lastmod>
-  </url><url>
-    <loc>https://dxjxpr.github.io/tags/</loc>
     <lastmod>2025-06-24T12:00:00+08:00</lastmod>
   </url><url>
     <loc>https://dxjxpr.github.io/categories/record/</loc>

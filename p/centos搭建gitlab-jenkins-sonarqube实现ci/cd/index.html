@@ -1,0 +1,1672 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="Centos搭建GitLab+Jenkins+SonarQube实现CI/CD 注：该教程可以将服务部署成功，但是在测试项目时，编写jenkinsfile总是会因为插件找不到而出错，暂未解决这个问题\njenkins的jenkinsfile只使用了打印简单语句作为测试。\n添加git仓库，并提交代码，能够实现触发jenkins流程，而且能够运行成功\n因为SonarQube插件已经安装，但是jenkinsfile总显示找不到，未能连调成功\n1. 前提条件 1.1 硬件与系统要求 阿里云 ECS 实例： 规格：至少 4 核 CPU、8 GB 内存、50 GB SSD 磁盘（推荐 16 GB 内存以确保性能）。 操作系统：CentOS 8（最新版本，截至 2025 年 6 月仍支持）。 网络： 公网 IP（绑定到 ECS 实例）。 安全组规则：开放以下端口： 22（SSH） 80（HTTP，GitLab） 443（HTTPS，GitLab） 8080（Jenkins） 9000（SonarQube） 账户与权限： 阿里云账户（已购买 ECS 实例）。 具有 root 权限的用户。 工具： 本地电脑安装 SSH 客户端（如 PuTTY 或终端）。 浏览器（推荐 Chrome）。 2. 环境准备 2.1 创建并配置 ECS 实例 登录阿里云控制台（https://ecs.console.aliyun.com）。 点击“创建实例”，选择： 地域：选择靠近你的区域（如华东 1）。 实例类型：ecs.c6.large（4 vCPU，8 GiB 内存）。 镜像：CentOS 8（公共镜像）。 存储：50 GB SSD 云盘。 网络：分配公网 IP，带宽按需（建议 5 Mbps）。 配置安全组： 创建新安全组，添加规则： 1 2 3 4 5 6 协议类型 | 端口范围 | 授权对象 TCP | 22 | 0.0.0.0/0 TCP | 80 | 0.0.0.0/0 TCP | 443 | 0.0.0.0/0 TCP | 8080 | 0.0.0.0/0 TCP | 9000 | 0.0.0.0/0 设置实例密码或上传 SSH 密钥对，记录密码/密钥。 确认配置，点击“创建实例”，等待实例启动（约 2-5 分钟）。 2.2 连接 ECS 实例 获取实例公网 IP（如 47.100.123.456）。 使用 SSH 客户端连接： 1 ssh root@47.100.123.456 输入密码或使用密钥登录，成功后进入 CentOS 终端。 2.3 更新系统并安装基础工具 更新系统包： 1 2 yum update -y yum upgrade -y 安装常用工具： 1 yum install -y curl wget vim git 2.4 安装 Java 安装 OpenJDK 17\n">
+<title>Centos搭建GitLab&#43;Jenkins&#43;SonarQube实现CI/CD</title>
+
+<link rel='canonical' href='https://dxjxpr.github.io/p/centos%E6%90%AD%E5%BB%BAgitlab-jenkins-sonarqube%E5%AE%9E%E7%8E%B0ci/cd/'>
+
+<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="Centos搭建GitLab+Jenkins+SonarQube实现CI/CD">
+<meta property='og:description' content="Centos搭建GitLab+Jenkins+SonarQube实现CI/CD 注：该教程可以将服务部署成功，但是在测试项目时，编写jenkinsfile总是会因为插件找不到而出错，暂未解决这个问题\njenkins的jenkinsfile只使用了打印简单语句作为测试。\n添加git仓库，并提交代码，能够实现触发jenkins流程，而且能够运行成功\n因为SonarQube插件已经安装，但是jenkinsfile总显示找不到，未能连调成功\n1. 前提条件 1.1 硬件与系统要求 阿里云 ECS 实例： 规格：至少 4 核 CPU、8 GB 内存、50 GB SSD 磁盘（推荐 16 GB 内存以确保性能）。 操作系统：CentOS 8（最新版本，截至 2025 年 6 月仍支持）。 网络： 公网 IP（绑定到 ECS 实例）。 安全组规则：开放以下端口： 22（SSH） 80（HTTP，GitLab） 443（HTTPS，GitLab） 8080（Jenkins） 9000（SonarQube） 账户与权限： 阿里云账户（已购买 ECS 实例）。 具有 root 权限的用户。 工具： 本地电脑安装 SSH 客户端（如 PuTTY 或终端）。 浏览器（推荐 Chrome）。 2. 环境准备 2.1 创建并配置 ECS 实例 登录阿里云控制台（https://ecs.console.aliyun.com）。 点击“创建实例”，选择： 地域：选择靠近你的区域（如华东 1）。 实例类型：ecs.c6.large（4 vCPU，8 GiB 内存）。 镜像：CentOS 8（公共镜像）。 存储：50 GB SSD 云盘。 网络：分配公网 IP，带宽按需（建议 5 Mbps）。 配置安全组： 创建新安全组，添加规则： 1 2 3 4 5 6 协议类型 | 端口范围 | 授权对象 TCP | 22 | 0.0.0.0/0 TCP | 80 | 0.0.0.0/0 TCP | 443 | 0.0.0.0/0 TCP | 8080 | 0.0.0.0/0 TCP | 9000 | 0.0.0.0/0 设置实例密码或上传 SSH 密钥对，记录密码/密钥。 确认配置，点击“创建实例”，等待实例启动（约 2-5 分钟）。 2.2 连接 ECS 实例 获取实例公网 IP（如 47.100.123.456）。 使用 SSH 客户端连接： 1 ssh root@47.100.123.456 输入密码或使用密钥登录，成功后进入 CentOS 终端。 2.3 更新系统并安装基础工具 更新系统包： 1 2 yum update -y yum upgrade -y 安装常用工具： 1 yum install -y curl wget vim git 2.4 安装 Java 安装 OpenJDK 17\n">
+<meta property='og:url' content='https://dxjxpr.github.io/p/centos%E6%90%AD%E5%BB%BAgitlab-jenkins-sonarqube%E5%AE%9E%E7%8E%B0ci/cd/'>
+<meta property='og:site_name' content='I&#39;m Mr.Liu'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='GitLab' /><meta property='article:tag' content='Jenkins' /><meta property='article:tag' content='SonarQube' /><meta property='article:published_time' content='2025-06-28T12:00:00&#43;08:00'/><meta property='article:modified_time' content='2025-06-28T12:00:00&#43;08:00'/><meta property='og:image' content='https://dxjxpr.github.io/p/centos%E6%90%AD%E5%BB%BAgitlab-jenkins-sonarqube%E5%AE%9E%E7%8E%B0ci/cd/cover.png' />
+<meta name="twitter:title" content="Centos搭建GitLab+Jenkins+SonarQube实现CI/CD">
+<meta name="twitter:description" content="Centos搭建GitLab+Jenkins+SonarQube实现CI/CD 注：该教程可以将服务部署成功，但是在测试项目时，编写jenkinsfile总是会因为插件找不到而出错，暂未解决这个问题\njenkins的jenkinsfile只使用了打印简单语句作为测试。\n添加git仓库，并提交代码，能够实现触发jenkins流程，而且能够运行成功\n因为SonarQube插件已经安装，但是jenkinsfile总显示找不到，未能连调成功\n1. 前提条件 1.1 硬件与系统要求 阿里云 ECS 实例： 规格：至少 4 核 CPU、8 GB 内存、50 GB SSD 磁盘（推荐 16 GB 内存以确保性能）。 操作系统：CentOS 8（最新版本，截至 2025 年 6 月仍支持）。 网络： 公网 IP（绑定到 ECS 实例）。 安全组规则：开放以下端口： 22（SSH） 80（HTTP，GitLab） 443（HTTPS，GitLab） 8080（Jenkins） 9000（SonarQube） 账户与权限： 阿里云账户（已购买 ECS 实例）。 具有 root 权限的用户。 工具： 本地电脑安装 SSH 客户端（如 PuTTY 或终端）。 浏览器（推荐 Chrome）。 2. 环境准备 2.1 创建并配置 ECS 实例 登录阿里云控制台（https://ecs.console.aliyun.com）。 点击“创建实例”，选择： 地域：选择靠近你的区域（如华东 1）。 实例类型：ecs.c6.large（4 vCPU，8 GiB 内存）。 镜像：CentOS 8（公共镜像）。 存储：50 GB SSD 云盘。 网络：分配公网 IP，带宽按需（建议 5 Mbps）。 配置安全组： 创建新安全组，添加规则： 1 2 3 4 5 6 协议类型 | 端口范围 | 授权对象 TCP | 22 | 0.0.0.0/0 TCP | 80 | 0.0.0.0/0 TCP | 443 | 0.0.0.0/0 TCP | 8080 | 0.0.0.0/0 TCP | 9000 | 0.0.0.0/0 设置实例密码或上传 SSH 密钥对，记录密码/密钥。 确认配置，点击“创建实例”，等待实例启动（约 2-5 分钟）。 2.2 连接 ECS 实例 获取实例公网 IP（如 47.100.123.456）。 使用 SSH 客户端连接： 1 ssh root@47.100.123.456 输入密码或使用密钥登录，成功后进入 CentOS 终端。 2.3 更新系统并安装基础工具 更新系统包： 1 2 yum update -y yum upgrade -y 安装常用工具： 1 yum install -y curl wget vim git 2.4 安装 Java 安装 OpenJDK 17\n"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://dxjxpr.github.io/p/centos%E6%90%AD%E5%BB%BAgitlab-jenkins-sonarqube%E5%AE%9E%E7%8E%B0ci/cd/cover.png' />
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_defd7c575e91cf12.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🏃‍➡️</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">I&#39;m Mr.Liu</a></h1>
+            <h2 class="site-description">B What U Wanna B! Just Do It!</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/dxjxpr'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1723043422785" class="icon" viewBox="0 0 1049 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4723" xmlns:xlink="http://www.w3.org/1999/xlink" width="204.8828125" height="200"><path d="M524.979332 0C234.676191 0 0 234.676191 0 524.979332c0 232.068678 150.366597 428.501342 358.967656 498.035028 26.075132 5.215026 35.636014-11.299224 35.636014-25.205961 0-12.168395-0.869171-53.888607-0.869171-97.347161-146.020741 31.290159-176.441729-62.580318-176.441729-62.580318-23.467619-60.841976-58.234462-76.487055-58.234463-76.487055-47.804409-32.15933 3.476684-32.15933 3.476685-32.15933 53.019436 3.476684 80.83291 53.888607 80.83291 53.888607 46.935238 79.963739 122.553122 57.365291 152.97411 43.458554 4.345855-33.897672 18.252593-57.365291 33.028501-70.402857-116.468925-12.168395-239.022047-57.365291-239.022047-259.012982 0-57.365291 20.860106-104.300529 53.888607-140.805715-5.215026-13.037566-23.467619-66.926173 5.215027-139.067372 0 0 44.327725-13.906737 144.282399 53.888607 41.720212-11.299224 86.917108-17.383422 131.244833-17.383422s89.524621 6.084198 131.244833 17.383422C756.178839 203.386032 800.506564 217.29277 800.506564 217.29277c28.682646 72.1412 10.430053 126.029806 5.215026 139.067372 33.897672 36.505185 53.888607 83.440424 53.888607 140.805715 0 201.64769-122.553122 245.975415-239.891218 259.012982 19.121764 16.514251 35.636014 47.804409 35.636015 97.347161 0 70.402857-0.869171 126.898978-0.869172 144.282399 0 13.906737 9.560882 30.420988 35.636015 25.205961 208.601059-69.533686 358.967656-265.96635 358.967655-498.035028C1049.958663 234.676191 814.413301 0 524.979332 0z" fill="#191717" p-id="4724"></path><path d="M199.040177 753.571326c-0.869171 2.607513-5.215026 3.476684-8.691711 1.738342s-6.084198-5.215026-4.345855-7.82254c0.869171-2.607513 5.215026-3.476684 8.691711-1.738342s5.215026 5.215026 4.345855 7.82254z m-6.953369-4.345856M219.900283 777.038945c-2.607513 2.607513-7.82254 0.869171-10.430053-2.607514-3.476684-3.476684-4.345855-8.691711-1.738342-11.299224 2.607513-2.607513 6.953369-0.869171 10.430053 2.607514 3.476684 4.345855 4.345855 9.560882 1.738342 11.299224z m-5.215026-5.215027M240.760389 807.459932c-3.476684 2.607513-8.691711 0-11.299224-4.345855-3.476684-4.345855-3.476684-10.430053 0-12.168395 3.476684-2.607513 8.691711 0 11.299224 4.345855 3.476684 4.345855 3.476684 9.560882 0 12.168395z m0 0M269.443034 837.011749c-2.607513 3.476684-8.691711 2.607513-13.906737-1.738342-4.345855-4.345855-6.084198-10.430053-2.607513-13.037566 2.607513-3.476684 8.691711-2.607513 13.906737 1.738342 4.345855 3.476684 5.215026 9.560882 2.607513 13.037566z m0 0M308.555733 853.526c-0.869171 4.345855-6.953369 6.084198-13.037566 4.345855-6.084198-1.738342-9.560882-6.953369-8.691711-10.430053 0.869171-4.345855 6.953369-6.084198 13.037566-4.345855 6.084198 1.738342 9.560882 6.084198 8.691711 10.430053z m0 0M351.145116 857.002684c0 4.345855-5.215026 7.82254-11.299224 7.82254-6.084198 0-11.299224-3.476684-11.299224-7.82254s5.215026-7.82254 11.299224-7.82254c6.084198 0 11.299224 3.476684 11.299224 7.82254z m0 0M391.126986 850.049315c0.869171 4.345855-3.476684 8.691711-9.560882 9.560882-6.084198 0.869171-11.299224-1.738342-12.168395-6.084197-0.869171-4.345855 3.476684-8.691711 9.560881-9.560882 6.084198-0.869171 11.299224 1.738342 12.168396 6.084197z m0 0" fill="#191717" p-id="4725"></path></svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/about-me/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About Me</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#1-前提条件">1. 前提条件</a>
+      <ol>
+        <li><a href="#11-硬件与系统要求">1.1 硬件与系统要求</a></li>
+      </ol>
+    </li>
+    <li><a href="#2-环境准备">2. 环境准备</a>
+      <ol>
+        <li><a href="#21-创建并配置-ecs-实例">2.1 创建并配置 ECS 实例</a></li>
+        <li><a href="#22-连接-ecs-实例">2.2 连接 ECS 实例</a></li>
+        <li><a href="#23-更新系统并安装基础工具">2.3 更新系统并安装基础工具</a></li>
+        <li><a href="#24-安装-java">2.4 安装 Java</a></li>
+      </ol>
+    </li>
+    <li><a href="#3-安装-gitlab">3. 安装 GitLab</a>
+      <ol>
+        <li><a href="#31-安装依赖">3.1 安装依赖</a></li>
+        <li><a href="#32-添加-gitlab-仓库并安装">3.2 添加 GitLab 仓库并安装</a></li>
+        <li><a href="#配置-gitlab">配置 GitLab</a></li>
+        <li><a href="#33-访问-gitlab">3.3 访问 GitLab</a></li>
+        <li><a href="#34-创建测试项目">3.4 创建测试项目</a></li>
+      </ol>
+    </li>
+    <li><a href="#4-安装-sonarqube">4. 安装 SonarQube</a>
+      <ol>
+        <li><a href="#41-安装-postgresql">4.1 安装 PostgreSQL</a></li>
+        <li><a href="#42-安装-sonarqube">4.2 安装 SonarQube</a></li>
+      </ol>
+    </li>
+    <li><a href="#5-安装-jenkins">5. 安装 Jenkins</a>
+      <ol>
+        <li><a href="#51-添加-jenkins-仓库">5.1 添加 Jenkins 仓库</a></li>
+        <li><a href="#安装-jenkins">安装 Jenkins</a></li>
+        <li><a href="#启动-jenkins">启动 Jenkins</a></li>
+        <li><a href="#配置-jenkins">配置 Jenkins</a></li>
+        <li><a href="#安装必要插件">安装必要插件</a></li>
+      </ol>
+    </li>
+    <li><a href="#6-配置-cicd-流水线">6. 配置 CI/CD 流水线</a>
+      <ol>
+        <li><a href="#61-准备测试项目">6.1 准备测试项目</a></li>
+        <li><a href="#62-配置-gitlab-webhook">6.2 配置 GitLab Webhook</a></li>
+        <li><a href="#63-创建-jenkins-pipeline">6.3 创建 Jenkins Pipeline</a></li>
+        <li><a href="#64-配置-sonarqube-报告回写">6.4 配置 SonarQube 报告回写</a></li>
+      </ol>
+    </li>
+    <li><a href="#7-测试流水线">7. 测试流水线</a></li>
+    <li><a href="#8-常见问题与调试">8. 常见问题与调试</a>
+      <ol>
+        <li><a href="#81-gitlab-无法访问">8.1 GitLab 无法访问</a></li>
+        <li><a href="#82-sonarqube-启动失败">8.2 SonarQube 启动失败</a></li>
+        <li><a href="#83-jenkins-webhook-不触发">8.3 Jenkins Webhook 不触发</a></li>
+        <li><a href="#84-lfs-文件未显示">8.4 LFS 文件未显示</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/centos%E6%90%AD%E5%BB%BAgitlab-jenkins-sonarqube%E5%AE%9E%E7%8E%B0ci/cd/">
+                <img src="/p/centos%E6%90%AD%E5%BB%BAgitlab-jenkins-sonarqube%E5%AE%9E%E7%8E%B0ci/cd/cover_hu_3cd3c15c3db483fa.png"
+                        srcset="/p/centos%E6%90%AD%E5%BB%BAgitlab-jenkins-sonarqube%E5%AE%9E%E7%8E%B0ci/cd/cover_hu_3cd3c15c3db483fa.png 800w, /p/centos%E6%90%AD%E5%BB%BAgitlab-jenkins-sonarqube%E5%AE%9E%E7%8E%B0ci/cd/cover_hu_e668d3d3093ae6c2.png 1600w"
+                        width="800" 
+                        height="400" 
+                        loading="lazy"
+                        alt="Featured image of post Centos搭建GitLab&#43;Jenkins&#43;SonarQube实现CI/CD" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/ci/cd/" >
+                CI/CD
+            </a>
+        
+            <a href="/categories/devops/" >
+                DevOps
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/centos%E6%90%AD%E5%BB%BAgitlab-jenkins-sonarqube%E5%AE%9E%E7%8E%B0ci/cd/">Centos搭建GitLab&#43;Jenkins&#43;SonarQube实现CI/CD</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jun 28, 2025</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    7 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h1 id="centos搭建gitlabjenkinssonarqube实现cicd">Centos搭建GitLab+Jenkins+SonarQube实现CI/CD
+</h1><p>注：该教程可以将服务部署成功，但是在测试项目时，编写jenkinsfile总是会因为插件找不到而出错，暂未解决这个问题</p>
+<p>jenkins的jenkinsfile只使用了打印简单语句作为测试。</p>
+<p>添加git仓库，并提交代码，能够实现触发jenkins流程，而且能够运行成功</p>
+<p>因为SonarQube插件已经安装，但是jenkinsfile总显示找不到，未能连调成功</p>
+<hr>
+<h2 id="1-前提条件">1. 前提条件
+</h2><h3 id="11-硬件与系统要求">1.1 硬件与系统要求
+</h3><ul>
+<li><strong>阿里云 ECS 实例</strong>：
+<ul>
+<li>规格：至少 4 核 CPU、8 GB 内存、50 GB SSD 磁盘（推荐 16 GB 内存以确保性能）。</li>
+<li>操作系统：CentOS 8（最新版本，截至 2025 年 6 月仍支持）。</li>
+</ul>
+</li>
+<li><strong>网络</strong>：
+<ul>
+<li>公网 IP（绑定到 ECS 实例）。</li>
+<li>安全组规则：开放以下端口：
+<ul>
+<li>22（SSH）</li>
+<li>80（HTTP，GitLab）</li>
+<li>443（HTTPS，GitLab）</li>
+<li>8080（Jenkins）</li>
+<li>9000（SonarQube）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>账户与权限</strong>：
+<ul>
+<li>阿里云账户（已购买 ECS 实例）。</li>
+<li>具有 <code>root</code> 权限的用户。</li>
+</ul>
+</li>
+<li><strong>工具</strong>：
+<ul>
+<li>本地电脑安装 SSH 客户端（如 PuTTY 或终端）。</li>
+<li>浏览器（推荐 Chrome）。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="2-环境准备">2. 环境准备
+</h2><h3 id="21-创建并配置-ecs-实例">2.1 创建并配置 ECS 实例
+</h3><ol>
+<li>登录阿里云控制台（https://ecs.console.aliyun.com）。</li>
+<li>点击“创建实例”，选择：
+<ul>
+<li>地域：选择靠近你的区域（如华东 1）。</li>
+<li>实例类型：ecs.c6.large（4 vCPU，8 GiB 内存）。</li>
+<li>镜像：CentOS 8（公共镜像）。</li>
+<li>存储：50 GB SSD 云盘。</li>
+<li>网络：分配公网 IP，带宽按需（建议 5 Mbps）。</li>
+</ul>
+</li>
+<li>配置安全组：
+<ul>
+<li>创建新安全组，添加规则：
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">协议类型 | 端口范围    | 授权对象
+</span></span><span class="line"><span class="cl">TCP      | 22         | 0.0.0.0/0
+</span></span><span class="line"><span class="cl">TCP      | 80         | 0.0.0.0/0
+</span></span><span class="line"><span class="cl">TCP      | 443        | 0.0.0.0/0
+</span></span><span class="line"><span class="cl">TCP      | 8080       | 0.0.0.0/0
+</span></span><span class="line"><span class="cl">TCP      | 9000       | 0.0.0.0/0
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+</li>
+<li>设置实例密码或上传 SSH 密钥对，记录密码/密钥。</li>
+<li>确认配置，点击“创建实例”，等待实例启动（约 2-5 分钟）。</li>
+</ol>
+<h3 id="22-连接-ecs-实例">2.2 连接 ECS 实例
+</h3><ol>
+<li>获取实例公网 IP（如 <code>47.100.123.456</code>）。</li>
+<li>使用 SSH 客户端连接：
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ssh root@47.100.123.456
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>输入密码或使用密钥登录，成功后进入 CentOS 终端。</li>
+</ol>
+<h3 id="23-更新系统并安装基础工具">2.3 更新系统并安装基础工具
+</h3><ol>
+<li>更新系统包：
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">yum update -y
+</span></span><span class="line"><span class="cl">yum upgrade -y
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>安装常用工具：
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">yum install -y curl wget vim git
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<hr>
+<h3 id="24-安装-java">2.4 安装 Java
+</h3><p>安装 OpenJDK 17</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">yum clean all
+</span></span><span class="line"><span class="cl">yum makecache
+</span></span><span class="line"><span class="cl">yum install -y epel-release
+</span></span><span class="line"><span class="cl">yum update -y 
+</span></span><span class="line"><span class="cl">yum upgrade -y
+</span></span><span class="line"><span class="cl">yum install -y libstdc++ glibc gcc gcc-c++
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 使用yum方式安装jdk</span>
+</span></span><span class="line"><span class="cl">sudo yum install -y java-17-openjdk java-17-openjdk-devel
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 如果上面的yum方式安装失败，则使用下面的下载文件方式进行安装</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 下载 OpenJDK 17 二进制包</span>
+</span></span><span class="line"><span class="cl">wget https://download.java.net/java/GA/jdk17.0.2/dfd4a8d0985749f896bed50d7138ee7f/8/GPL/openjdk-17.0.2_linux-x64_bin.tar.gz
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 解压并安装</span>
+</span></span><span class="line"><span class="cl">sudo mkdir -p /usr/lib/jvm
+</span></span><span class="line"><span class="cl">sudo tar -xzf openjdk-17.0.2_linux-x64_bin.tar.gz -C /usr/lib/jvm
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 设置环境变量</span>
+</span></span><span class="line"><span class="cl">sudo tee /etc/profile.d/java.sh <span class="s">&lt;&lt;EOF
+</span></span></span><span class="line"><span class="cl"><span class="s">export JAVA_HOME=/usr/lib/jvm/jdk-17.0.2
+</span></span></span><span class="line"><span class="cl"><span class="s">export PATH=\$PATH:\$JAVA_HOME/bin
+</span></span></span><span class="line"><span class="cl"><span class="s">EOF</span>
+</span></span><span class="line"><span class="cl"><span class="nb">source</span> /etc/profile.d/java.sh
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 验证安装</span>
+</span></span><span class="line"><span class="cl">java -version
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 预期输出</span>
+</span></span><span class="line"><span class="cl">openjdk version <span class="s2">&#34;17.0.2&#34;</span> 2022-01-18
+</span></span><span class="line"><span class="cl">OpenJDK Runtime Environment <span class="o">(</span>build 17.0.2+8-86<span class="o">)</span>
+</span></span><span class="line"><span class="cl">OpenJDK 64-Bit Server VM <span class="o">(</span>build 17.0.2+8-86, mixed mode, sharing<span class="o">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="3-安装-gitlab">3. 安装 GitLab
+</h2><h3 id="31-安装依赖">3.1 安装依赖
+</h3><ol>
+<li>安装必要依赖包：
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">yum install -y policycoreutils-python-utils openssh-server postfix
+</span></span><span class="line"><span class="cl">systemctl <span class="nb">enable</span> sshd postfix
+</span></span><span class="line"><span class="cl">systemctl start sshd postfix
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<h3 id="32-添加-gitlab-仓库并安装">3.2 添加 GitLab 仓库并安装
+</h3><ol>
+<li>
+<p>添加 GitLab 官方仓库：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">curl -sS https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh <span class="p">|</span> sudo bash
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>安装 GitLab 社区版（CE）：
+安装 GitLab CE 并配置。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo yum install -y gitlab-ce
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="配置-gitlab">配置 GitLab
+</h3><p>编辑 GitLab 配置文件，设置外部 URL（替换 <code>your_domain.com</code> 为你的域名或服务器 IP）。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo vim /etc/gitlab/gitlab.rb
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>修改以下行：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nv">EXTERNAL_URL</span><span class="o">=</span><span class="s2">&#34;http://your_domain.com&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>重新配置并启动 GitLab：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo gitlab-ctl reconfigure
+</span></span><span class="line"><span class="cl">sudo gitlab-ctl start
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<h3 id="33-访问-gitlab">3.3 访问 GitLab
+</h3><ul>
+<li>打开浏览器，访问 <code>http://your_domain.com</code>。</li>
+<li>首次访问会提示设置 root 用户密码，记录密码。</li>
+<li>登录后，创建新项目（例如 <code>test-project</code>）用于测试。</li>
+<li>root的默认密码是在<code>/etc/gitlab/initial_root_password</code>文件中</li>
+</ul>
+<h3 id="34-创建测试项目">3.4 创建测试项目
+</h3><ol>
+<li>登录 GitLab，点击“Create a project” &gt; “Create blank project”。</li>
+<li>设置项目名称（如 <code>test-project</code>），可见性为“Private”，点击“Create project”。</li>
+<li>记录项目 HTTP URL（如 <code>http://your_domain/root/test-project.git</code>）。</li>
+<li>生成 SSH 密钥（在本地电脑）：
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ssh-keygen -t rsa -b <span class="m">4096</span> -C <span class="s2">&#34;your_email@example.com&#34;</span>
+</span></span><span class="line"><span class="cl">cat ~/.ssh/id_rsa.pub
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>复制公钥。</li>
+</ul>
+</li>
+<li>在 GitLab 中添加 SSH 密钥：
+<ul>
+<li>进入 Profile &gt; Preferences &gt; SSH Keys，粘贴公钥，点击“Add key”。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="4-安装-sonarqube">4. 安装 SonarQube
+</h2><h3 id="41-安装-postgresql">4.1 安装 PostgreSQL
+</h3><p>SonarQube 需使用 PostgreSQL 数据库（社区版不支持 MySQL）。</p>
+<p>注：本教程中使用的sonarqube 10版本，需要postgresql起码9.3版本，这里直接使用14的版本进行部署</p>
+<ol>
+<li>安装 PostgreSQL：
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 添加 PostgreSQL 官方 Yum 仓库</span>
+</span></span><span class="line"><span class="cl">sudo yum install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 安装 PostgreSQL（推荐版本 14 或更高）</span>
+</span></span><span class="line"><span class="cl">sudo yum install -y postgresql14 postgresql14-server postgresql14-libs postgresql14-contrib
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 初始化数据库</span>
+</span></span><span class="line"><span class="cl">sudo /usr/pgsql-14/bin/postgresql-14-setup initdb
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 启动并启用 PostgreSQL 服务</span>
+</span></span><span class="line"><span class="cl">systemctl <span class="nb">enable</span> postgresql-14
+</span></span><span class="line"><span class="cl">systemctl start postgresql-14
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 切换到postgres用户下，为postgres用户修改数据库密码，因为下面会将pg的配置文件修改为md5的模式，如果没有修改密码，则无法登陆</span>
+</span></span><span class="line"><span class="cl">su - postgres
+</span></span><span class="line"><span class="cl">psql
+</span></span><span class="line"><span class="cl">alter user postgres wiht password <span class="s1">&#39;newpassword&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="se">\q</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 将配置文件中method列修改为md5模式，修改完毕后保存并退出</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 例如</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 修改前： local   all  all   peer</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 修改后： local   all  all   md5</span>
+</span></span><span class="line"><span class="cl">vim /var/lib/pgsql/14/data/pg_hba.conf
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 重新加载配置文件信息</span>
+</span></span><span class="line"><span class="cl">sudo systemctl reload postgresql
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 测试新密码，如果连接成功，则代表ok</span>
+</span></span><span class="line"><span class="cl">psql -U postgres -h localhost -W
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>配置 PostgreSQL：
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">su - postgres
+</span></span><span class="line"><span class="cl">psql
+</span></span><span class="line"><span class="cl">CREATE USER sonar WITH ENCRYPTED PASSWORD <span class="s1">&#39;sonar123&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">CREATE DATABASE sonarqube OWNER sonar<span class="p">;</span>
+</span></span><span class="line"><span class="cl">GRANT ALL PRIVILEGES ON DATABASE sonarqube TO sonar<span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="se">\q</span>
+</span></span><span class="line"><span class="cl"><span class="nb">exit</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<h3 id="42-安装-sonarqube">4.2 安装 SonarQube
+</h3><ol>
+<li>
+<p>下载并解压 SonarQube 社区版（截至 2025 年 6 月，最新版本为 10.x）：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 将下载下来的SonarQube解压缩到/opt目录下</span>
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> /opt
+</span></span><span class="line"><span class="cl">wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-10.0.0.68432.zip
+</span></span><span class="line"><span class="cl">yum install -y unzip
+</span></span><span class="line"><span class="cl">unzip sonarqube-10.0.0.68432.zip
+</span></span><span class="line"><span class="cl">mv sonarqube-10.0.0.68432 sonarqube
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>配置 SonarQube：</p>
+<ul>
+<li>编辑 <code>conf/sonar.properties</code>：
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">vim /opt/sonarqube/conf/sonar.properties
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>添加/修改以下内容：
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">sonar.jdbc.username=sonar
+</span></span><span class="line"><span class="cl">sonar.jdbc.password=sonar123
+</span></span><span class="line"><span class="cl">sonar.jdbc.url=jdbc:postgresql://localhost:5432/sonarqube?useUnicode=true&amp;characterEncoding=utf8
+</span></span><span class="line"><span class="cl">sonar.web.host=0.0.0.0
+</span></span><span class="line"><span class="cl">sonar.web.port=9000
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>创建 SonarQube 用户并设置权限：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">groupadd sonar
+</span></span><span class="line"><span class="cl">useradd -g sonar -d /opt/sonarqube sonar
+</span></span><span class="line"><span class="cl">chown -R sonar:sonar /opt/sonarqube
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>配置系统参数：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;vm.max_map_count=262144&#34;</span> &gt;&gt; /etc/sysctl.conf
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;fs.file-max=65536&#34;</span> &gt;&gt; /etc/sysctl.conf
+</span></span><span class="line"><span class="cl">sysctl -p
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;sonarqube - nofile 65536&#34;</span> &gt;&gt; /etc/security/limits.conf
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;sonarqube - nproc 4096&#34;</span> &gt;&gt; /etc/security/limits.conf
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>设置 SonarQube 服务</p>
+<p>SonarQube服务不能使用root身份进行启动，需要切换到sonar普通用户进行启动，但是在启动前需要将SonarQube服务所在的目录权限和所属用户，切换给sonar用户</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo chown -R sonar:sonar /opt/sonarqube
+</span></span><span class="line"><span class="cl">sudo chmod -R <span class="m">755</span> /opt/sonarqube
+</span></span><span class="line"><span class="cl">su - sonar
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> /opt/sonarqube
+</span></span><span class="line"><span class="cl">./bin/linux-x86-64/sonar.sh start
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 如果此处启动失败，就去看下sonarqube/logs目录下的日志信息</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>访问 SonarQube：</p>
+<ul>
+<li>浏览器打开 <code>http://your_domain.com:9000</code>。</li>
+<li>默认登录：用户名 <code>admin</code>，密码 <code>admin</code>。</li>
+<li>设置新密码（如 <code>admin123</code>）。</li>
+</ul>
+</li>
+<li>
+<p>创建项目：</p>
+<ul>
+<li>点击“Create Project” &gt; “Manually”。</li>
+<li>项目名称：<code>test-project</code>，项目键：<code>test-project</code>，分支：<code>master</code>。</li>
+<li>生成 Token（如 <code>sonar-token-123</code>），记录以供 Jenkins 使用。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="5-安装-jenkins">5. 安装 Jenkins
+</h2><h3 id="51-添加-jenkins-仓库">5.1 添加 Jenkins 仓库
+</h3><p>安装最新版本的 Jenkins（长期支持版，免费）。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+</span></span><span class="line"><span class="cl">sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="安装-jenkins">安装 Jenkins
+</h3><p>安装 Jenkins 及其依赖</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo yum install -y jenkins
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="启动-jenkins">启动 Jenkins
+</h3><p>启动并设置 Jenkins 开机自启。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo systemctl start jenkins
+</span></span><span class="line"><span class="cl">sudo systemctl <span class="nb">enable</span> jenkins
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="配置-jenkins">配置 Jenkins
+</h3><ul>
+<li>访问 <code>http://your_domain.com:8080</code>。</li>
+<li>获取初始管理员密码：</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>按照界面提示完成安装，建议安装推荐插件。</li>
+<li>创建管理员账户。</li>
+</ul>
+<h3 id="安装必要插件">安装必要插件
+</h3><p>在 Jenkins 仪表盘：</p>
+<ol>
+<li>
+<p>进入 <strong>Manage Jenkins</strong> &gt; <strong>Manage Plugins</strong>。</p>
+</li>
+<li>
+<p>安装以下插件：</p>
+<ul>
+<li><strong>GitLab Plugin</strong>：用于 GitLab 集成。</li>
+<li><strong>SonarQube Scanner</strong>：用于 SonarQube 扫描。</li>
+<li><strong>Pipeline</strong>：支持流水线功能。</li>
+<li><strong>Git</strong>：支持 Git 仓库操作。</li>
+</ul>
+</li>
+<li>
+<p>配置全局工具：</p>
+<ul>
+<li>
+<p>进入 Manage Jenkins &gt; Global Tool Configuration。</p>
+</li>
+<li>
+<p><strong>JDK</strong>：添加 JDK，名称 <code>JDK11</code>，取消“Install automatically”，设置 <code>JAVA_HOME=/usr/lib/jvm/java-11-openjdk</code>。</p>
+</li>
+<li>
+<p><strong>Maven</strong>：添加 Maven，名称 <code>Maven3</code>，勾选“Install automatically”。</p>
+</li>
+<li>
+<p><strong>SonarQube Scanner</strong>：添加 Scanner，名称 <code>SonarScanner</code>，勾选“Install automatically”。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>配置 SonarQube 服务器：</p>
+<ul>
+<li>
+<p>进入 Manage Jenkins &gt; Configure System &gt; SonarQube servers。</p>
+</li>
+<li>
+<p>添加：</p>
+<ul>
+<li>名称：<code>SonarQube</code>
+<ul>
+<li>服务器 URL：<code>http://your_domain.com:9000</code></li>
+<li>服务器认证 Token：添加凭据，类型“Secret text”，粘贴 SonarQube 的 Token（如 <code>sonar-token-123</code>）。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="6-配置-cicd-流水线">6. 配置 CI/CD 流水线
+</h2><h3 id="61-准备测试项目">6.1 准备测试项目
+</h3><p>如果没有安装maven可以到<a class="link" href="https://maven.apache.org/download.cgi"  target="_blank" rel="noopener"
+    >官网</a>下载，这里以Linux版本为例，下载安装<code>maven 3.9.10</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 1、下载meave源代码</span>
+</span></span><span class="line"><span class="cl">wget https://dlcdn.apache.org/maven/maven-3/3.9.10/binaries/apache-maven-3.9.10-bin.tar.gz
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 解压并安装： 解压到 /usr/local 目录</span>
+</span></span><span class="line"><span class="cl">sudo tar -zxvf apache-maven-3.9.10-bin.tar.gz -C /usr/local/
+</span></span><span class="line"><span class="cl">sudo ln -s /usr/local/apache-maven-3.9.10 /usr/local/maven
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 配置环境变量： 编辑 ~/.bashrc 文件，添加 Maven 到 PATH</span>
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s1">&#39;export M2_HOME=/usr/local/maven&#39;</span> &gt;&gt; ~/.bashrc
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s1">&#39;export PATH=$M2_HOME/bin:$PATH&#39;</span> &gt;&gt; ~/.bashrc
+</span></span><span class="line"><span class="cl"><span class="nb">source</span> ~/.bashrc
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 验证安装，应返回类似 Apache Maven 3.9.10 的信息。代表安装成功</span>
+</span></span><span class="line"><span class="cl">mvn --version
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol>
+<li>在本地创建 Maven 项目：
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mvn archetype:generate -DgroupId<span class="o">=</span>com.example -DartifactId<span class="o">=</span>test-project -DarchetypeArtifactId<span class="o">=</span>maven-archetype-quickstart -DinteractiveMode<span class="o">=</span><span class="nb">false</span>
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> test-project
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>配置 <code>pom.xml</code>，添加 SonarQube 插件：
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;project&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;modelVersion&gt;</span>4.0.0<span class="nt">&lt;/modelVersion&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;groupId&gt;</span>com.example<span class="nt">&lt;/groupId&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;artifactId&gt;</span>test-project<span class="nt">&lt;/artifactId&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;version&gt;</span>1.0-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;properties&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;maven.compiler.source&gt;</span>11<span class="nt">&lt;/maven.compiler.source&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;maven.compiler.target&gt;</span>11<span class="nt">&lt;/maven.compiler.target&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;/properties&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;build&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;plugins&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&lt;plugin&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;groupId&gt;</span>org.sonarsource.scanner.maven<span class="nt">&lt;/groupId&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;artifactId&gt;</span>sonar-maven-plugin<span class="nt">&lt;/artifactId&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;version&gt;</span>3.9.1.2184<span class="nt">&lt;/version&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&lt;/plugin&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;/plugins&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;/build&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/project&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>推送代码到 GitLab：
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git init
+</span></span><span class="line"><span class="cl">git add .
+</span></span><span class="line"><span class="cl">git commit -m <span class="s2">&#34;Initial commit&#34;</span>
+</span></span><span class="line"><span class="cl">git remote add origin http://47.100.123.456/root/test-project.git
+</span></span><span class="line"><span class="cl">git push -u origin master
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<h3 id="62-配置-gitlab-webhook">6.2 配置 GitLab Webhook
+</h3><ol>
+<li>
+<p>在 GitLab 项目中：</p>
+<ul>
+<li>进入 Settings &gt; Integrations。</li>
+<li>添加 Webhook：
+<ul>
+<li>URL：<code>http://your_domain:8080/project/test-job</code></li>
+<li>触发事件：勾选“Push events”。</li>
+<li>点击“Add webhook”。</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 备注：如果上面的url显示无效或者是使用错误，可以使用下面格式的</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 前面是jenkins的管理员账户和token，后面是jenkins的项目地址</span>
+</span></span><span class="line"><span class="cl">http://admin:119cd07f8d572e0bcb832608efb20fce6e@8.138.235.28:8081/project/test-job
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>测试 Webhook：</p>
+<ul>
+<li>点击“Test” &gt; “Push events”，确保返回 200 OK。</li>
+</ul>
+</li>
+</ol>
+<h3 id="63-创建-jenkins-pipeline">6.3 创建 Jenkins Pipeline
+</h3><ol>
+<li>在 Jenkins 中：
+<ul>
+<li>点击“New Item”，名称 <code>test-job</code>，选择“Pipeline”。</li>
+</ul>
+</li>
+<li>配置 Pipeline：
+<ul>
+<li>
+<p><strong>General</strong>：勾选“GitLab Connection”，选择默认连接。</p>
+</li>
+<li>
+<p><strong>Build Triggers</strong>：勾选“Build when a change is pushed to GitLab”。</p>
+</li>
+<li>
+<p><strong>Pipeline</strong>：选择“Pipeline script”，输入：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="n">pipeline</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">agent</span> <span class="n">any</span>
+</span></span><span class="line"><span class="cl">    <span class="n">tools</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">maven</span> <span class="s1">&#39;Maven3&#39;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">jdk</span> <span class="s1">&#39;JDK17&#39;</span>
+</span></span><span class="line"><span class="cl">      	<span class="n">sonarQubeScanner</span> <span class="s1">&#39;SonarScanner&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">  	<span class="n">environment</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">GIT_CREDENTIALS</span> <span class="o">=</span> <span class="s1">&#39;gitlab-credentials&#39;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">SONAR_SERVER</span> <span class="o">=</span> <span class="s1">&#39;SonarQube&#39;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">DEPLOY_SERVER</span> <span class="o">=</span> <span class="s1">&#39;deploy-server&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">stages</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// 阶段1：从Gitlab 拉取代码
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Checkout&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">git</span> <span class="nl">branch:</span> <span class="s2">&#34;${params.gitlabBranch ?: &#39;master&#39;}&#34;</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">                <span class="nl">credentialsId:</span> <span class="s1">&#39;gitlab-credentials&#39;</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">                <span class="nl">url:</span> <span class="s1">&#39;http://ip/username/xxx.git&#39;</span> <span class="c1">// 替换
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// 阶段2: 编译代码
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Build&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">sh</span> <span class="s1">&#39;mvn clean package&#39;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// 阶段3：SonarQube 代码质量分析
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;SonarQube Scan&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">withSonarQubeEnv</span><span class="o">(</span><span class="s1">&#39;SonarQube&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                  <span class="n">sh</span> <span class="s1">&#39;mvn sonar:sonar \
+</span></span></span><span class="line"><span class="cl"><span class="s1">                  -Dsonar.projectKey=test-project \
+</span></span></span><span class="line"><span class="cl"><span class="s1">                  -Dsonar.host.url=http://IP:9000 \
+</span></span></span><span class="line"><span class="cl"><span class="s1">                  -Dsonar.login=$SONAR_TOKEN&#39;</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// 阶段4：检查 SonarQube Quality Gate
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Quality Gate&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">timeout</span><span class="o">(</span><span class="nl">time:</span> <span class="mi">2</span><span class="o">,</span> <span class="nl">unit:</span> <span class="s1">&#39;MINUTES&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">waitForQualityGate</span> <span class="nl">abortPipeline:</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// 阶段5: 部署
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Deploy&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">sh</span> <span class="s1">&#39;echo &#34;Deploying Successful, but this is a test demo&#34;&#39;</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">// 示例：scp target/*.jar user@server:/path
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">  <span class="n">post</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">always</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">cleanWs</span><span class="o">()</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="n">success</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">echo</span> <span class="s1">&#39;Build and deployment completed successfully!&#39;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="n">failure</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">echo</span> <span class="s1">&#39;Build or deployment failed. Check logs for details.&#39;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>替换 <code>SONAR_TOKEN</code> 为 SonarQube Token 的 Jenkins 凭据 ID。</p>
+</li>
+</ul>
+</li>
+<li>保存并点击“Build Now”测试。</li>
+</ol>
+<h3 id="64-配置-sonarqube-报告回写">6.4 配置 SonarQube 报告回写
+</h3><ol>
+<li>在 SonarQube 中安装 GitLab 插件：
+<ul>
+<li>进入 Administration &gt; Marketplace，搜索“GitLab”，安装并重启。</li>
+</ul>
+</li>
+<li>配置 GitLab 集成：
+<ul>
+<li>进入 Administration &gt; Configuration &gt; General Settings &gt; GitLab。</li>
+<li>设置 GitLab URL（<code>http://your_domain.com/api/v4</code>）和 Personal Access Token（在 GitLab 的 Profile &gt; Access Tokens 生成）。</li>
+</ul>
+</li>
+<li>在项目中启用报告回写：
+<ul>
+<li>进入项目设置，启用“Comment on Merge Requests”。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="7-测试流水线">7. 测试流水线
+</h2><ol>
+<li>修改本地 <code>test-project</code> 的代码（如 <code>src/main/java/com/example/App.java</code>），提交并推送：
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git add .
+</span></span><span class="line"><span class="cl">git commit -m <span class="s2">&#34;Update code&#34;</span>
+</span></span><span class="line"><span class="cl">git push origin master
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>验证：
+<ul>
+<li>在 Jenkins 中，检查 <code>test-job</code> 是否自动触发构建。</li>
+<li>在 SonarQube 中，访问 <code>http://47.100.123.456:9000/dashboard?id=test-project</code>，确认代码扫描结果。</li>
+<li>在 GitLab 中，检查提交是否收到 SonarQube 的质量报告评论。</li>
+</ul>
+</li>
+<li>若部署阶段配置了服务器，检查目标服务器上的应用是否更新。</li>
+</ol>
+<hr>
+<h2 id="8-常见问题与调试">8. 常见问题与调试
+</h2><h3 id="81-gitlab-无法访问">8.1 GitLab 无法访问
+</h3><ul>
+<li>
+<p><strong>现象</strong>：浏览器显示“502 Bad Gateway”。</p>
+</li>
+<li>
+<p><strong>解决</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">gitlab-ctl reconfigure
+</span></span><span class="line"><span class="cl">gitlab-ctl restart
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>检查端口占用：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">netstat -tulnp <span class="p">|</span> grep <span class="m">80</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h3 id="82-sonarqube-启动失败">8.2 SonarQube 启动失败
+</h3><ul>
+<li>
+<p><strong>现象</strong>：日志（<code>/opt/sonarqube/logs/sonar.log</code>）显示数据库连接错误。</p>
+</li>
+<li>
+<p><strong>解决</strong>：</p>
+<ul>
+<li>确认 PostgreSQL 运行：
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">systemctl status postgresql
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>验证 <code>sonar.properties</code> 中的数据库配置。</li>
+</ul>
+</li>
+</ul>
+<h3 id="83-jenkins-webhook-不触发">8.3 Jenkins Webhook 不触发
+</h3><ul>
+<li>
+<p><strong>现象</strong>：GitLab 推送无反应。</p>
+</li>
+<li>
+<p><strong>解决</strong>：</p>
+<ul>
+<li>确认 Jenkins URL 可从 GitLab 访问：
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">curl http://47.100.123.456:8080
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>检查 GitLab Webhook 日志，确认 HTTP 状态码。</li>
+</ul>
+</li>
+</ul>
+<h3 id="84-lfs-文件未显示">8.4 LFS 文件未显示
+</h3><ul>
+<li>若涉及大文件（如你的 125 MB 文件）：
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git lfs install
+</span></span><span class="line"><span class="cl">git lfs track <span class="s2">&#34;*.pdf&#34;</span>
+</span></span><span class="line"><span class="cl">git add .gitattributes
+</span></span><span class="line"><span class="cl">git commit -m <span class="s2">&#34;Add LFS tracking&#34;</span>
+</span></span><span class="line"><span class="cl">git push origin master
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/gitlab/">GitLab</a>
+        
+            <a href="/tags/jenkins/">Jenkins</a>
+        
+            <a href="/tags/sonarqube/">SonarQube</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+	const mainArticleElement = document.querySelector(".main-article");
+        renderMathInElement(mainArticleElement, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2024 - 
+        
+        2025 dxjxpr All Rights Reserved
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

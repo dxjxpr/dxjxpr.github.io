@@ -7,7 +7,31 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
         <copyright>dxjxpr All Rights Reserved</copyright>
-        <lastBuildDate>Tue, 24 Jun 2025 12:00:00 +0800</lastBuildDate><atom:link href="https://dxjxpr.github.io/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sat, 28 Jun 2025 12:00:00 +0800</lastBuildDate><atom:link href="https://dxjxpr.github.io/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>GitLab</title>
+        <link>https://dxjxpr.github.io/tags/gitlab/</link>
+        <pubDate>Sat, 28 Jun 2025 12:00:00 +0800</pubDate>
+        
+        <guid>https://dxjxpr.github.io/tags/gitlab/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Jenkins</title>
+        <link>https://dxjxpr.github.io/tags/jenkins/</link>
+        <pubDate>Sat, 28 Jun 2025 12:00:00 +0800</pubDate>
+        
+        <guid>https://dxjxpr.github.io/tags/jenkins/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>SonarQube</title>
+        <link>https://dxjxpr.github.io/tags/sonarqube/</link>
+        <pubDate>Sat, 28 Jun 2025 12:00:00 +0800</pubDate>
+        
+        <guid>https://dxjxpr.github.io/tags/sonarqube/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>Python</title>
         <link>https://dxjxpr.github.io/tags/python/</link>
         <pubDate>Tue, 24 Jun 2025 12:00:00 +0800</pubDate>
