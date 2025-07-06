@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="软硬件信息 服务器\n阿里云ECS * 3 4核8G 100G 操作系统\nUbuntu24.04 架构\n一台阿里云ECS实例部署 Zabbix Server + MariaDB\n两台阿里云ECS实例（被监控服务器）\n网络要求：\n所有ECS实例需公网IP或VPC内网通信。 开放以下端口： Zabbix Server：10051（TCP，Zabbix Server接收Agent数据）、80/443（HTTP/HTTPS，Web界面）。 被监控服务器：10050（TCP，Zabbix Agent监听）。 阿里云安全组配置：确保上述端口已开放（参考阿里云控制台）。 权限：root或sudo权限。\n软件：Zabbix 7.0支持MariaDB，需与Zabbix Server同机部署。\n部署步骤 步骤 1：安装并配置MariaDB 更新系统：\n1 sudo apt update &amp;&amp; sudo apt upgrade -y 安装MariaDB：\n1 sudo apt install mariadb-server -y 保护MariaDB安装：\n1 sudo mysql_secure_installation 设置root密码（记录下来）。 回答提示 启用密码验证（Y） 移除匿名用户（Y） 禁用远程root登录（Y） 移除测试数据库（Y） 刷新权限（Y） 创建Zabbix数据库和用户：\n1 sudo mysql -uroot -p 在MariaDB提示符下执行：\n">
+<title>在Ubuntu 24.04上部署Zabbix 7.0对服务器进行监控</title>
+
+<link rel='canonical' href='https://dxjxpr.github.io/p/%E5%9C%A8ubuntu-24.04%E4%B8%8A%E9%83%A8%E7%BD%B2zabbix-7.0%E5%AF%B9%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%9B%E8%A1%8C%E7%9B%91%E6%8E%A7/'>
+
+<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="在Ubuntu 24.04上部署Zabbix 7.0对服务器进行监控">
+<meta property='og:description' content="软硬件信息 服务器\n阿里云ECS * 3 4核8G 100G 操作系统\nUbuntu24.04 架构\n一台阿里云ECS实例部署 Zabbix Server + MariaDB\n两台阿里云ECS实例（被监控服务器）\n网络要求：\n所有ECS实例需公网IP或VPC内网通信。 开放以下端口： Zabbix Server：10051（TCP，Zabbix Server接收Agent数据）、80/443（HTTP/HTTPS，Web界面）。 被监控服务器：10050（TCP，Zabbix Agent监听）。 阿里云安全组配置：确保上述端口已开放（参考阿里云控制台）。 权限：root或sudo权限。\n软件：Zabbix 7.0支持MariaDB，需与Zabbix Server同机部署。\n部署步骤 步骤 1：安装并配置MariaDB 更新系统：\n1 sudo apt update &amp;&amp; sudo apt upgrade -y 安装MariaDB：\n1 sudo apt install mariadb-server -y 保护MariaDB安装：\n1 sudo mysql_secure_installation 设置root密码（记录下来）。 回答提示 启用密码验证（Y） 移除匿名用户（Y） 禁用远程root登录（Y） 移除测试数据库（Y） 刷新权限（Y） 创建Zabbix数据库和用户：\n1 sudo mysql -uroot -p 在MariaDB提示符下执行：\n">
+<meta property='og:url' content='https://dxjxpr.github.io/p/%E5%9C%A8ubuntu-24.04%E4%B8%8A%E9%83%A8%E7%BD%B2zabbix-7.0%E5%AF%B9%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%9B%E8%A1%8C%E7%9B%91%E6%8E%A7/'>
+<meta property='og:site_name' content='I&#39;m Mr.Liu'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Ubuntu' /><meta property='article:tag' content='Mariadb' /><meta property='article:tag' content='Zabbix' /><meta property='article:published_time' content='2025-07-06T12:00:00&#43;08:00'/><meta property='article:modified_time' content='2025-07-06T12:00:00&#43;08:00'/><meta property='og:image' content='https://dxjxpr.github.io/p/%E5%9C%A8ubuntu-24.04%E4%B8%8A%E9%83%A8%E7%BD%B2zabbix-7.0%E5%AF%B9%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%9B%E8%A1%8C%E7%9B%91%E6%8E%A7/cover.png' />
+<meta name="twitter:title" content="在Ubuntu 24.04上部署Zabbix 7.0对服务器进行监控">
+<meta name="twitter:description" content="软硬件信息 服务器\n阿里云ECS * 3 4核8G 100G 操作系统\nUbuntu24.04 架构\n一台阿里云ECS实例部署 Zabbix Server + MariaDB\n两台阿里云ECS实例（被监控服务器）\n网络要求：\n所有ECS实例需公网IP或VPC内网通信。 开放以下端口： Zabbix Server：10051（TCP，Zabbix Server接收Agent数据）、80/443（HTTP/HTTPS，Web界面）。 被监控服务器：10050（TCP，Zabbix Agent监听）。 阿里云安全组配置：确保上述端口已开放（参考阿里云控制台）。 权限：root或sudo权限。\n软件：Zabbix 7.0支持MariaDB，需与Zabbix Server同机部署。\n部署步骤 步骤 1：安装并配置MariaDB 更新系统：\n1 sudo apt update &amp;&amp; sudo apt upgrade -y 安装MariaDB：\n1 sudo apt install mariadb-server -y 保护MariaDB安装：\n1 sudo mysql_secure_installation 设置root密码（记录下来）。 回答提示 启用密码验证（Y） 移除匿名用户（Y） 禁用远程root登录（Y） 移除测试数据库（Y） 刷新权限（Y） 创建Zabbix数据库和用户：\n1 sudo mysql -uroot -p 在MariaDB提示符下执行：\n"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://dxjxpr.github.io/p/%E5%9C%A8ubuntu-24.04%E4%B8%8A%E9%83%A8%E7%BD%B2zabbix-7.0%E5%AF%B9%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%9B%E8%A1%8C%E7%9B%91%E6%8E%A7/cover.png' />
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_defd7c575e91cf12.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🏃‍➡️</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">I&#39;m Mr.Liu</a></h1>
+            <h2 class="site-description">B What U Wanna B! Just Do It!</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/dxjxpr'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1723043422785" class="icon" viewBox="0 0 1049 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4723" xmlns:xlink="http://www.w3.org/1999/xlink" width="204.8828125" height="200"><path d="M524.979332 0C234.676191 0 0 234.676191 0 524.979332c0 232.068678 150.366597 428.501342 358.967656 498.035028 26.075132 5.215026 35.636014-11.299224 35.636014-25.205961 0-12.168395-0.869171-53.888607-0.869171-97.347161-146.020741 31.290159-176.441729-62.580318-176.441729-62.580318-23.467619-60.841976-58.234462-76.487055-58.234463-76.487055-47.804409-32.15933 3.476684-32.15933 3.476685-32.15933 53.019436 3.476684 80.83291 53.888607 80.83291 53.888607 46.935238 79.963739 122.553122 57.365291 152.97411 43.458554 4.345855-33.897672 18.252593-57.365291 33.028501-70.402857-116.468925-12.168395-239.022047-57.365291-239.022047-259.012982 0-57.365291 20.860106-104.300529 53.888607-140.805715-5.215026-13.037566-23.467619-66.926173 5.215027-139.067372 0 0 44.327725-13.906737 144.282399 53.888607 41.720212-11.299224 86.917108-17.383422 131.244833-17.383422s89.524621 6.084198 131.244833 17.383422C756.178839 203.386032 800.506564 217.29277 800.506564 217.29277c28.682646 72.1412 10.430053 126.029806 5.215026 139.067372 33.897672 36.505185 53.888607 83.440424 53.888607 140.805715 0 201.64769-122.553122 245.975415-239.891218 259.012982 19.121764 16.514251 35.636014 47.804409 35.636015 97.347161 0 70.402857-0.869171 126.898978-0.869172 144.282399 0 13.906737 9.560882 30.420988 35.636015 25.205961 208.601059-69.533686 358.967656-265.96635 358.967655-498.035028C1049.958663 234.676191 814.413301 0 524.979332 0z" fill="#191717" p-id="4724"></path><path d="M199.040177 753.571326c-0.869171 2.607513-5.215026 3.476684-8.691711 1.738342s-6.084198-5.215026-4.345855-7.82254c0.869171-2.607513 5.215026-3.476684 8.691711-1.738342s5.215026 5.215026 4.345855 7.82254z m-6.953369-4.345856M219.900283 777.038945c-2.607513 2.607513-7.82254 0.869171-10.430053-2.607514-3.476684-3.476684-4.345855-8.691711-1.738342-11.299224 2.607513-2.607513 6.953369-0.869171 10.430053 2.607514 3.476684 4.345855 4.345855 9.560882 1.738342 11.299224z m-5.215026-5.215027M240.760389 807.459932c-3.476684 2.607513-8.691711 0-11.299224-4.345855-3.476684-4.345855-3.476684-10.430053 0-12.168395 3.476684-2.607513 8.691711 0 11.299224 4.345855 3.476684 4.345855 3.476684 9.560882 0 12.168395z m0 0M269.443034 837.011749c-2.607513 3.476684-8.691711 2.607513-13.906737-1.738342-4.345855-4.345855-6.084198-10.430053-2.607513-13.037566 2.607513-3.476684 8.691711-2.607513 13.906737 1.738342 4.345855 3.476684 5.215026 9.560882 2.607513 13.037566z m0 0M308.555733 853.526c-0.869171 4.345855-6.953369 6.084198-13.037566 4.345855-6.084198-1.738342-9.560882-6.953369-8.691711-10.430053 0.869171-4.345855 6.953369-6.084198 13.037566-4.345855 6.084198 1.738342 9.560882 6.084198 8.691711 10.430053z m0 0M351.145116 857.002684c0 4.345855-5.215026 7.82254-11.299224 7.82254-6.084198 0-11.299224-3.476684-11.299224-7.82254s5.215026-7.82254 11.299224-7.82254c6.084198 0 11.299224 3.476684 11.299224 7.82254z m0 0M391.126986 850.049315c0.869171 4.345855-3.476684 8.691711-9.560882 9.560882-6.084198 0.869171-11.299224-1.738342-12.168395-6.084197-0.869171-4.345855 3.476684-8.691711 9.560881-9.560882 6.084198-0.869171 11.299224 1.738342 12.168396 6.084197z m0 0" fill="#191717" p-id="4725"></path></svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/about-me/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About Me</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#软硬件信息">软硬件信息</a></li>
+    <li><a href="#部署步骤">部署步骤</a>
+      <ol>
+        <li><a href="#步骤-1安装并配置mariadb">步骤 1：安装并配置MariaDB</a></li>
+        <li><a href="#步骤-2安装zabbix-70-server">步骤 2：安装Zabbix 7.0 Server</a></li>
+        <li><a href="#步骤-3配置apache和php">步骤 3：配置Apache和PHP</a></li>
+        <li><a href="#步骤-4完成zabbix-web界面配置">步骤 4：完成Zabbix Web界面配置</a></li>
+        <li><a href="#步骤-5在两台阿里云ecs上安装zabbix-agent">步骤 5：在两台阿里云ECS上安装Zabbix Agent</a></li>
+        <li><a href="#步骤-6在zabbix-server上添加监控主机">步骤 6：在Zabbix Server上添加监控主机</a></li>
+        <li><a href="#步骤-7验证监控">步骤 7：验证监控</a></li>
+        <li><a href="#步骤-8优化和安全">步骤 8：优化和安全</a></li>
+        <li><a href="#步骤-9故障排查">步骤 9：故障排查</a></li>
+      </ol>
+    </li>
+    <li><a href="#最终结果">最终结果</a></li>
+    <li><a href="#参考资料">参考资料</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/%E5%9C%A8ubuntu-24.04%E4%B8%8A%E9%83%A8%E7%BD%B2zabbix-7.0%E5%AF%B9%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%9B%E8%A1%8C%E7%9B%91%E6%8E%A7/">
+                <img src="/p/%E5%9C%A8ubuntu-24.04%E4%B8%8A%E9%83%A8%E7%BD%B2zabbix-7.0%E5%AF%B9%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%9B%E8%A1%8C%E7%9B%91%E6%8E%A7/cover_hu_a26fef327d55a6a9.png"
+                        srcset="/p/%E5%9C%A8ubuntu-24.04%E4%B8%8A%E9%83%A8%E7%BD%B2zabbix-7.0%E5%AF%B9%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%9B%E8%A1%8C%E7%9B%91%E6%8E%A7/cover_hu_a26fef327d55a6a9.png 800w, /p/%E5%9C%A8ubuntu-24.04%E4%B8%8A%E9%83%A8%E7%BD%B2zabbix-7.0%E5%AF%B9%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%9B%E8%A1%8C%E7%9B%91%E6%8E%A7/cover_hu_1d7c079a410f1e2e.png 1600w"
+                        width="800" 
+                        height="450" 
+                        loading="lazy"
+                        alt="Featured image of post 在Ubuntu 24.04上部署Zabbix 7.0对服务器进行监控" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/monitor/" >
+                Monitor
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/%E5%9C%A8ubuntu-24.04%E4%B8%8A%E9%83%A8%E7%BD%B2zabbix-7.0%E5%AF%B9%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%9B%E8%A1%8C%E7%9B%91%E6%8E%A7/">在Ubuntu 24.04上部署Zabbix 7.0对服务器进行监控</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jul 06, 2025</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    3 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="软硬件信息">软硬件信息
+</h2><ul>
+<li>
+<p>服务器</p>
+<ul>
+<li>阿里云ECS * 3   4核8G  100G</li>
+</ul>
+</li>
+<li>
+<p>操作系统</p>
+<ul>
+<li>Ubuntu24.04</li>
+</ul>
+</li>
+<li>
+<p>架构</p>
+<ul>
+<li>
+<p>一台阿里云ECS实例部署 Zabbix Server + MariaDB</p>
+</li>
+<li>
+<p>两台阿里云ECS实例（被监控服务器）</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>网络要求</strong>：</p>
+<ul>
+<li>所有ECS实例需公网IP或VPC内网通信。</li>
+<li>开放以下端口：
+<ul>
+<li>Zabbix Server：10051（TCP，Zabbix Server接收Agent数据）、80/443（HTTP/HTTPS，Web界面）。</li>
+<li>被监控服务器：10050（TCP，Zabbix Agent监听）。</li>
+</ul>
+</li>
+<li>阿里云安全组配置：确保上述端口已开放（参考阿里云控制台）。</li>
+</ul>
+</li>
+<li>
+<p><strong>权限</strong>：root或sudo权限。</p>
+</li>
+<li>
+<p><strong>软件</strong>：Zabbix 7.0支持MariaDB，需与Zabbix Server同机部署。</p>
+</li>
+</ul>
+<h2 id="部署步骤">部署步骤
+</h2><h3 id="步骤-1安装并配置mariadb">步骤 1：安装并配置MariaDB
+</h3><ol>
+<li>
+<p><strong>更新系统</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo apt update <span class="o">&amp;&amp;</span> sudo apt upgrade -y
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong>安装MariaDB</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo apt install mariadb-server -y
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong>保护MariaDB安装</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo mysql_secure_installation
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>设置root密码（记录下来）。</li>
+<li>回答提示
+<ul>
+<li>启用密码验证（Y）</li>
+<li>移除匿名用户（Y）</li>
+<li>禁用远程root登录（Y）</li>
+<li>移除测试数据库（Y）</li>
+<li>刷新权限（Y）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>创建Zabbix数据库和用户</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo mysql -uroot -p
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在MariaDB提示符下执行：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">CREATE</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="n">zabbix</span><span class="w"> </span><span class="nb">CHARACTER</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">utf8mb4</span><span class="w"> </span><span class="k">COLLATE</span><span class="w"> </span><span class="n">utf8mb4_bin</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">CREATE</span><span class="w"> </span><span class="k">USER</span><span class="w"> </span><span class="s1">&#39;zabbix&#39;</span><span class="o">@</span><span class="s1">&#39;localhost&#39;</span><span class="w"> </span><span class="n">IDENTIFIED</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="s1">&#39;StrongPassword123&#39;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">GRANT</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="k">PRIVILEGES</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">zabbix</span><span class="p">.</span><span class="o">*</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="s1">&#39;zabbix&#39;</span><span class="o">@</span><span class="s1">&#39;localhost&#39;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">FLUSH</span><span class="w"> </span><span class="k">PRIVILEGES</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">EXIT</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>替换<code>StrongPassword123</code>为强密码并记录。</li>
+</ul>
+</li>
+</ol>
+<h3 id="步骤-2安装zabbix-70-server">步骤 2：安装Zabbix 7.0 Server
+</h3><ol>
+<li>
+<p><strong>添加Zabbix 7.0仓库</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">wget https://repo.zabbix.com/zabbix/7.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_7.0-1+ubuntu24.04_all.deb
+</span></span><span class="line"><span class="cl">sudo dpkg -i zabbix-release_7.0-1+ubuntu24.04_all.deb
+</span></span><span class="line"><span class="cl">sudo apt update
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong>安装Zabbix Server、Frontend和Agent</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo apt install zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf zabbix-sql-scripts zabbix-agent -y
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>注：<code>zabbix-server-mysql</code>兼容MariaDB，无需额外包。</li>
+</ul>
+</li>
+<li>
+<p><strong>导入Zabbix数据库架构</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">zcat /usr/share/zabbix-sql-scripts/mysql/server.sql.gz <span class="p">|</span> mysql --default-character-set<span class="o">=</span>utf8mb4 -uzabbix -p zabbix
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>输入<code>StrongPassword123</code>（步骤2设置的密码）。</li>
+<li>导入可能需要几分钟。</li>
+</ul>
+</li>
+<li>
+<p><strong>配置Zabbix Server</strong>：
+编辑<code>/etc/zabbix/zabbix_server.conf</code>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo nano /etc/zabbix/zabbix_server.conf
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>设置以下参数（替换密码）：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">DBName=zabbix
+</span></span><span class="line"><span class="cl">DBUser=zabbix
+</span></span><span class="line"><span class="cl">DBPassword=StrongPassword123
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>保存并退出（Ctrl+X，Y，Enter）。</p>
+</li>
+<li>
+<p><strong>启动Zabbix Server和Agent</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo systemctl start zabbix-server zabbix-agent
+</span></span><span class="line"><span class="cl">sudo systemctl <span class="nb">enable</span> zabbix-server zabbix-agent
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<h3 id="步骤-3配置apache和php">步骤 3：配置Apache和PHP
+</h3><ol>
+<li>
+<p><strong>安装Apache和PHP依赖</strong>：
+Zabbix前端需要Apache和PHP模块，步骤3已安装部分依赖，确认安装：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo apt install apache2 libapache2-mod-php php-mysql php-gd php-xml php-bcmath php-mbstring -y
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong>配置PHP</strong>：
+编辑<code>/etc/php/8.3/apache2/php.ini</code>（Ubuntu 24.04默认PHP 8.3）：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo nano /etc/php/8.3/apache2/php.ini
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>确保以下设置：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-ini" data-lang="ini"><span class="line"><span class="cl"><span class="na">memory_limit</span> <span class="o">=</span> <span class="s">256M</span>
+</span></span><span class="line"><span class="cl"><span class="na">upload_max_filesize</span> <span class="o">=</span> <span class="s">16M</span>
+</span></span><span class="line"><span class="cl"><span class="na">post_max_size</span> <span class="o">=</span> <span class="s">16M</span>
+</span></span><span class="line"><span class="cl"><span class="na">max_execution_time</span> <span class="o">=</span> <span class="s">300</span>
+</span></span><span class="line"><span class="cl"><span class="na">max_input_time</span> <span class="o">=</span> <span class="s">300</span>
+</span></span><span class="line"><span class="cl"><span class="na">max_input_vars</span> <span class="o">=</span> <span class="s">10000</span>
+</span></span><span class="line"><span class="cl"><span class="na">date.timezone</span> <span class="o">=</span> <span class="s">Asia/Shanghai</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>保存并退出。</p>
+</li>
+<li>
+<p><strong>配置Apache</strong>：
+确保Zabbix前端配置文件已启用：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 如果次数启动时，提示ERROR: Conf zabbix-frontend-php does not exist!</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 可以查看/etc/apache2/conf-available目录下是否有zabbix.conf文件</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 如果有将zabbix-frontend-php换成zabbix</span>
+</span></span><span class="line"><span class="cl">sudo a2enconf zabbix-frontend-php
+</span></span><span class="line"><span class="cl">sudo systemctl restart apache2
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<h3 id="步骤-4完成zabbix-web界面配置">步骤 4：完成Zabbix Web界面配置
+</h3><ol>
+<li>打开浏览器，访问<code>http://&lt;zabbix-server-ip&gt;/zabbix</code>。</li>
+<li>按照向导操作：
+<ul>
+<li>
+<p><strong>欢迎页面</strong>：点击“Next step”。</p>
+<p><img src="/p/%E5%9C%A8ubuntu-24.04%E4%B8%8A%E9%83%A8%E7%BD%B2zabbix-7.0%E5%AF%B9%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%9B%E8%A1%8C%E7%9B%91%E6%8E%A7/image-20250706152919921.png"
+	width="2540"
+	height="1688"
+	srcset="/p/%E5%9C%A8ubuntu-24.04%E4%B8%8A%E9%83%A8%E7%BD%B2zabbix-7.0%E5%AF%B9%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%9B%E8%A1%8C%E7%9B%91%E6%8E%A7/image-20250706152919921_hu_85b8d48c6a35fafb.png 480w, /p/%E5%9C%A8ubuntu-24.04%E4%B8%8A%E9%83%A8%E7%BD%B2zabbix-7.0%E5%AF%B9%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%9B%E8%A1%8C%E7%9B%91%E6%8E%A7/image-20250706152919921_hu_586df51f612ed263.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250706152919921"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="150"
+		data-flex-basis="361px"
+	
+></p>
+</li>
+<li>
+<p><strong>检查先决条件</strong>：确保所有值显示“OK”，点击“Next step”。</p>
+<p><img src="/p/%E5%9C%A8ubuntu-24.04%E4%B8%8A%E9%83%A8%E7%BD%B2zabbix-7.0%E5%AF%B9%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%9B%E8%A1%8C%E7%9B%91%E6%8E%A7/image-20250706152944115.png"
+	width="2352"
+	height="1564"
+	srcset="/p/%E5%9C%A8ubuntu-24.04%E4%B8%8A%E9%83%A8%E7%BD%B2zabbix-7.0%E5%AF%B9%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%9B%E8%A1%8C%E7%9B%91%E6%8E%A7/image-20250706152944115_hu_fec81a3b52a4bb87.png 480w, /p/%E5%9C%A8ubuntu-24.04%E4%B8%8A%E9%83%A8%E7%BD%B2zabbix-7.0%E5%AF%B9%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%9B%E8%A1%8C%E7%9B%91%E6%8E%A7/image-20250706152944115_hu_32e8f64ca22fc349.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250706152944115"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="150"
+		data-flex-basis="360px"
+	
+></p>
+</li>
+<li>
+<p><strong>配置数据库</strong>：</p>
+<ul>
+<li>
+<p>Database type: MySQL（MariaDB兼容）</p>
+</li>
+<li>
+<p>Database host: localhost</p>
+</li>
+<li>
+<p>Database name: zabbix</p>
+</li>
+<li>
+<p>User: zabbix</p>
+</li>
+<li>
+<p>Password: StrongPassword123</p>
+</li>
+<li>
+<p>点击“Next step”。</p>
+<p><img src="/p/%E5%9C%A8ubuntu-24.04%E4%B8%8A%E9%83%A8%E7%BD%B2zabbix-7.0%E5%AF%B9%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%9B%E8%A1%8C%E7%9B%91%E6%8E%A7/image-20250706153135063.png"
+	width="2260"
+	height="1554"
+	srcset="/p/%E5%9C%A8ubuntu-24.04%E4%B8%8A%E9%83%A8%E7%BD%B2zabbix-7.0%E5%AF%B9%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%9B%E8%A1%8C%E7%9B%91%E6%8E%A7/image-20250706153135063_hu_a47d72021f6b222c.png 480w, /p/%E5%9C%A8ubuntu-24.04%E4%B8%8A%E9%83%A8%E7%BD%B2zabbix-7.0%E5%AF%B9%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%9B%E8%A1%8C%E7%9B%91%E6%8E%A7/image-20250706153135063_hu_838ebfc096f481b5.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250706153135063"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="145"
+		data-flex-basis="349px"
+	
+></p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>服务器详情</strong>：</p>
+<ul>
+<li>Host: 留空或输入Zabbix服务器IP。</li>
+<li>Port: 10051</li>
+<li>Name: 可选（如“Zabbix Server”）。</li>
+<li>点击“Next step”。</li>
+</ul>
+</li>
+<li>
+<p><strong>预安装摘要</strong>：确认配置，点击“Next step”。</p>
+</li>
+<li>
+<p><strong>完成</strong>：点击“Finish”，生成配置文件<code>/etc/zabbix/web/zabbix.conf.php</code>。</p>
+</li>
+</ul>
+</li>
+<li>登录Zabbix仪表板：
+<ul>
+<li>URL：<code>http://&lt;zabbix-server-ip&gt;/zabbix</code></li>
+<li>默认凭据：用户名<code>Admin</code>，密码<code>zabbix</code>（立即更改密码）。</li>
+</ul>
+</li>
+</ol>
+<h3 id="步骤-5在两台阿里云ecs上安装zabbix-agent">步骤 5：在两台阿里云ECS上安装Zabbix Agent
+</h3><p>在每台被监控的ECS实例（称为ECS1和ECS2）上执行：</p>
+<ol>
+<li>
+<p><strong>登录ECS实例</strong>（<code>ssh root@&lt;ecs-ip&gt;</code>）。</p>
+</li>
+<li>
+<p><strong>添加Zabbix仓库</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">wget https://repo.zabbix.com/zabbix/7.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_7.0-1+ubuntu24.04_all.deb
+</span></span><span class="line"><span class="cl">sudo dpkg -i zabbix-release_7.0-1+ubuntu24.04_all.deb
+</span></span><span class="line"><span class="cl">sudo apt update
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong>安装Zabbix Agent</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo apt install zabbix-agent -y
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong>配置Zabbix Agent</strong>：
+编辑<code>/etc/zabbix/zabbix_agent.conf</code>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># /etc/zabbix这个目录下的是zabbix_agentd.conf就编辑zabbix_agentd.conf</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 如果这个目录下的是zabbix_agentd2.conf，就编辑zabbix_agentd2.conf</span>
+</span></span><span class="line"><span class="cl">sudo vim /etc/zabbix/zabbix_agentd.conf
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>设置以下参数：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Server=&lt;zabbix-server-ip&gt;
+</span></span><span class="line"><span class="cl">ServerActive=&lt;zabbix-server-ip&gt;
+</span></span><span class="line"><span class="cl">Hostname=&lt;unique-hostname&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>替换<code>&lt;zabbix-server-ip&gt;</code>为Zabbix Server公网IP。</li>
+<li>替换<code>&lt;unique-hostname&gt;</code>为唯一主机名（如<code>ECS1</code>或<code>ECS2</code>）。</li>
+<li>保存并退出。</li>
+</ul>
+</li>
+<li>
+<p><strong>开放端口10050</strong>：</p>
+<ul>
+<li>在阿里云控制台为ECS1和ECS2的安全组添加入站规则，允许TCP 10050。</li>
+<li>本地防火墙（如ufw）：
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo ufw allow 10050/tcp
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+</li>
+<li>
+<p><strong>重启Zabbix Agent</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo systemctl restart zabbix-agent
+</span></span><span class="line"><span class="cl">sudo systemctl <span class="nb">enable</span> zabbix-agent
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<h3 id="步骤-6在zabbix-server上添加监控主机">步骤 6：在Zabbix Server上添加监控主机
+</h3><ol>
+<li>登录Zabbix Web界面（<code>http://&lt;zabbix-server-ip&gt;/zabbix</code>）。</li>
+<li>导航至 <strong>Monitoring</strong> &gt; <strong>Hosts</strong> &gt; <strong>Create host</strong>。</li>
+<li>为每台ECS配置：
+<ul>
+<li><strong>Host name</strong>：输入唯一主机名（与Agent配置中的<code>Hostname</code>一致，如<code>ECS1</code>）。</li>
+<li><strong>Groups</strong>：选择或创建主机组（如“AliCloud ECS”）。</li>
+<li><strong>Interfaces</strong>：
+<ul>
+<li>Type: Agent</li>
+<li>IP address: 输入ECS的公网IP（如ECS1的IP）。</li>
+<li>Port: 10050</li>
+</ul>
+</li>
+<li><strong>Templates</strong>：点击“Select”，选择“Template OS Linux by Zabbix agent”。</li>
+<li><strong>Status</strong>：确保为“Enabled”。</li>
+</ul>
+</li>
+<li>点击“Add”保存。</li>
+<li>重复为ECS2配置（主机名如<code>ECS2</code>）。</li>
+</ol>
+<p><img src="/p/%E5%9C%A8ubuntu-24.04%E4%B8%8A%E9%83%A8%E7%BD%B2zabbix-7.0%E5%AF%B9%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%9B%E8%A1%8C%E7%9B%91%E6%8E%A7/image-20250706162018726.png"
+	width="3000"
+	height="1486"
+	srcset="/p/%E5%9C%A8ubuntu-24.04%E4%B8%8A%E9%83%A8%E7%BD%B2zabbix-7.0%E5%AF%B9%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%9B%E8%A1%8C%E7%9B%91%E6%8E%A7/image-20250706162018726_hu_375c54d5464492cd.png 480w, /p/%E5%9C%A8ubuntu-24.04%E4%B8%8A%E9%83%A8%E7%BD%B2zabbix-7.0%E5%AF%B9%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%9B%E8%A1%8C%E7%9B%91%E6%8E%A7/image-20250706162018726_hu_961a352dd5c26686.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250706162018726"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="484px"
+	
+></p>
+<h3 id="步骤-7验证监控">步骤 7：验证监控
+</h3><ol>
+<li>等待5-10分钟，Zabbix Server开始收集数据。</li>
+<li>导航至 <strong>Monitoring</strong> &gt; <strong>Latest data</strong>，选择主机组或主机（如<code>ECS1</code>、<code>ECS2</code>），检查CPU、内存、磁盘等指标。</li>
+<li>若无数据，检查：
+<ul>
+<li>Zabbix Server日志：<code>sudo tail -f /var/log/zabbix/zabbix_server.log</code></li>
+<li>Zabbix Agent日志：<code>sudo tail -f /var/log/zabbix/zabbix_agentd.log</code></li>
+<li>确保阿里云安全组和本地防火墙允许10050/10051端口。</li>
+</ul>
+</li>
+</ol>
+<h3 id="步骤-8优化和安全">步骤 8：优化和安全
+</h3><ol>
+<li>
+<p><strong>更改默认密码</strong>：</p>
+<ul>
+<li>导航至 <strong>Administration</strong> &gt; <strong>Users</strong>，更新<code>Admin</code>用户密码。</li>
+</ul>
+</li>
+<li>
+<p><strong>启用HTTPS</strong>：</p>
+<ul>
+<li>使用Let’s Encrypt配置SSL：
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo apt install certbot python3-certbot-apache
+</span></span><span class="line"><span class="cl">sudo certbot --apache
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>按提示配置域名或IP，重启Apache：
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo systemctl restart apache2
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>优化Zabbix Server</strong>（若监控更多设备）：
+编辑<code>/etc/zabbix/zabbix_server.conf</code>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo vim /etc/zabbix/zabbix_server.conf
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>添加：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">StartPollers=100
+</span></span><span class="line"><span class="cl">StartPollersUnreachable=50
+</span></span><span class="line"><span class="cl">StartPingers=50
+</span></span><span class="line"><span class="cl">StartTrappers=10
+</span></span><span class="line"><span class="cl">StartDiscoverers=10
+</span></span><span class="line"><span class="cl">CacheSize=128M
+</span></span><span class="line"><span class="cl">HistoryCacheSize=64M
+</span></span><span class="line"><span class="cl">HistoryIndexCacheSize=32M
+</span></span><span class="line"><span class="cl">TrendCacheSize=32M
+</span></span><span class="line"><span class="cl">ValueCacheSize=256M
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>重启：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo systemctl restart zabbix-server
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p><strong>备份数据库</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mysqldump -u zabbix -p zabbix &gt; zabbix_backup.sql
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<h3 id="步骤-9故障排查">步骤 9：故障排查
+</h3><ul>
+<li><strong>Zabbix Server未运行</strong>：
+<ul>
+<li>检查状态：<code>sudo systemctl status zabbix-server</code></li>
+<li>检查配置文件：<code>/etc/zabbix/zabbix_server.conf</code></li>
+<li>验证数据库连接：<code>mysql -uzabbix -p -e &quot;SELECT 1&quot;</code></li>
+</ul>
+</li>
+<li><strong>Agent无法连接</strong>：
+<ul>
+<li>确保<code>Server</code>和<code>ServerActive</code>设置为Zabbix Server IP。</li>
+<li>检查阿里云安全组和ufw规则。</li>
+</ul>
+</li>
+<li><strong>Web界面错误</strong>：
+<ul>
+<li>验证PHP配置：<code>/etc/php/8.3/apache2/php.ini</code></li>
+<li>检查Apache日志：<code>sudo tail -f /var/log/apache2/error.log</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="最终结果">最终结果
+</h2><p>完成以上步骤后，Zabbix 7.0将在Ubuntu 24.04上运行，使用MariaDB数据库（同机部署），成功监控两台阿里云ECS服务器（ECS1和ECS2）。通过Web界面（<code>http://&lt;zabbix-server-ip&gt;/zabbix</code>）可查看实时数据、设置警报和生成报告。</p>
+<p><img src="/p/%E5%9C%A8ubuntu-24.04%E4%B8%8A%E9%83%A8%E7%BD%B2zabbix-7.0%E5%AF%B9%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%9B%E8%A1%8C%E7%9B%91%E6%8E%A7/image-20250706162045628.png"
+	width="3360"
+	height="1810"
+	srcset="/p/%E5%9C%A8ubuntu-24.04%E4%B8%8A%E9%83%A8%E7%BD%B2zabbix-7.0%E5%AF%B9%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%9B%E8%A1%8C%E7%9B%91%E6%8E%A7/image-20250706162045628_hu_637b83df784dde2.png 480w, /p/%E5%9C%A8ubuntu-24.04%E4%B8%8A%E9%83%A8%E7%BD%B2zabbix-7.0%E5%AF%B9%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%9B%E8%A1%8C%E7%9B%91%E6%8E%A7/image-20250706162045628_hu_f387f22e87ba9896.png 1024w"
+	loading="lazy"
+	
+		alt="image-20250706162045628"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="185"
+		data-flex-basis="445px"
+	
+></p>
+<h2 id="参考资料">参考资料
+</h2><ul>
+<li>Zabbix官方文档：https://www.zabbix.com/documentation/7.0/</li>
+<li>Alibaba Cloud ECS文档：https://www.alibabacloud.com/help/</li>
+<li>MariaDB官方文档：https://mariadb.com/kb/en/</li>
+</ul>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/ubuntu/">Ubuntu</a>
+        
+            <a href="/tags/mariadb/">Mariadb</a>
+        
+            <a href="/tags/zabbix/">Zabbix</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+	const mainArticleElement = document.querySelector(".main-article");
+        renderMathInElement(mainArticleElement, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2024 - 
+        
+        2025 dxjxpr All Rights Reserved
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

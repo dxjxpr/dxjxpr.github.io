@@ -3,10 +3,31 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://dxjxpr.github.io/</loc>
-    <lastmod>2025-06-28T12:00:00+08:00</lastmod>
+    <lastmod>2025-07-06T12:00:00+08:00</lastmod>
   </url><url>
     <loc>https://dxjxpr.github.io/categories/</loc>
-    <lastmod>2025-06-28T12:00:00+08:00</lastmod>
+    <lastmod>2025-07-06T12:00:00+08:00</lastmod>
+  </url><url>
+    <loc>https://dxjxpr.github.io/tags/mariadb/</loc>
+    <lastmod>2025-07-06T12:00:00+08:00</lastmod>
+  </url><url>
+    <loc>https://dxjxpr.github.io/categories/monitor/</loc>
+    <lastmod>2025-07-06T12:00:00+08:00</lastmod>
+  </url><url>
+    <loc>https://dxjxpr.github.io/post/</loc>
+    <lastmod>2025-07-06T12:00:00+08:00</lastmod>
+  </url><url>
+    <loc>https://dxjxpr.github.io/tags/</loc>
+    <lastmod>2025-07-06T12:00:00+08:00</lastmod>
+  </url><url>
+    <loc>https://dxjxpr.github.io/tags/ubuntu/</loc>
+    <lastmod>2025-07-06T12:00:00+08:00</lastmod>
+  </url><url>
+    <loc>https://dxjxpr.github.io/tags/zabbix/</loc>
+    <lastmod>2025-07-06T12:00:00+08:00</lastmod>
+  </url><url>
+    <loc>https://dxjxpr.github.io/p/%E5%9C%A8ubuntu-24.04%E4%B8%8A%E9%83%A8%E7%BD%B2zabbix-7.0%E5%AF%B9%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%9B%E8%A1%8C%E7%9B%91%E6%8E%A7/</loc>
+    <lastmod>2025-07-06T12:00:00+08:00</lastmod>
   </url><url>
     <loc>https://dxjxpr.github.io/p/centos%E6%90%AD%E5%BB%BAgitlab-jenkins-sonarqube%E5%AE%9E%E7%8E%B0ci/cd/</loc>
     <lastmod>2025-06-28T12:00:00+08:00</lastmod>
@@ -23,13 +44,7 @@
     <loc>https://dxjxpr.github.io/tags/jenkins/</loc>
     <lastmod>2025-06-28T12:00:00+08:00</lastmod>
   </url><url>
-    <loc>https://dxjxpr.github.io/post/</loc>
-    <lastmod>2025-06-28T12:00:00+08:00</lastmod>
-  </url><url>
     <loc>https://dxjxpr.github.io/tags/sonarqube/</loc>
-    <lastmod>2025-06-28T12:00:00+08:00</lastmod>
-  </url><url>
-    <loc>https://dxjxpr.github.io/tags/</loc>
     <lastmod>2025-06-28T12:00:00+08:00</lastmod>
   </url><url>
     <loc>https://dxjxpr.github.io/p/jenkins%E5%90%AF%E5%8A%A8%E6%8A%A5%E9%94%99%E4%B8%80%E7%9B%B4%E6%97%A0%E6%B3%95%E5%90%AF%E5%8A%A8/</loc>
@@ -159,9 +174,6 @@
     <lastmod>2025-02-21T12:00:00+08:00</lastmod>
   </url><url>
     <loc>https://dxjxpr.github.io/categories/os/</loc>
-    <lastmod>2025-02-21T12:00:00+08:00</lastmod>
-  </url><url>
-    <loc>https://dxjxpr.github.io/tags/ubuntu/</loc>
     <lastmod>2025-02-21T12:00:00+08:00</lastmod>
   </url><url>
     <loc>https://dxjxpr.github.io/tags/windows/</loc>
