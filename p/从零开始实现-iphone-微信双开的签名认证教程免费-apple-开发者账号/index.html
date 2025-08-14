@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="引言 本教程为没有 iOS 开发经验的 Python 程序员（熟悉 Linux、C 语言基础、Vim、macOS 和 Windows）提供详细指导，使用免费 Apple 开发者账号实现微信双开（在同一 iPhone 上运行两个微信账号）。通过自签名技术修改微信 IPA 文件并侧载到 iPhone 上，应用有效期为 7 天，需定期重新签名。\n目标：\n生成微信克隆版应用，支持双开。 使用免费 Apple 开发者账号签名，安装到 iPhone。 每 7 天重新签名以维持双开。 限制（2025 年最新信息）：\n免费账号的 Provisioning Profile 有效期为 7 天。 最多支持 3 台设备，每台设备最多 3 个自签名应用。 可使用 AltStore 或 Sideloadly 自动化签名。 时间估算：\n首次学习和实现：10-20 小时。 每 7 天重新签名：5-10 分钟（可自动化）。 前提条件：\nmacOS 电脑（Xcode 仅支持 macOS；Windows 可用于 Sideloadly）。 iPhone（iOS 16+，推荐 iOS 18+）。 有效 Apple ID。 网络连接。 风险：可能违反 Apple/微信服务条款，建议备份数据，仅限个人测试。 工具：\n">
+<title>从零开始实现 iPhone 微信双开的签名认证教程（免费 Apple 开发者账号）</title>
+
+<link rel='canonical' href='https://dxjxpr.github.io/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E5%AE%9E%E7%8E%B0-iphone-%E5%BE%AE%E4%BF%A1%E5%8F%8C%E5%BC%80%E7%9A%84%E7%AD%BE%E5%90%8D%E8%AE%A4%E8%AF%81%E6%95%99%E7%A8%8B%E5%85%8D%E8%B4%B9-apple-%E5%BC%80%E5%8F%91%E8%80%85%E8%B4%A6%E5%8F%B7/'>
+
+<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="从零开始实现 iPhone 微信双开的签名认证教程（免费 Apple 开发者账号）">
+<meta property='og:description' content="引言 本教程为没有 iOS 开发经验的 Python 程序员（熟悉 Linux、C 语言基础、Vim、macOS 和 Windows）提供详细指导，使用免费 Apple 开发者账号实现微信双开（在同一 iPhone 上运行两个微信账号）。通过自签名技术修改微信 IPA 文件并侧载到 iPhone 上，应用有效期为 7 天，需定期重新签名。\n目标：\n生成微信克隆版应用，支持双开。 使用免费 Apple 开发者账号签名，安装到 iPhone。 每 7 天重新签名以维持双开。 限制（2025 年最新信息）：\n免费账号的 Provisioning Profile 有效期为 7 天。 最多支持 3 台设备，每台设备最多 3 个自签名应用。 可使用 AltStore 或 Sideloadly 自动化签名。 时间估算：\n首次学习和实现：10-20 小时。 每 7 天重新签名：5-10 分钟（可自动化）。 前提条件：\nmacOS 电脑（Xcode 仅支持 macOS；Windows 可用于 Sideloadly）。 iPhone（iOS 16+，推荐 iOS 18+）。 有效 Apple ID。 网络连接。 风险：可能违反 Apple/微信服务条款，建议备份数据，仅限个人测试。 工具：\n">
+<meta property='og:url' content='https://dxjxpr.github.io/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E5%AE%9E%E7%8E%B0-iphone-%E5%BE%AE%E4%BF%A1%E5%8F%8C%E5%BC%80%E7%9A%84%E7%AD%BE%E5%90%8D%E8%AE%A4%E8%AF%81%E6%95%99%E7%A8%8B%E5%85%8D%E8%B4%B9-apple-%E5%BC%80%E5%8F%91%E8%80%85%E8%B4%A6%E5%8F%B7/'>
+<meta property='og:site_name' content='I&#39;m Mr.Liu'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='iPhone' /><meta property='article:tag' content='WeChat' /><meta property='article:tag' content='IOS' /><meta property='article:published_time' content='2025-08-14T12:00:00&#43;08:00'/><meta property='article:modified_time' content='2025-08-14T12:00:00&#43;08:00'/><meta property='og:image' content='https://dxjxpr.github.io/cover.png' />
+<meta name="twitter:title" content="从零开始实现 iPhone 微信双开的签名认证教程（免费 Apple 开发者账号）">
+<meta name="twitter:description" content="引言 本教程为没有 iOS 开发经验的 Python 程序员（熟悉 Linux、C 语言基础、Vim、macOS 和 Windows）提供详细指导，使用免费 Apple 开发者账号实现微信双开（在同一 iPhone 上运行两个微信账号）。通过自签名技术修改微信 IPA 文件并侧载到 iPhone 上，应用有效期为 7 天，需定期重新签名。\n目标：\n生成微信克隆版应用，支持双开。 使用免费 Apple 开发者账号签名，安装到 iPhone。 每 7 天重新签名以维持双开。 限制（2025 年最新信息）：\n免费账号的 Provisioning Profile 有效期为 7 天。 最多支持 3 台设备，每台设备最多 3 个自签名应用。 可使用 AltStore 或 Sideloadly 自动化签名。 时间估算：\n首次学习和实现：10-20 小时。 每 7 天重新签名：5-10 分钟（可自动化）。 前提条件：\nmacOS 电脑（Xcode 仅支持 macOS；Windows 可用于 Sideloadly）。 iPhone（iOS 16+，推荐 iOS 18+）。 有效 Apple ID。 网络连接。 风险：可能违反 Apple/微信服务条款，建议备份数据，仅限个人测试。 工具：\n"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://dxjxpr.github.io/cover.png' />
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_defd7c575e91cf12.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🏃‍➡️</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">I&#39;m Mr.Liu</a></h1>
+            <h2 class="site-description">B What U Wanna B! Just Do It!</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/dxjxpr'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1723043422785" class="icon" viewBox="0 0 1049 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4723" xmlns:xlink="http://www.w3.org/1999/xlink" width="204.8828125" height="200"><path d="M524.979332 0C234.676191 0 0 234.676191 0 524.979332c0 232.068678 150.366597 428.501342 358.967656 498.035028 26.075132 5.215026 35.636014-11.299224 35.636014-25.205961 0-12.168395-0.869171-53.888607-0.869171-97.347161-146.020741 31.290159-176.441729-62.580318-176.441729-62.580318-23.467619-60.841976-58.234462-76.487055-58.234463-76.487055-47.804409-32.15933 3.476684-32.15933 3.476685-32.15933 53.019436 3.476684 80.83291 53.888607 80.83291 53.888607 46.935238 79.963739 122.553122 57.365291 152.97411 43.458554 4.345855-33.897672 18.252593-57.365291 33.028501-70.402857-116.468925-12.168395-239.022047-57.365291-239.022047-259.012982 0-57.365291 20.860106-104.300529 53.888607-140.805715-5.215026-13.037566-23.467619-66.926173 5.215027-139.067372 0 0 44.327725-13.906737 144.282399 53.888607 41.720212-11.299224 86.917108-17.383422 131.244833-17.383422s89.524621 6.084198 131.244833 17.383422C756.178839 203.386032 800.506564 217.29277 800.506564 217.29277c28.682646 72.1412 10.430053 126.029806 5.215026 139.067372 33.897672 36.505185 53.888607 83.440424 53.888607 140.805715 0 201.64769-122.553122 245.975415-239.891218 259.012982 19.121764 16.514251 35.636014 47.804409 35.636015 97.347161 0 70.402857-0.869171 126.898978-0.869172 144.282399 0 13.906737 9.560882 30.420988 35.636015 25.205961 208.601059-69.533686 358.967656-265.96635 358.967655-498.035028C1049.958663 234.676191 814.413301 0 524.979332 0z" fill="#191717" p-id="4724"></path><path d="M199.040177 753.571326c-0.869171 2.607513-5.215026 3.476684-8.691711 1.738342s-6.084198-5.215026-4.345855-7.82254c0.869171-2.607513 5.215026-3.476684 8.691711-1.738342s5.215026 5.215026 4.345855 7.82254z m-6.953369-4.345856M219.900283 777.038945c-2.607513 2.607513-7.82254 0.869171-10.430053-2.607514-3.476684-3.476684-4.345855-8.691711-1.738342-11.299224 2.607513-2.607513 6.953369-0.869171 10.430053 2.607514 3.476684 4.345855 4.345855 9.560882 1.738342 11.299224z m-5.215026-5.215027M240.760389 807.459932c-3.476684 2.607513-8.691711 0-11.299224-4.345855-3.476684-4.345855-3.476684-10.430053 0-12.168395 3.476684-2.607513 8.691711 0 11.299224 4.345855 3.476684 4.345855 3.476684 9.560882 0 12.168395z m0 0M269.443034 837.011749c-2.607513 3.476684-8.691711 2.607513-13.906737-1.738342-4.345855-4.345855-6.084198-10.430053-2.607513-13.037566 2.607513-3.476684 8.691711-2.607513 13.906737 1.738342 4.345855 3.476684 5.215026 9.560882 2.607513 13.037566z m0 0M308.555733 853.526c-0.869171 4.345855-6.953369 6.084198-13.037566 4.345855-6.084198-1.738342-9.560882-6.953369-8.691711-10.430053 0.869171-4.345855 6.953369-6.084198 13.037566-4.345855 6.084198 1.738342 9.560882 6.084198 8.691711 10.430053z m0 0M351.145116 857.002684c0 4.345855-5.215026 7.82254-11.299224 7.82254-6.084198 0-11.299224-3.476684-11.299224-7.82254s5.215026-7.82254 11.299224-7.82254c6.084198 0 11.299224 3.476684 11.299224 7.82254z m0 0M391.126986 850.049315c0.869171 4.345855-3.476684 8.691711-9.560882 9.560882-6.084198 0.869171-11.299224-1.738342-12.168395-6.084197-0.869171-4.345855 3.476684-8.691711 9.560881-9.560882 6.084198-0.869171 11.299224 1.738342 12.168396 6.084197z m0 0" fill="#191717" p-id="4725"></path></svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/about-me/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About Me</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#引言">引言</a></li>
+    <li><a href="#第一部分准备环境">第一部分：准备环境</a>
+      <ol>
+        <li><a href="#11-注册免费-apple-开发者账号">1.1 注册免费 Apple 开发者账号</a></li>
+        <li><a href="#12-安装-xcode">1.2 安装 Xcode</a></li>
+        <li><a href="#13-安装辅助工具">1.3 安装辅助工具</a></li>
+        <li><a href="#14-注册-iphone-设备">1.4 注册 iPhone 设备</a></li>
+      </ol>
+    </li>
+    <li><a href="#第二部分获取和修改微信-ipa-文件">第二部分：获取和修改微信 IPA 文件</a>
+      <ol>
+        <li><a href="#21-获取微信-ipa">2.1 获取微信 IPA</a></li>
+        <li><a href="#22-修改-ipa-为克隆版实现双开">2.2 修改 IPA 为克隆版（实现双开）</a></li>
+      </ol>
+    </li>
+    <li><a href="#第三部分签名和安装微信克隆版">第三部分：签名和安装微信克隆版</a>
+      <ol>
+        <li><a href="#31-使用-ios-app-signer-签名">3.1 使用 iOS App Signer 签名</a></li>
+        <li><a href="#32-安装到-iphone">3.2 安装到 iPhone</a></li>
+        <li><a href="#33-测试双开">3.3 测试双开</a></li>
+      </ol>
+    </li>
+    <li><a href="#第四部分每-7-天重新签名">第四部分：每 7 天重新签名</a>
+      <ol>
+        <li><a href="#41-手动重新签名">4.1 手动重新签名</a></li>
+        <li><a href="#42-使用-altstore-自动化推荐">4.2 使用 AltStore 自动化（推荐）</a></li>
+      </ol>
+    </li>
+    <li><a href="#第五部分注意事项">第五部分：注意事项</a></li>
+    <li><a href="#第六部分总结">第六部分：总结</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E5%AE%9E%E7%8E%B0-iphone-%E5%BE%AE%E4%BF%A1%E5%8F%8C%E5%BC%80%E7%9A%84%E7%AD%BE%E5%90%8D%E8%AE%A4%E8%AF%81%E6%95%99%E7%A8%8B%E5%85%8D%E8%B4%B9-apple-%E5%BC%80%E5%8F%91%E8%80%85%E8%B4%A6%E5%8F%B7/">
+                
+                    <img src="/cover.png" loading="lazy" alt="Featured image of post 从零开始实现 iPhone 微信双开的签名认证教程（免费 Apple 开发者账号）" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/ios/" >
+                IOS
+            </a>
+        
+            <a href="/categories/wechat/" >
+                WeChat
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E5%AE%9E%E7%8E%B0-iphone-%E5%BE%AE%E4%BF%A1%E5%8F%8C%E5%BC%80%E7%9A%84%E7%AD%BE%E5%90%8D%E8%AE%A4%E8%AF%81%E6%95%99%E7%A8%8B%E5%85%8D%E8%B4%B9-apple-%E5%BC%80%E5%8F%91%E8%80%85%E8%B4%A6%E5%8F%B7/">从零开始实现 iPhone 微信双开的签名认证教程（免费 Apple 开发者账号）</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Aug 14, 2025</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    3 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="引言">引言
+</h2><p>本教程为没有 iOS 开发经验的 Python 程序员（熟悉 Linux、C 语言基础、Vim、macOS 和 Windows）提供详细指导，使用免费 Apple 开发者账号实现微信双开（在同一 iPhone 上运行两个微信账号）。通过自签名技术修改微信 IPA 文件并侧载到 iPhone 上，应用有效期为 7 天，需定期重新签名。</p>
+<p><strong>目标</strong>：</p>
+<ul>
+<li>生成微信克隆版应用，支持双开。</li>
+<li>使用免费 Apple 开发者账号签名，安装到 iPhone。</li>
+<li>每 7 天重新签名以维持双开。</li>
+</ul>
+<p><strong>限制</strong>（2025 年最新信息）：</p>
+<ul>
+<li>免费账号的 Provisioning Profile 有效期为 7 天。</li>
+<li>最多支持 3 台设备，每台设备最多 3 个自签名应用。</li>
+<li>可使用 AltStore 或 Sideloadly 自动化签名。</li>
+</ul>
+<p><strong>时间估算</strong>：</p>
+<ul>
+<li>首次学习和实现：10-20 小时。</li>
+<li>每 7 天重新签名：5-10 分钟（可自动化）。</li>
+</ul>
+<p><strong>前提条件</strong>：</p>
+<ul>
+<li>macOS 电脑（Xcode 仅支持 macOS；Windows 可用于 Sideloadly）。</li>
+<li>iPhone（iOS 16+，推荐 iOS 18+）。</li>
+<li>有效 Apple ID。</li>
+<li>网络连接。</li>
+<li>风险：可能违反 Apple/微信服务条款，建议备份数据，仅限个人测试。</li>
+</ul>
+<p><strong>工具</strong>：</p>
+<ul>
+<li>Xcode（Mac App Store，免费）。</li>
+<li>iOS App Signer（<a class="link" href="https://github.com/DanTheMan827/ios-app-signer"  target="_blank" rel="noopener"
+    >GitHub</a>）。</li>
+<li>AltStore（<a class="link" href="https://altstore.io/"  target="_blank" rel="noopener"
+    >官网</a>，推荐）。</li>
+<li>Sideloadly（<a class="link" href="https://sideloadly.io/"  target="_blank" rel="noopener"
+    >官网</a>，支持 macOS/Windows）。</li>
+<li>Apple Configurator 2 或 iMazing（Mac App Store，提取 IPA）。</li>
+</ul>
+<p><strong>风险警告</strong>：</p>
+<ul>
+<li>第三方 IPA 可能有隐私风险。</li>
+<li>Apple 可能撤销证书。</li>
+<li>微信可能封禁克隆版账号。</li>
+</ul>
+<hr>
+<h2 id="第一部分准备环境">第一部分：准备环境
+</h2><h3 id="11-注册免费-apple-开发者账号">1.1 注册免费 Apple 开发者账号
+</h3><ol>
+<li>
+<p>访问 <a class="link" href="https://developer.apple.com/"  target="_blank" rel="noopener"
+    >Apple Developer 网站</a>。</p>
+</li>
+<li>
+<p>点击 <strong>Account &gt; Sign In</strong>，登录 Apple ID（或点击 <strong>Create Apple ID</strong> 创建）。</p>
+</li>
+<li>
+<p>点击 <strong>Join the Apple Developer Program</strong>，选择免费选项（无需 $99）。</p>
+</li>
+<li>
+<p>同意许可协议，完成注册。</p>
+</li>
+<li>
+<p>确保 Apple ID 启用双因素认证（iPhone <strong>设置 &gt; Apple ID &gt; 密码与安全性</strong>）。</p>
+<p><strong>时间</strong>：0.5-1 小时。</p>
+</li>
+</ol>
+<h3 id="12-安装-xcode">1.2 安装 Xcode
+</h3><ol>
+<li>
+<p>打开 Mac App Store，搜索 <strong>Xcode</strong>（约 10-15 GB），下载并安装。</p>
+</li>
+<li>
+<p>打开 Xcode，同意许可协议。</p>
+</li>
+<li>
+<p>进入 <strong>Xcode &gt; Preferences &gt; Accounts</strong>，点击 <strong>+</strong> 添加 Apple ID。</p>
+</li>
+<li>
+<p>点击 <strong>Manage Certificates</strong>，确保生成开发者证书（有效期 1 年）。</p>
+<p><strong>时间</strong>：1-2 小时（视网络速度）。</p>
+</li>
+</ol>
+<h3 id="13-安装辅助工具">1.3 安装辅助工具
+</h3><ol>
+<li>
+<p><strong>iOS App Signer</strong>：</p>
+<ul>
+<li>下载 <a class="link" href="https://github.com/DanTheMan827/ios-app-signer"  target="_blank" rel="noopener"
+    >iOS App Signer</a>（2025 兼容 iOS 18）。</li>
+<li>安装并验证 Xcode 已配置。</li>
+</ul>
+</li>
+<li>
+<p><strong>AltStore</strong>（推荐，自动化签名）：</p>
+<ul>
+<li>下载 <a class="link" href="https://altstore.io/"  target="_blank" rel="noopener"
+    >AltServer</a>（macOS）。</li>
+<li>运行 AltServer（菜单栏图标）。</li>
+<li>连接 iPhone（USB/Wi-Fi），选择 <strong>Install AltStore &gt; [你的 iPhone]</strong>。</li>
+<li>输入 Apple ID 和密码，安装 AltStore。</li>
+<li>iPhone 上信任证书（<strong>设置 &gt; 通用 &gt; VPN 与设备管理</strong>）。</li>
+</ul>
+</li>
+<li>
+<p><strong>Sideloadly</strong>（可选，macOS/Windows）：</p>
+<ul>
+<li>下载 <a class="link" href="https://sideloadly.io/"  target="_blank" rel="noopener"
+    >Sideloadly</a>。</li>
+<li>安装 iTunes（<a class="link" href="https://www.apple.com/itunes/"  target="_blank" rel="noopener"
+    >Apple 网站</a>，若未安装）。</li>
+</ul>
+<p><strong>时间</strong>：1-2 小时。</p>
+</li>
+</ol>
+<h3 id="14-注册-iphone-设备">1.4 注册 iPhone 设备
+</h3><ol>
+<li>
+<p>连接 iPhone 到 Mac（USB）。</p>
+</li>
+<li>
+<p>打开 Xcode，进入 <strong>Window &gt; Devices and Simulators</strong>。</p>
+</li>
+<li>
+<p>选择 iPhone，点击 <strong>Use for Development</strong>，输入 Apple ID。</p>
+</li>
+<li>
+<p>获取 UDID（右键复制），在 <a class="link" href="https://developer.apple.com/account/"  target="_blank" rel="noopener"
+    >Apple Developer 网站</a> 的 <strong>Devices</strong> 注册（最多 3 台）。</p>
+<p><strong>时间</strong>：0.5 小时。</p>
+</li>
+</ol>
+<hr>
+<h2 id="第二部分获取和修改微信-ipa-文件">第二部分：获取和修改微信 IPA 文件
+</h2><h3 id="21-获取微信-ipa">2.1 获取微信 IPA
+</h3><ol>
+<li>
+<p><strong>从 App Store 提取</strong>：</p>
+<ul>
+<li>在 iPhone 上从 App Store 下载微信。</li>
+<li>使用 <strong>Apple Configurator 2</strong>（Mac App Store）：
+<ul>
+<li>连接 iPhone，打开 Configurator。</li>
+<li>选择 iPhone，点击 <strong>Add &gt; Apps</strong>，导出微信 IPA（保存到桌面，命名为 <code>WeChat.ipa</code>）。</li>
+</ul>
+</li>
+<li>或使用 <strong>iMazing</strong>（免费试用）：
+<ul>
+<li>连接 iPhone，打开 iMazing，选择 <strong>Manage Apps</strong>，导出微信 IPA。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>从第三方来源</strong>（谨慎）：</p>
+<ul>
+<li>搜索“WeChat IPA download”（如 GitHub 或论坛）。</li>
+<li>验证文件 SHA256 哈希，确保安全。</li>
+<li>推荐可信来源，如 <a class="link" href="https://iosgods.com/"  target="_blank" rel="noopener"
+    >iOSGods</a>（需注册）。</li>
+</ul>
+<p><strong>时间</strong>：1-2 小时。</p>
+<p><strong>警告</strong>：第三方 IPA 可能包含恶意代码，优先使用官方 IPA。</p>
+</li>
+</ol>
+<h3 id="22-修改-ipa-为克隆版实现双开">2.2 修改 IPA 为克隆版（实现双开）
+</h3><ol>
+<li>
+<p>复制 <code>WeChat.ipa</code> 到桌面。</p>
+</li>
+<li>
+<p>在终端运行以下命令解压 IPA（IPA 是 ZIP 文件）：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">cp ~/Desktop/WeChat.ipa ~/Desktop/WeChat.zip
+</span></span><span class="line"><span class="cl">unzip ~/Desktop/WeChat.zip -d ~/Desktop/WeChat
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>进入解压目录，找到 <code>Info.plist</code>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> ~/Desktop/WeChat/Payload/WeChat.app
+</span></span><span class="line"><span class="cl">vim Info.plist
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>在 Vim 中，找到 <code>CFBundleIdentifier</code>（Bundle ID，例如 <code>com.tencent.xin</code>），修改为唯一值（如 <code>com.tencent.xin2</code>）：</p>
+<ul>
+<li>按 <code>i</code> 进入编辑模式。</li>
+<li>找到 <code>&lt;key&gt;CFBundleIdentifier&lt;/key&gt;</code> 后的 <code>&lt;string&gt;com.tencent.xin&lt;/string&gt;</code>。</li>
+<li>修改为 <code>&lt;string&gt;com.tencent.xin2&lt;/string&gt;</code>。</li>
+<li>按 <code>Esc</code>，输入 <code>:wq</code> 保存退出。</li>
+</ul>
+</li>
+<li>
+<p>重新打包 IPA：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> ~/Desktop/WeChat
+</span></span><span class="line"><span class="cl">zip -r ~/Desktop/WeChat_Clone.ipa Payload
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>验证 IPA 文件是否有效（大小应接近原 IPA）。</p>
+<p><strong>时间</strong>：3-5 小时（包括学习 XML 和 Vim 操作）。</p>
+<p><strong>可选</strong>：若使用第三方克隆版 IPA（已修改 Bundle ID），可跳过此步骤，节省时间。</p>
+</li>
+</ol>
+<hr>
+<h2 id="第三部分签名和安装微信克隆版">第三部分：签名和安装微信克隆版
+</h2><h3 id="31-使用-ios-app-signer-签名">3.1 使用 iOS App Signer 签名
+</h3><ol>
+<li>
+<p>打开 <strong>iOS App Signer</strong>。</p>
+</li>
+<li>
+<p><strong>Input File</strong>：选择 <code>WeChat_Clone.ipa</code>（或第三方克隆版 IPA）。</p>
+</li>
+<li>
+<p><strong>Signing Certificate</strong>：选择你的 Apple ID 证书（Xcode 自动生成）。</p>
+</li>
+<li>
+<p><strong>Provisioning Profile</strong>：</p>
+<ul>
+<li>选择 Xcode 自动生成的 Profile（或在 Xcode 中创建）：
+<ul>
+<li>打开 Xcode，创建新项目（<strong>File &gt; New &gt; Project &gt; Single View App</strong>）。</li>
+<li>设置 Bundle ID（如 <code>com.yourname.wechatclone</code>）。</li>
+<li>在 <strong>Signing &amp; Capabilities</strong> 中启用 <strong>Automatically manage signing</strong>。</li>
+<li>Xcode 会生成 Profile。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>点击 <strong>Start</strong>，输出签名后的 IPA（保存为 <code>WeChat_Signed.ipa</code>）。</p>
+<p><strong>时间</strong>：2-3 小时（包括学习 iOS App Signer 和 Xcode 签名）。</p>
+</li>
+</ol>
+<h3 id="32-安装到-iphone">3.2 安装到 iPhone
+</h3><ol>
+<li>
+<p>连接 iPhone 到 Mac（USB）。</p>
+</li>
+<li>
+<p>打开 Xcode，进入 <strong>Window &gt; Devices and Simulators</strong>。</p>
+</li>
+<li>
+<p>拖动 <code>WeChat_Signed.ipa</code> 到 iPhone 的 <strong>Installed Apps</strong> 区域。</p>
+</li>
+<li>
+<p>等待安装完成（1-2 分钟）。</p>
+</li>
+<li>
+<p>在 iPhone 上，前往 <strong>设置 &gt; 通用 &gt; VPN 与设备管理</strong>，信任你的 Apple ID 证书。</p>
+<p><strong>时间</strong>：1-2 小时。</p>
+</li>
+</ol>
+<h3 id="33-测试双开">3.3 测试双开
+</h3><ol>
+<li>
+<p>在 iPhone 上打开官方微信和克隆版微信。</p>
+</li>
+<li>
+<p>分别登录不同微信账号，验证双开功能。</p>
+</li>
+<li>
+<p>检查功能（如消息、支付、推送通知，部分功能可能受限）。</p>
+<p><strong>时间</strong>：1-2 小时。</p>
+</li>
+</ol>
+<hr>
+<h2 id="第四部分每-7-天重新签名">第四部分：每 7 天重新签名
+</h2><h3 id="41-手动重新签名">4.1 手动重新签名
+</h3><ol>
+<li>
+<p>打开 iOS App Signer，重复 <strong>3.1</strong> 步骤，使用相同的 <code>WeChat_Clone.ipa</code>。</p>
+</li>
+<li>
+<p>生成新的 Provisioning Profile（Xcode 自动更新）。</p>
+</li>
+<li>
+<p>安装新签名的 IPA（重复 <strong>3.2</strong>）。</p>
+</li>
+<li>
+<p>信任证书（若提示）。</p>
+<p><strong>时间</strong>：5-10 分钟（熟练后）。</p>
+</li>
+</ol>
+<h3 id="42-使用-altstore-自动化推荐">4.2 使用 AltStore 自动化（推荐）
+</h3><ol>
+<li>
+<p>确保 AltStore 已安装（见 <strong>1.3</strong>）。</p>
+</li>
+<li>
+<p>在 iPhone 上打开 AltStore，导入 <code>WeChat_Clone.ipa</code>：</p>
+<ul>
+<li>点击 <strong>My Apps &gt; +</strong>，选择 IPA 文件（通过 AirDrop 或 iCloud 传输）。</li>
+<li>输入 Apple ID 和密码。</li>
+</ul>
+</li>
+<li>
+<p>AltStore 会在 7 天内自动刷新签名（需 Mac 运行 AltServer，iPhone 和 Mac 在同一 Wi-Fi）。</p>
+</li>
+<li>
+<p>验证签名状态（AltStore 的 <strong>My Apps</strong> 中查看）。</p>
+<p><strong>时间</strong>：1-2 小时（首次学习），后续几乎无操作。</p>
+</li>
+</ol>
+<hr>
+<h2 id="第五部分注意事项">第五部分：注意事项
+</h2><ol>
+<li><strong>安全性</strong>：
+<ul>
+<li>优先使用官方 IPA 或可信第三方来源。</li>
+<li>避免在克隆版登录重要微信账号，防止封禁。</li>
+</ul>
+</li>
+<li><strong>备份数据</strong>：
+<ul>
+<li>使用微信官方备份（<strong>微信 &gt; 设置 &gt; 聊天 &gt; 备份</strong>）或 iCloud。</li>
+</ul>
+</li>
+<li><strong>Apple 政策</strong>：
+<ul>
+<li>自签名可能违反服务条款，谨慎操作。</li>
+<li>免费账号限制：3 台设备，3 个应用。</li>
+</ul>
+</li>
+<li><strong>重新签名提醒</strong>：
+<ul>
+<li>设置日历提醒，每 7 天检查应用状态。</li>
+<li>AltStore 可减少手动操作。</li>
+</ul>
+</li>
+<li><strong>调试问题</strong>：
+<ul>
+<li>签名失败：检查 Xcode 是否生成有效证书/Profile。</li>
+<li>应用无法启动：确保信任证书，验证 IPA 完整性。</li>
+<li>推送通知失效：克隆版常见问题，可尝试其他 IPA。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="第六部分总结">第六部分：总结
+</h2><p><strong>总时间</strong>：</p>
+<ul>
+<li>首次实现：10-20 小时（环境准备 3-5 小时，获取/修改 IPA 4-7 小时，签名/安装 4-7 小时，测试/自动化 2-4 小时）。</li>
+<li>每 7 天维护：5-10 分钟（AltStore 自动化后几乎无操作）。</li>
+</ul>
+<p><strong>后续步骤</strong>：</p>
+<ul>
+<li>保存 <code>WeChat_Clone.ipa</code> 和 <code>WeChat_Signed.ipa</code>。</li>
+<li>定期备份微信数据。</li>
+<li>若需长期稳定，考虑付费账号（$99/年，证书有效期 1 年，支持 100 台设备）。</li>
+</ul>
+<p><strong>资源</strong>：</p>
+<ul>
+<li><a class="link" href="https://developer.apple.com/documentation/xcode"  target="_blank" rel="noopener"
+    >Apple Developer 文档</a></li>
+<li><a class="link" href="https://altstore.io/faq/"  target="_blank" rel="noopener"
+    >AltStore 教程</a></li>
+<li><a class="link" href="https://sideloadly.io/#docs"  target="_blank" rel="noopener"
+    >Sideloadly 指南</a></li>
+<li><a class="link" href="https://github.com/DanTheMan827/ios-app-signer"  target="_blank" rel="noopener"
+    >iOS App Signer 说明</a></li>
+</ul>
+<p>如需进一步帮助（例如调试错误、优化自动化流程），请联系！</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/iphone/">IPhone</a>
+        
+            <a href="/tags/wechat/">WeChat</a>
+        
+            <a href="/tags/ios/">IOS</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+	const mainArticleElement = document.querySelector(".main-article");
+        renderMathInElement(mainArticleElement, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2024 - 
+        
+        2025 dxjxpr All Rights Reserved
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
