@@ -10,10 +10,10 @@
 <meta property='og:description' content="引言 本教程为没有 iOS 开发经验的 Python 程序员（熟悉 Linux、C 语言基础、Vim、macOS 和 Windows）提供详细指导，使用免费 Apple 开发者账号实现微信双开（在同一 iPhone 上运行两个微信账号）。通过自签名技术修改微信 IPA 文件并侧载到 iPhone 上，应用有效期为 7 天，需定期重新签名。\n目标：\n生成微信克隆版应用，支持双开。 使用免费 Apple 开发者账号签名，安装到 iPhone。 每 7 天重新签名以维持双开。 限制（2025 年最新信息）：\n免费账号的 Provisioning Profile 有效期为 7 天。 最多支持 3 台设备，每台设备最多 3 个自签名应用。 可使用 AltStore 或 Sideloadly 自动化签名。 时间估算：\n首次学习和实现：10-20 小时。 每 7 天重新签名：5-10 分钟（可自动化）。 前提条件：\nmacOS 电脑（Xcode 仅支持 macOS；Windows 可用于 Sideloadly）。 iPhone（iOS 16+，推荐 iOS 18+）。 有效 Apple ID。 网络连接。 风险：可能违反 Apple/微信服务条款，建议备份数据，仅限个人测试。 工具：\n">
 <meta property='og:url' content='https://dxjxpr.github.io/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E5%AE%9E%E7%8E%B0-iphone-%E5%BE%AE%E4%BF%A1%E5%8F%8C%E5%BC%80%E7%9A%84%E7%AD%BE%E5%90%8D%E8%AE%A4%E8%AF%81%E6%95%99%E7%A8%8B%E5%85%8D%E8%B4%B9-apple-%E5%BC%80%E5%8F%91%E8%80%85%E8%B4%A6%E5%8F%B7/'>
 <meta property='og:site_name' content='I&#39;m Mr.Liu'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='iPhone' /><meta property='article:tag' content='WeChat' /><meta property='article:tag' content='IOS' /><meta property='article:published_time' content='2025-08-14T12:00:00&#43;08:00'/><meta property='article:modified_time' content='2025-08-14T12:00:00&#43;08:00'/><meta property='og:image' content='https://dxjxpr.github.io/cover.png' />
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='iPhone' /><meta property='article:tag' content='WeChat' /><meta property='article:tag' content='IOS' /><meta property='article:published_time' content='2025-08-14T12:00:00&#43;08:00'/><meta property='article:modified_time' content='2025-08-14T12:00:00&#43;08:00'/><meta property='og:image' content='https://dxjxpr.github.io/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E5%AE%9E%E7%8E%B0-iphone-%E5%BE%AE%E4%BF%A1%E5%8F%8C%E5%BC%80%E7%9A%84%E7%AD%BE%E5%90%8D%E8%AE%A4%E8%AF%81%E6%95%99%E7%A8%8B%E5%85%8D%E8%B4%B9-apple-%E5%BC%80%E5%8F%91%E8%80%85%E8%B4%A6%E5%8F%B7/cover.png' />
 <meta name="twitter:title" content="从零开始实现 iPhone 微信双开的签名认证教程（免费 Apple 开发者账号）">
 <meta name="twitter:description" content="引言 本教程为没有 iOS 开发经验的 Python 程序员（熟悉 Linux、C 语言基础、Vim、macOS 和 Windows）提供详细指导，使用免费 Apple 开发者账号实现微信双开（在同一 iPhone 上运行两个微信账号）。通过自签名技术修改微信 IPA 文件并侧载到 iPhone 上，应用有效期为 7 天，需定期重新签名。\n目标：\n生成微信克隆版应用，支持双开。 使用免费 Apple 开发者账号签名，安装到 iPhone。 每 7 天重新签名以维持双开。 限制（2025 年最新信息）：\n免费账号的 Provisioning Profile 有效期为 7 天。 最多支持 3 台设备，每台设备最多 3 个自签名应用。 可使用 AltStore 或 Sideloadly 自动化签名。 时间估算：\n首次学习和实现：10-20 小时。 每 7 天重新签名：5-10 分钟（可自动化）。 前提条件：\nmacOS 电脑（Xcode 仅支持 macOS；Windows 可用于 Sideloadly）。 iPhone（iOS 16+，推荐 iOS 18+）。 有效 Apple ID。 网络连接。 风险：可能违反 Apple/微信服务条款，建议备份数据，仅限个人测试。 工具：\n"><meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content='https://dxjxpr.github.io/cover.png' />
+    <meta name="twitter:image" content='https://dxjxpr.github.io/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E5%AE%9E%E7%8E%B0-iphone-%E5%BE%AE%E4%BF%A1%E5%8F%8C%E5%BC%80%E7%9A%84%E7%AD%BE%E5%90%8D%E8%AE%A4%E8%AF%81%E6%95%99%E7%A8%8B%E5%85%8D%E8%B4%B9-apple-%E5%BC%80%E5%8F%91%E8%80%85%E8%B4%A6%E5%8F%B7/cover.png' />
     <link rel="shortcut icon" href="/favicon.ico" />
 
     </head>
@@ -287,8 +287,12 @@
     <header class="article-header">
         <div class="article-image">
             <a href="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E5%AE%9E%E7%8E%B0-iphone-%E5%BE%AE%E4%BF%A1%E5%8F%8C%E5%BC%80%E7%9A%84%E7%AD%BE%E5%90%8D%E8%AE%A4%E8%AF%81%E6%95%99%E7%A8%8B%E5%85%8D%E8%B4%B9-apple-%E5%BC%80%E5%8F%91%E8%80%85%E8%B4%A6%E5%8F%B7/">
-                
-                    <img src="/cover.png" loading="lazy" alt="Featured image of post 从零开始实现 iPhone 微信双开的签名认证教程（免费 Apple 开发者账号）" />
+                <img src="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E5%AE%9E%E7%8E%B0-iphone-%E5%BE%AE%E4%BF%A1%E5%8F%8C%E5%BC%80%E7%9A%84%E7%AD%BE%E5%90%8D%E8%AE%A4%E8%AF%81%E6%95%99%E7%A8%8B%E5%85%8D%E8%B4%B9-apple-%E5%BC%80%E5%8F%91%E8%80%85%E8%B4%A6%E5%8F%B7/cover_hu_dd3178bcbb0dd5ee.png"
+                        srcset="/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E5%AE%9E%E7%8E%B0-iphone-%E5%BE%AE%E4%BF%A1%E5%8F%8C%E5%BC%80%E7%9A%84%E7%AD%BE%E5%90%8D%E8%AE%A4%E8%AF%81%E6%95%99%E7%A8%8B%E5%85%8D%E8%B4%B9-apple-%E5%BC%80%E5%8F%91%E8%80%85%E8%B4%A6%E5%8F%B7/cover_hu_dd3178bcbb0dd5ee.png 800w, /p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E5%AE%9E%E7%8E%B0-iphone-%E5%BE%AE%E4%BF%A1%E5%8F%8C%E5%BC%80%E7%9A%84%E7%AD%BE%E5%90%8D%E8%AE%A4%E8%AF%81%E6%95%99%E7%A8%8B%E5%85%8D%E8%B4%B9-apple-%E5%BC%80%E5%8F%91%E8%80%85%E8%B4%A6%E5%8F%B7/cover_hu_9cc96c5227d98cbf.png 1600w"
+                        width="800" 
+                        height="460" 
+                        loading="lazy"
+                        alt="Featured image of post 从零开始实现 iPhone 微信双开的签名认证教程（免费 Apple 开发者账号）" />
                 
             </a>
         </div>
