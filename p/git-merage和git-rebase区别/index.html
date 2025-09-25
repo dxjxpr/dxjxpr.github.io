@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://dxjxpr.github.io/p/git-merage%E5%92%8Cgit-rebase%E5%8C%BA%E5%88%AB/'>
 
-<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="Git Merage和Git Rebase区别">
+<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="Git Merage和Git Rebase区别">
 <meta property='og:description' content="git merge和git rebase 在Git中merge和rebase都是git在管理整合分支的两种主要工具，但是他们的工作方式、提交历史影响和使用场景不同。\ngit merge 定义\n将两个分支的提交历史合并，创建一个新的合并提交（merge commit），保留两个分支的完整历史。但是在快进合并（fast-foward）情况下直接移动指针，保持线性历史 通常是将特性分支（feature branch）合并到主分支（如main分支） 工作原理\nGit首先会找到两个分支的共同祖先节点，计算差异，然后合并代码 如果没有冲突，自动合并 如果有冲突，需要手动解决该冲突后生成合并提交 快进模式：若目标分支无新提交，直接将指针移动到源分支，历史线性。 非快进模式：生成合并提交，历史非线性，保留分支拓扑 示例\n1 2 3 # 将feature分支合并到main分支上 git checkout main git merge feature 快进合并（若main无新提交）\nmain指针移动到feature最新提交，历史线性 非快进合并（默认或指定&ndash;no-ff）\n创建合并提交，历史非线性 提交历史图\n快进合并（线性历史，修正后在一条直线上）\n1 2 3 # 初始：main和feature指向A；feature新增B、C。 # 合并后：main快进到C，历史为单条直线。 A---B---C (main, feature) 非快进合并（非线性历史）\n1 2 3 4 5 6 # 合并后：M为合并提交，指向B和D A---B (main) \\ C---D (feature) \\ M (main, 合并提交) 优点\n">
 <meta property='og:url' content='https://dxjxpr.github.io/p/git-merage%E5%92%8Cgit-rebase%E5%8C%BA%E5%88%AB/'>
 <meta property='og:site_name' content='I&#39;m Mr.Liu'>

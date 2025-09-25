@@ -7,7 +7,199 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
         <copyright>dxjxpr All Rights Reserved</copyright>
-        <lastBuildDate>Thu, 14 Aug 2025 12:00:00 +0800</lastBuildDate><atom:link href="https://dxjxpr.github.io/tags/ios/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Thu, 25 Sep 2025 12:00:00 +0800</lastBuildDate><atom:link href="https://dxjxpr.github.io/tags/ios/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>从零开始实现 iPhone 微信双开的签名认证教程（付费账号）</title>
+        <link>https://dxjxpr.github.io/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E5%AE%9E%E7%8E%B0-iphone-%E5%BE%AE%E4%BF%A1%E5%8F%8C%E5%BC%80%E7%9A%84%E7%AD%BE%E5%90%8D%E8%AE%A4%E8%AF%81%E6%95%99%E7%A8%8B%E4%BB%98%E8%B4%B9%E8%B4%A6%E5%8F%B7/</link>
+        <pubDate>Thu, 25 Sep 2025 12:00:00 +0800</pubDate>
+        
+        <guid>https://dxjxpr.github.io/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E5%AE%9E%E7%8E%B0-iphone-%E5%BE%AE%E4%BF%A1%E5%8F%8C%E5%BC%80%E7%9A%84%E7%AD%BE%E5%90%8D%E8%AE%A4%E8%AF%81%E6%95%99%E7%A8%8B%E4%BB%98%E8%B4%B9%E8%B4%A6%E5%8F%B7/</guid>
+        <description>&lt;img src="https://dxjxpr.github.io/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E5%AE%9E%E7%8E%B0-iphone-%E5%BE%AE%E4%BF%A1%E5%8F%8C%E5%BC%80%E7%9A%84%E7%AD%BE%E5%90%8D%E8%AE%A4%E8%AF%81%E6%95%99%E7%A8%8B%E4%BB%98%E8%B4%B9%E8%B4%A6%E5%8F%B7/cover.png" alt="Featured image of post 从零开始实现 iPhone 微信双开的签名认证教程（付费账号）" /&gt;&lt;h1 id=&#34;从注册苹果开发者账号到生成ipa签名并实现微信双开的详细步骤&#34;&gt;从注册苹果开发者账号到生成IPA签名并实现微信双开的详细步骤
+&lt;/h1&gt;&lt;p&gt;以下是详细的操作步骤，指导你从注册苹果开发者付费账号开始，到生成IPA签名文件，用于在自己的iPhone设备上安装应用，并实现微信双开（仅限个人学习和测试用途）。本指南不涉及任何违反Apple或微信服务条款的行为，强调合法合规操作。&lt;/p&gt;
+&lt;h2 id=&#34;1-注册苹果开发者账号&#34;&gt;1. 注册苹果开发者账号
+&lt;/h2&gt;&lt;h3 id=&#34;11-访问apple开发者网站&#34;&gt;1.1 访问Apple开发者网站
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;打开浏览器，前往 &lt;a class=&#34;link&#34; href=&#34;https://developer.apple.com/programs/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Apple Developer Program&lt;/a&gt;。&lt;/li&gt;
+&lt;li&gt;点击“Enroll”开始注册流程。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;12-创建或使用apple-id&#34;&gt;1.2 创建或使用Apple ID
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;如果已有Apple ID，直接登录；若没有，点击“Create Apple ID”创建新账号。&lt;/li&gt;
+&lt;li&gt;确保Apple ID绑定有效的邮箱并启用两步验证。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;13-报名加入apple-developer-program&#34;&gt;1.3 报名加入Apple Developer Program
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;选择“Enroll as an Individual”（个人开发者）或“Enroll as an Organization”（需提供公司信息，如营业执照）。&lt;/li&gt;
+&lt;li&gt;填写个人信息，包括姓名、地址、联系方式等。&lt;/li&gt;
+&lt;li&gt;支付年费：Apple Developer Program年费为99美元（约688人民币，视汇率而定）。需使用支持国际支付的信用卡（如Visa或MasterCard）。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;14-等待审核&#34;&gt;1.4 等待审核
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;提交申请后，Apple通常在1-2个工作日内完成审核。&lt;/li&gt;
+&lt;li&gt;审核通过后，你会收到确认邮件，开发者账号正式激活。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;2-配置开发环境&#34;&gt;2. 配置开发环境
+&lt;/h2&gt;&lt;h3 id=&#34;21-准备开发设备&#34;&gt;2.1 准备开发设备
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;准备一台Mac电脑（Xcode仅支持macOS）。&lt;/li&gt;
+&lt;li&gt;确保系统为最新版本（如macOS Ventura或更高）。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;22-安装xcode&#34;&gt;2.2 安装Xcode
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;打开Mac App Store，搜索“Xcode”，下载并安装（约40GB磁盘空间）。&lt;/li&gt;
+&lt;li&gt;安装完成后，打开Xcode，同意许可协议，并安装额外组件（如命令行工具，Xcode会自动提示）。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;23-登录apple开发者账号&#34;&gt;2.3 登录Apple开发者账号
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;打开Xcode，点击菜单栏 &lt;strong&gt;Xcode &amp;gt; Preferences &amp;gt; Accounts&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;点击“+”号，添加你的Apple ID，登录开发者账号。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;3-创建开发证书和配置文件&#34;&gt;3. 创建开发证书和配置文件
+&lt;/h2&gt;&lt;h3 id=&#34;31-生成证书签名请求-csr&#34;&gt;3.1 生成证书签名请求 (CSR)
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;打开Mac的“钥匙串访问”（Keychain Access）应用。&lt;/li&gt;
+&lt;li&gt;点击菜单 &lt;strong&gt;钥匙串访问 &amp;gt; 证书助理 &amp;gt; 从证书颁发机构请求证书&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;输入你的邮箱和名称，选择“存储到磁盘”，保存CSR文件（例如&lt;code&gt;CertificateSigningRequest.certSigningRequest&lt;/code&gt;）。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;32-创建开发者证书&#34;&gt;3.2 创建开发者证书
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;登录 &lt;a class=&#34;link&#34; href=&#34;https://developer.apple.com/account/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Apple Developer Portal&lt;/a&gt;。&lt;/li&gt;
+&lt;li&gt;进入“Certificates, Identifiers &amp;amp; Profiles” &amp;gt; “Certificates” &amp;gt; 点击“+”添加新证书。&lt;/li&gt;
+&lt;li&gt;选择“iOS App Development”或“Apple Development”，上传之前保存的CSR文件。&lt;/li&gt;
+&lt;li&gt;下载生成的证书（&lt;code&gt;.cer&lt;/code&gt;文件），双击安装到钥匙串访问中。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;33-注册设备&#34;&gt;3.3 注册设备
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;在Apple Developer Portal中，进入“Devices” &amp;gt; “All”，点击“+”添加你的iPhone。&lt;/li&gt;
+&lt;li&gt;提供设备的UDID：
+&lt;ul&gt;
+&lt;li&gt;连接iPhone到Mac，打开Xcode，点击 &lt;strong&gt;Window &amp;gt; Devices and Simulators&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;选择你的设备，复制UDID。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;在门户网站中输入UDID，注册设备。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;34-创建app-id&#34;&gt;3.4 创建App ID
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;在Apple Developer Portal中，进入“Identifiers” &amp;gt; 点击“+”创建新App ID。&lt;/li&gt;
+&lt;li&gt;选择“App IDs”，输入应用名称和Bundle ID（例如&lt;code&gt;com.yourname.wechatclone&lt;/code&gt;）。&lt;/li&gt;
+&lt;li&gt;确保勾选需要的功能（如Push Notifications，若需要）。&lt;/li&gt;
+&lt;li&gt;确认并注册。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;35-创建provisioning-profile&#34;&gt;3.5 创建Provisioning Profile
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;在Apple Developer Portal中，进入“Profiles” &amp;gt; 点击“+”创建新Profile。&lt;/li&gt;
+&lt;li&gt;选择“iOS App Development”，关联之前创建的App ID、证书和设备。&lt;/li&gt;
+&lt;li&gt;下载生成的Provisioning Profile（&lt;code&gt;.mobileprovision&lt;/code&gt;文件），双击安装到Xcode。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;4-实现微信双开个人测试用途&#34;&gt;4. 实现微信双开（个人测试用途）
+&lt;/h2&gt;&lt;h3 id=&#34;41-理解微信双开的原理&#34;&gt;4.1 理解微信双开的原理
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;微信双开需要在同一设备上安装两个不同Bundle ID的微信实例。&lt;/li&gt;
+&lt;li&gt;官方微信应用Bundle ID为&lt;code&gt;com.tencent.xin&lt;/code&gt;，你需要创建一个新应用，修改Bundle ID并重新签名。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;合规性声明&lt;/strong&gt;：直接修改微信官方IPA或逆向工程可能违反微信和Apple的服务条款。本指南假设你通过合法方式（如自建应用或使用第三方工具）实现双开，仅限个人学习用途。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;42-获取微信ipa&#34;&gt;4.2 获取微信IPA
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;合法来源&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;从App Store下载官方微信应用（无法直接获取IPA）。&lt;/li&gt;
+&lt;li&gt;若需IPA，需从合法渠道获取，例如通过越狱设备或第三方工具（需自行验证合法性）。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;替代方案&lt;/strong&gt;：创建自己的测试应用，模拟微信登录功能（需开发技能），或使用第三方开源工具（如AltStore）安装修改后的IPA。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;43-修改bundle-id&#34;&gt;4.3 修改Bundle ID
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;获取微信IPA后，使用工具（如iMazing或第三方IPA编辑工具）解包IPA。&lt;/li&gt;
+&lt;li&gt;找到&lt;code&gt;Info.plist&lt;/code&gt;文件，修改&lt;code&gt;CFBundleIdentifier&lt;/code&gt;为新的Bundle ID（例如&lt;code&gt;com.yourname.wechatclone2&lt;/code&gt;）。&lt;/li&gt;
+&lt;li&gt;确保新Bundle ID已在Apple Developer Portal中注册（见3.4）。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;44-重新签名ipa&#34;&gt;4.4 重新签名IPA
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;使用命令行工具&lt;code&gt;codesign&lt;/code&gt;重新签名：
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;codesign -f -s &lt;span class=&#34;s2&#34;&gt;&amp;#34;iPhone Developer: Your Name (Team ID)&amp;#34;&lt;/span&gt; WeChat.app
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;替换“Your Name”和“Team ID”为你的开发者证书信息。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;或者，使用第三方工具（如iResign）自动完成签名：
+&lt;ul&gt;
+&lt;li&gt;导入IPA、证书和Provisioning Profile。&lt;/li&gt;
+&lt;li&gt;指定新Bundle ID，点击“Re-sign”生成新IPA。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;5-构建并生成ipa文件&#34;&gt;5. 构建并生成IPA文件
+&lt;/h2&gt;&lt;h3 id=&#34;51-配置xcode项目若自建应用&#34;&gt;5.1 配置Xcode项目（若自建应用）
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;打开Xcode，点击 &lt;strong&gt;File &amp;gt; New &amp;gt; Project&lt;/strong&gt;，选择“App”模板。&lt;/li&gt;
+&lt;li&gt;设置Bundle ID与注册的相同（例如&lt;code&gt;com.yourname.wechatclone2&lt;/code&gt;）。&lt;/li&gt;
+&lt;li&gt;编写测试代码或导入修改后的微信应用代码（需开发技能）。&lt;/li&gt;
+&lt;li&gt;点击 &lt;strong&gt;Product &amp;gt; Build&lt;/strong&gt; 编译项目。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;52-归档项目&#34;&gt;5.2 归档项目
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;点击 &lt;strong&gt;Product &amp;gt; Archive&lt;/strong&gt;，Xcode会生成归档文件。&lt;/li&gt;
+&lt;li&gt;编译完成后，Xcode自动打开“Archives”窗口。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;53-导出ipa文件&#34;&gt;5.3 导出IPA文件
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;在“Archives”窗口，选择归档，点击“Distribute App”。&lt;/li&gt;
+&lt;li&gt;选择“Development”或“Ad Hoc”分发方式（个人使用选“Development”）。&lt;/li&gt;
+&lt;li&gt;选择之前配置的Provisioning Profile，点击“Export”。&lt;/li&gt;
+&lt;li&gt;保存IPA文件到指定路径。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;6-安装ipa到iphone&#34;&gt;6. 安装IPA到iPhone
+&lt;/h2&gt;&lt;h3 id=&#34;61-使用xcode直接安装&#34;&gt;6.1 使用Xcode直接安装
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;连接iPhone到Mac，打开Xcode。&lt;/li&gt;
+&lt;li&gt;点击 &lt;strong&gt;Window &amp;gt; Devices and Simulators&lt;/strong&gt;，选择你的iPhone。&lt;/li&gt;
+&lt;li&gt;在“Installed Apps”下，点击“+”，选择生成的IPA文件，安装到设备。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;62-使用第三方工具安装可选&#34;&gt;6.2 使用第三方工具安装（可选）
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;安装可靠的工具，如AltStore（需在Mac或PC上配置）：
+&lt;ul&gt;
+&lt;li&gt;下载AltStore并安装服务器（AltServer）。&lt;/li&gt;
+&lt;li&gt;使用AltStore将IPA文件安装到iPhone。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;输入Apple ID和密码，完成安装。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;注意&lt;/strong&gt;：免费开发者账号的签名有效期为7天，需定期重新签名。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;7-验证和使用&#34;&gt;7. 验证和使用
+&lt;/h2&gt;&lt;h3 id=&#34;71-信任开发者证书&#34;&gt;7.1 信任开发者证书
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;安装完成后，前往iPhone的 &lt;strong&gt;设置 &amp;gt; 通用 &amp;gt; VPN与设备管理&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;找到你的开发者账号，点击“信任”以授权应用运行。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;72-测试微信双开&#34;&gt;7.2 测试微信双开
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;确保设备上已安装官方微信（Bundle ID: &lt;code&gt;com.tencent.xin&lt;/code&gt;）。&lt;/li&gt;
+&lt;li&gt;打开新安装的微信应用（新Bundle ID），尝试登录第二个微信账号。&lt;/li&gt;
+&lt;li&gt;验证两个微信实例能否同时运行（需确保网络和权限配置正确）。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;注意事项&#34;&gt;注意事项
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;合法性&lt;/strong&gt;：本流程仅限个人学习和测试用途。修改或分发微信应用可能违反微信或Apple的服务条款，请确保遵守相关政策。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;签名限制&lt;/strong&gt;：免费开发者账号的IPA签名有效期为7天，付费账号为1年，需定期重新签名。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;设备限制&lt;/strong&gt;：免费账号最多注册3台设备，付费账号最多100台。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;安全&lt;/strong&gt;：避免使用非官方工具或来源不明的IPA文件，确保设备和数据安全。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;技术难度&lt;/strong&gt;：实现微信双开需一定开发经验，若不熟悉Xcode或签名流程，可考虑使用合法的第三方工具（如AltStore）或咨询专业开发者。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;替代方案&lt;/strong&gt;：部分越狱工具或企业证书可实现双开，但可能不稳定或违反政策，建议谨慎使用。&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
         <title>从零开始实现 iPhone 微信双开的签名认证教程（免费 Apple 开发者账号）</title>
         <link>https://dxjxpr.github.io/p/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E5%AE%9E%E7%8E%B0-iphone-%E5%BE%AE%E4%BF%A1%E5%8F%8C%E5%BC%80%E7%9A%84%E7%AD%BE%E5%90%8D%E8%AE%A4%E8%AF%81%E6%95%99%E7%A8%8B%E5%85%8D%E8%B4%B9-apple-%E5%BC%80%E5%8F%91%E8%80%85%E8%B4%A6%E5%8F%B7/</link>
         <pubDate>Thu, 14 Aug 2025 12:00:00 +0800</pubDate>

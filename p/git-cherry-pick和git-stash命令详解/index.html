@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://dxjxpr.github.io/p/git-cherry-pick%E5%92%8Cgit-stash%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/'>
 
-<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="Git Cherry-pick和Git Stash命令详解">
+<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="Git Cherry-pick和Git Stash命令详解">
 <meta property='og:description' content="git cherry-pick命令 定义\n用于将指定的提交(commit)从一个分支&quot;挑选&quot;并应用到当前分支 它复制某个提交的更改（diff），生成一个新的提交，保留原提交的更改内容，但拥有新的提交ID（SHA值） 命令\n1 git cherry-pick &lt;commit-id&gt; 核心功能\n提取单个或多个提交的更改，应用到目标分支 不影响分支的整体历史，仅复制指定提交 适合修复bug、移植特性或整理提交 适用场景\n需要从一个分支移植一个特定更改到另一个分支时非常有用 示例\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 # 假设有以下分支 # main分支有提交A、B、C。 # feature分支从B分叉，包含提交D、E、F。 A---B---C (main) \\ D---E---F (feature) # 现在将feature分支的提交E（例如一个Bug修复）应用到main，但不想要D或F。 # 首先切换到main分支 git switch main # git checkout main # 然后执行cherry-pick，选择提交E（假设E的SHA值为e123456） # 如果无冲突，Git会在main分支创建一个新提交E&#39;，包含E的更改 git cherry-pick e123456 # 提交后的结果 A---B---C---E&#39; (main) \\ D---E---F (feature) # 如果有冲突，提示错误信息，如下 error: could not apply e123456... [commit message] # 手动解决冲突，解决完成后 git add &lt;file&gt; # 继续cherry-pick git cherry-pick --continue # 或者放弃cherry-pick git cherry-pick --abort 批量cherry-pick\n">
 <meta property='og:url' content='https://dxjxpr.github.io/p/git-cherry-pick%E5%92%8Cgit-stash%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/'>
 <meta property='og:site_name' content='I&#39;m Mr.Liu'>
