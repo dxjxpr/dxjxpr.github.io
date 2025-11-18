@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://dxjxpr.github.io/p/%E5%9C%A8ubuntu-24.04%E4%B8%8A%E9%83%A8%E7%BD%B2zabbix-7.0%E5%AF%B9%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%9B%E8%A1%8C%E7%9B%91%E6%8E%A7/'>
 
-<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="在Ubuntu 24.04上部署Zabbix 7.0对服务器进行监控">
+<link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="在Ubuntu 24.04上部署Zabbix 7.0对服务器进行监控">
 <meta property='og:description' content="软硬件信息 服务器\n阿里云ECS * 3 4核8G 100G 操作系统\nUbuntu24.04 架构\n一台阿里云ECS实例部署 Zabbix Server + MariaDB\n两台阿里云ECS实例（被监控服务器）\n网络要求：\n所有ECS实例需公网IP或VPC内网通信。 开放以下端口： Zabbix Server：10051（TCP，Zabbix Server接收Agent数据）、80/443（HTTP/HTTPS，Web界面）。 被监控服务器：10050（TCP，Zabbix Agent监听）。 阿里云安全组配置：确保上述端口已开放（参考阿里云控制台）。 权限：root或sudo权限。\n软件：Zabbix 7.0支持MariaDB，需与Zabbix Server同机部署。\n部署步骤 步骤 1：安装并配置MariaDB 更新系统：\n1 sudo apt update &amp;&amp; sudo apt upgrade -y 安装MariaDB：\n1 sudo apt install mariadb-server -y 保护MariaDB安装：\n1 sudo mysql_secure_installation 设置root密码（记录下来）。 回答提示 启用密码验证（Y） 移除匿名用户（Y） 禁用远程root登录（Y） 移除测试数据库（Y） 刷新权限（Y） 创建Zabbix数据库和用户：\n1 sudo mysql -uroot -p 在MariaDB提示符下执行：\n">
 <meta property='og:url' content='https://dxjxpr.github.io/p/%E5%9C%A8ubuntu-24.04%E4%B8%8A%E9%83%A8%E7%BD%B2zabbix-7.0%E5%AF%B9%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%9B%E8%A1%8C%E7%9B%91%E6%8E%A7/'>
 <meta property='og:site_name' content='I&#39;m Mr.Liu'>

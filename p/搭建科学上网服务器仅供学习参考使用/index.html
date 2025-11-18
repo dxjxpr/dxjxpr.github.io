@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/'>
 
-<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="搭建科学上网服务器（仅供学习参考使用）">
+<link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="搭建科学上网服务器（仅供学习参考使用）">
 <meta property='og:description' content="[TOC]\n本文仅仅供学习参考使用，无任何盈利性质，单纯技术分享，不承担任何法律责任，所有使用该技术的人员引发的后果自行承担相应后果 本文仅分享科学上网技术，用来学习计算机知识，查询资料，比如医学、计算机、绘画等各领域学习使用 请勿私自搭建进行违法犯罪活动 一、准备工作 1、vps厂商选择 搭建一个科学上网服务器，那么必然是需要一个云服务器作为物理基础，才能进行搭建，这里就应用Github上mmhunter3515大佬整理的VPS厂商，整理的很详细，在这里就列举几个\nVultr：https://www.vultr.com/ Lightnode：ttps://www.lightnode.com/ Google：https://cloud.google.com/ AWS：https://aws.amazon.com/ 2、注册账号与充值 本文选择vultr厂商，这个厂商的数据中心较多，于是使用的人也就很多，很多人选择这个厂商的服务器搭建网站之类，于是出现一个就封锁一个ip，就造成了vultr厂商的很多ip被封了，所以，在创建实例的时候，就会出现很有可能无法连接，因为被封了。本文只是为了演示技术，就还是选择vultr厂商（其实是没有钱去其他网站充值了，也就这个网站还有几刀可以嚯嚯）\n下面是vultr的主界面\n首先需要一个账号，点击右上角的Sign up自行注册一个账户，推荐使用Gmail邮箱\n注：关于注册账号和充值部分，厂家可能会不定期给一些优惠券或者是返还之类，这个就需要大家执行去翻阅查找资料了\n注册完成后，需要充值，最低需要$10，支持支付宝充值\n二、开始创建ECS实例 1、部署服务器 选择Products的Compute界面，可以看到Deploy Server\n创建实例\n关闭自动备份后，价格就降低几美元（一方面省钱，另外一方面其实也没有那个必要）\n然后点击Configure Software进入到镜像选择的界面，系统镜像选择，一般选择CentOS，版本的话，选择最新版本就好\n">
 <meta property='og:url' content='https://dxjxpr.github.io/p/%E6%90%AD%E5%BB%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%85%E4%BE%9B%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83%E4%BD%BF%E7%94%A8/'>
 <meta property='og:site_name' content='I&#39;m Mr.Liu'>

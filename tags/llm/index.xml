@@ -19,7 +19,8 @@
 1、Mistral-7B大模型语言，采用4-bit量化，但是需要使用最新版本的bitstandbyte模块，然而这个模块在macos上最新支持到0.42版本，当前（2025.06.28）最新的版本是0.46，但是只有win和linux上的版本，没有macos的版本，故无法继续安装&lt;/p&gt;
 &lt;p&gt;2、不采用4-bit量化模型，但是在运行的时候，需要分配很大的内存或者显存缓冲区，但是本电脑性能不足，无法分配，故无法运行成功&lt;/p&gt;
 &lt;p&gt;3、如果采用云服务器的方式，如果达到可用的性能标准的时候，云服务器价格过于昂贵，不太现实，所以暂时无法进行搭建&lt;/p&gt;
-&lt;p&gt;当前模型的搭建问题先进行遗留，日后条件成熟时，组装一个性能比较不错的电脑再进行搭建&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;当前模型的搭建问题先进行遗留，日后条件成熟时，组装一个性能比较不错的电脑再进行搭建&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;h1 id=&#34;在2019款macbook-pro上从零搭建mistral-7b模型教程&#34;&gt;在2019款MacBook Pro上从零搭建Mistral 7B模型教程
 &lt;/h1&gt;&lt;p&gt;&lt;strong&gt;本教程指导你在MacBook Pro（2019款，2.3GHz Intel Core i9，32GB RAM，512GB SSD，Radeon Pro 5500M）上搭建Mistral 7B模型，支持推理、微调（优化中文任务）和联网功能。教程使用开源工具（如Hugging Face、LangChain），适配Intel架构硬件。&lt;/strong&gt;&lt;/p&gt;
 &lt;h2 id=&#34;前提条件&#34;&gt;前提条件

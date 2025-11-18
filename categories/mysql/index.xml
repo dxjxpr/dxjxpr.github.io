@@ -23,7 +23,8 @@
 &lt;h1 id=&#34;开始&#34;&gt;开始
 &lt;/h1&gt;&lt;p&gt;1、&lt;strong&gt;查看centos7中是否有&lt;code&gt;MariaDB&lt;/code&gt;，&lt;code&gt;MariaDB&lt;/code&gt;与&lt;code&gt;MySQL&lt;/code&gt;关系请自行查阅&lt;/strong&gt;&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;rpm -qa | grep mariadb&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;rpm -qa | grep mariadb&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/5dbd0cce202441c0a19df6a14a50b37d.png&#34;
 	width=&#34;1108&#34;
 	height=&#34;256&#34;
@@ -40,7 +41,8 @@
 &gt;
 2、&lt;strong&gt;如果有&lt;code&gt;MariaDB&lt;/code&gt;，需要将 &lt;code&gt;步骤1&lt;/code&gt; 中查询到的&lt;code&gt;mairadb&lt;/code&gt;全部卸载，否则&lt;code&gt;MySQL&lt;/code&gt;安装会出现问题&lt;/strong&gt;&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;rpm -e &amp;ndash;nodeps 软件名&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;rpm -e &amp;ndash;nodeps 软件名&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/d6c01d167bdd45a2837506e8143060f6.png&#34;
 	width=&#34;1521&#34;
 	height=&#34;163&#34;
@@ -57,7 +59,8 @@
 &gt;
 3、&lt;strong&gt;查看本机是否已经安装过&lt;code&gt;MySQL&lt;/code&gt;&lt;/strong&gt;&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;rpm -qa | grep -i mysql&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;rpm -qa | grep -i mysql&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/acec7cdafa264a4ca521ed19aa096a63.png&#34;
 	width=&#34;1022&#34;
 	height=&#34;214&#34;
@@ -79,24 +82,29 @@
 &lt;li&gt;将步骤3中查询到的mysql安装包全部卸载&lt;/li&gt;
 &lt;/ul&gt;
 &lt;blockquote&gt;
-&lt;p&gt;rpm -e &amp;ndash;nodeps 软件名&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;rpm -e &amp;ndash;nodeps 软件名&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;查找mysql文件，并将其删除&lt;/li&gt;
 &lt;/ul&gt;
 &lt;blockquote&gt;
 &lt;p&gt;find / -name mysql
-whereis mysql&lt;/p&gt;&lt;/blockquote&gt;
+whereis mysql&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;  将&lt;code&gt;find&lt;/code&gt;命令和&lt;code&gt;whereis&lt;/code&gt;命令查询到的mysql文件全部删除&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;rm -rf 查询到的mysql路径&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;rm -rf 查询到的mysql路径&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;  删除mysql配置文件&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;rm /etc/my.cnf&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;rm /etc/my.cnf&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;确认是否全部删除mysql&lt;/li&gt;
 &lt;/ul&gt;
 &lt;blockquote&gt;
-&lt;p&gt;rpm -qa | grep -i mysql&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;rpm -qa | grep -i mysql&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;6、&lt;strong&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.mysql.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;MySQL官网&lt;/a&gt;下载适用于centos7的mysql安装包&lt;/strong&gt;
 &lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/da834284b8bd4a5ebcc8a85623c84f7c.png&#34;
@@ -146,7 +154,8 @@ whereis mysql&lt;/p&gt;&lt;/blockquote&gt;
 &lt;p&gt;uname -m
 或者是
 arch
-# 我的服务器是x86_64的&lt;/p&gt;&lt;/blockquote&gt;
+# 我的服务器是x86_64的&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/8f55107c93e14828b386f9e418344008.png&#34;
 	width=&#34;979&#34;
 	height=&#34;288&#34;
@@ -194,11 +203,13 @@ arch
 &lt;li&gt;或者是复制这个&lt;code&gt;tar&lt;/code&gt;包的链接，然后通过&lt;code&gt;wget&lt;/code&gt;命令下载，操作如下&lt;/li&gt;
 &lt;/ul&gt;
 &lt;blockquote&gt;
-&lt;p&gt;wget  文件的网络地址&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;wget  文件的网络地址&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;比如我这里下载的地址是&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;wget  &lt;a class=&#34;link&#34; href=&#34;https://cdn.mysql.com//Downloads/MySQL-8.0/mysql-8.0.26-1.el7.x86_64.rpm-bundle.tar&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;https://cdn.mysql.com//Downloads/MySQL-8.0/mysql-8.0.26-1.el7.x86_64.rpm-bundle.tar&lt;/a&gt;&lt;/p&gt;&lt;/blockquote&gt;
+    &gt;https://cdn.mysql.com//Downloads/MySQL-8.0/mysql-8.0.26-1.el7.x86_64.rpm-bundle.tar&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/4bd9695e6fb743b0987af3c82bf696b0.png&#34;
 	width=&#34;1547&#34;
 	height=&#34;578&#34;
@@ -261,12 +272,14 @@ arch
 		data-flex-grow=&#34;304&#34;
 		data-flex-basis=&#34;731px&#34;
 	
-&gt;&lt;/p&gt;&lt;/blockquote&gt;
+&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;解压该tar包&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;tar -xvf mysql的tar包全名  -C 解压到指定目录
 # 说明：-C参数，后面跟的是目录，意思是将压缩包解压缩后存放到指定的目录下。&lt;/p&gt;
-&lt;p&gt;# 这里就指定到刚才创建的mysql目录下&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;# 这里就指定到刚才创建的mysql目录下&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/7e1ec434fb4243d2907e93de5cb3ff75.png&#34;
 	width=&#34;1784&#34;
 	height=&#34;536&#34;
@@ -300,7 +313,8 @@ arch
 &lt;li&gt;rpm安装命令&lt;/li&gt;
 &lt;/ul&gt;
 &lt;blockquote&gt;
-&lt;p&gt;rpm -ivh xxx.rpm&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;rpm -ivh xxx.rpm&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;blockquote&gt;
 &lt;p&gt;# 这里选择的是全部安装
 # 安装顺序如下，否则会出现依赖问题
@@ -312,7 +326,8 @@ mysql-community-libs-compat-8.0.26-1.el7.x86_64.rpm
 mysql-community-devel-8.0.26-1.el7.x86_64.rpm
 mysql-community-client-8.0.26-1.el7.x86_64.rpm
 mysql-community-server-8.0.26-1.el7.x86_64.rpm
-mysql-community-test-8.0.26-1.el7.x86_64.rpm&lt;/p&gt;&lt;/blockquote&gt;
+mysql-community-test-8.0.26-1.el7.x86_64.rpm&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;以上安装rpm时可能会出现centos的动态库缺失等情况，这里记录下几种错误情况&lt;/li&gt;
 &lt;/ul&gt;
@@ -387,25 +402,31 @@ perl(Test::More) is needed by mysql-community-test-8.0.26-1.el7.x86_64&lt;/font&
     &gt;https://pkgs.org/download/perl(Test::More)&lt;/a&gt;，打开centos7的下拉框，找到CentOS x86_64下对应的rpm，然后打开这个rpm连接，在&lt;code&gt;Download&lt;/code&gt;对应的部分找&lt;code&gt;Binary Package&lt;/code&gt;，后面有对应的rpm下载连接，下载下来进行安装即可&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;/ul&gt;&lt;/blockquote&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;9、&lt;strong&gt;初始化数据库&lt;/strong&gt;&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;mysqld &amp;ndash;initialize &amp;ndash;console&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;mysqld &amp;ndash;initialize &amp;ndash;console&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;10、&lt;strong&gt;目录授权，否则可能会启动失败&lt;/strong&gt;&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;chown -R mysql:mysql /var/lib/mysql/&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;chown -R mysql:mysql /var/lib/mysql/&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;11、&lt;strong&gt;启动mysql&lt;/strong&gt;&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;systemctl start mysqld&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;systemctl start mysqld&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;对应的重启、关闭mysql命令如下&lt;/li&gt;
 &lt;/ul&gt;
 &lt;blockquote&gt;
 &lt;p&gt;systemctl stop mysqld
-systemctl restart mysqld&lt;/p&gt;&lt;/blockquote&gt;
+systemctl restart mysqld&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;12、&lt;strong&gt;查询mysql状态&lt;/strong&gt;&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;systemctl status mysqld&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;systemctl status mysqld&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/dc9dd40507424492bc07103110d06e42.png&#34;
 	width=&#34;1919&#34;
 	height=&#34;607&#34;
@@ -422,7 +443,8 @@ systemctl restart mysqld&lt;/p&gt;&lt;/blockquote&gt;
 &gt;&lt;/p&gt;
 &lt;p&gt;13、&lt;strong&gt;查询mysql的临时密码&lt;/strong&gt;&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;cat /var/log/mysqld.log | grep password&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;cat /var/log/mysqld.log | grep password&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/0195743babce4169a3cb3bfde6320f99.png&#34;
 	width=&#34;1900&#34;
 	height=&#34;357&#34;
@@ -439,7 +461,8 @@ systemctl restart mysqld&lt;/p&gt;&lt;/blockquote&gt;
 &gt;
 14、&lt;strong&gt;使用临时密码登录mysql&lt;/strong&gt;&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;mysql  -u root -p&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;mysql  -u root -p&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;注意：linux下输入密码是不会回显（不是电脑坏了！），输入完毕后直接回车即可&lt;/li&gt;
 &lt;/ul&gt;
@@ -476,18 +499,21 @@ systemctl restart mysqld&lt;/p&gt;&lt;/blockquote&gt;
 &gt;&lt;/p&gt;
 &lt;p&gt;15、&lt;strong&gt;修改mysql的登录密码&lt;/strong&gt;&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;alter user &amp;lsquo;root&amp;rsquo;@&amp;rsquo;localhost&amp;rsquo; identified  with mysql_native_password by &amp;lsquo;你的密码&amp;rsquo; ;&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;alter user &amp;lsquo;root&amp;rsquo;@&amp;rsquo;localhost&amp;rsquo; identified  with mysql_native_password by &amp;lsquo;你的密码&amp;rsquo; ;&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;注：mysql8对密码的强度有很高的要求，具体密码要求可使用以下命令查询&lt;/li&gt;
 &lt;/ul&gt;
 &lt;blockquote&gt;
-&lt;p&gt;SHOW VARIABLES LIKE &amp;lsquo;validate_password%&amp;rsquo;;&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;SHOW VARIABLES LIKE &amp;lsquo;validate_password%&amp;rsquo;;&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;最后重启下mysql即可&lt;/p&gt;
 &lt;p&gt;16、&lt;strong&gt;mysql设置远程连接&lt;/strong&gt;
 注：这个步骤根据实际需求而设定&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;show databases ;
-use mysql ;&lt;/p&gt;&lt;/blockquote&gt;
+use mysql ;&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/fd72829896684bed97e6399f130b6541.png&#34;
 	width=&#34;1501&#34;
 	height=&#34;732&#34;
@@ -504,7 +530,8 @@ use mysql ;&lt;/p&gt;&lt;/blockquote&gt;
 &gt;
 查看可登录mysql的host&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;select host, user from user;&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;select host, user from user;&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;&lt;code&gt;host&lt;/code&gt;部分全部都是&lt;code&gt;localhost&lt;/code&gt;，说明用户只能本地连接msyql服务
 &lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/ec197732dcd24d5f843b0f35772406cd.png&#34;
 	width=&#34;1066&#34;
@@ -525,7 +552,8 @@ use mysql ;&lt;/p&gt;&lt;/blockquote&gt;
 &lt;/ul&gt;
 &lt;blockquote&gt;
 &lt;p&gt;update user set user.host=&amp;rsquo;%&amp;rsquo; where user.user=&amp;lsquo;root&amp;rsquo;;
-flush privileges;&lt;/p&gt;&lt;/blockquote&gt;
+flush privileges;&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/5df7adbe22224823ada00da9c6815fbb.png&#34;
 	width=&#34;1367&#34;
 	height=&#34;799&#34;

@@ -3212,7 +3212,8 @@ Zabbix前端需要Apache和PHP模块，步骤3已安装部分依赖，确认安�
 1、Mistral-7B大模型语言，采用4-bit量化，但是需要使用最新版本的bitstandbyte模块，然而这个模块在macos上最新支持到0.42版本，当前（2025.06.28）最新的版本是0.46，但是只有win和linux上的版本，没有macos的版本，故无法继续安装&lt;/p&gt;
 &lt;p&gt;2、不采用4-bit量化模型，但是在运行的时候，需要分配很大的内存或者显存缓冲区，但是本电脑性能不足，无法分配，故无法运行成功&lt;/p&gt;
 &lt;p&gt;3、如果采用云服务器的方式，如果达到可用的性能标准的时候，云服务器价格过于昂贵，不太现实，所以暂时无法进行搭建&lt;/p&gt;
-&lt;p&gt;当前模型的搭建问题先进行遗留，日后条件成熟时，组装一个性能比较不错的电脑再进行搭建&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;当前模型的搭建问题先进行遗留，日后条件成熟时，组装一个性能比较不错的电脑再进行搭建&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;h1 id=&#34;在2019款macbook-pro上从零搭建mistral-7b模型教程&#34;&gt;在2019款MacBook Pro上从零搭建Mistral 7B模型教程
 &lt;/h1&gt;&lt;p&gt;&lt;strong&gt;本教程指导你在MacBook Pro（2019款，2.3GHz Intel Core i9，32GB RAM，512GB SSD，Radeon Pro 5500M）上搭建Mistral 7B模型，支持推理、微调（优化中文任务）和联网功能。教程使用开源工具（如Hugging Face、LangChain），适配Intel架构硬件。&lt;/strong&gt;&lt;/p&gt;
 &lt;h2 id=&#34;前提条件&#34;&gt;前提条件
@@ -7806,7 +7807,8 @@ HTTP规范允许扩展方法，但非标准方法（如WebDAV的PROPFIND、MKCOL
 &lt;/div&gt;&lt;p&gt;3、Windows与Linux看待BIOS里时间的方式不一样&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Linux时钟分为系统时钟（System Clock）和硬件时钟（RTC）。Linux把硬件时间当作UTC，系统时间是UTC时间经过换算过来的（就是东几区：加时间，西几区：减时间）。比如北京时间，就是GMT+8,在windows里是凌晨00:00，那么在Linux中就是08:00，多八个小时，这是与所在的地理位置有关，此处就请科普下地理知识，经度纬度，以及地球公转自转，太阳照射时间等知识信息
-Windows系统就直接读取了系统硬件时间（RTC），当作本地时间（Local time），因此windows系统时间和BIOS中显示的时间（RTC）是一样的&lt;/p&gt;&lt;/blockquote&gt;
+Windows系统就直接读取了系统硬件时间（RTC），当作本地时间（Local time），因此windows系统时间和BIOS中显示的时间（RTC）是一样的&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;4、解决方法，在ubuntu，打开终端，执行以下命令&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -9761,7 +9763,8 @@ Windows系统就直接读取了系统硬件时间（RTC），当作本地时间�
 &lt;h1 id=&#34;开始&#34;&gt;开始
 &lt;/h1&gt;&lt;p&gt;1、&lt;strong&gt;查看centos7中是否有&lt;code&gt;MariaDB&lt;/code&gt;，&lt;code&gt;MariaDB&lt;/code&gt;与&lt;code&gt;MySQL&lt;/code&gt;关系请自行查阅&lt;/strong&gt;&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;rpm -qa | grep mariadb&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;rpm -qa | grep mariadb&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/5dbd0cce202441c0a19df6a14a50b37d.png&#34;
 	width=&#34;1108&#34;
 	height=&#34;256&#34;
@@ -9778,7 +9781,8 @@ Windows系统就直接读取了系统硬件时间（RTC），当作本地时间�
 &gt;
 2、&lt;strong&gt;如果有&lt;code&gt;MariaDB&lt;/code&gt;，需要将 &lt;code&gt;步骤1&lt;/code&gt; 中查询到的&lt;code&gt;mairadb&lt;/code&gt;全部卸载，否则&lt;code&gt;MySQL&lt;/code&gt;安装会出现问题&lt;/strong&gt;&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;rpm -e &amp;ndash;nodeps 软件名&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;rpm -e &amp;ndash;nodeps 软件名&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/d6c01d167bdd45a2837506e8143060f6.png&#34;
 	width=&#34;1521&#34;
 	height=&#34;163&#34;
@@ -9795,7 +9799,8 @@ Windows系统就直接读取了系统硬件时间（RTC），当作本地时间�
 &gt;
 3、&lt;strong&gt;查看本机是否已经安装过&lt;code&gt;MySQL&lt;/code&gt;&lt;/strong&gt;&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;rpm -qa | grep -i mysql&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;rpm -qa | grep -i mysql&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/acec7cdafa264a4ca521ed19aa096a63.png&#34;
 	width=&#34;1022&#34;
 	height=&#34;214&#34;
@@ -9817,24 +9822,29 @@ Windows系统就直接读取了系统硬件时间（RTC），当作本地时间�
 &lt;li&gt;将步骤3中查询到的mysql安装包全部卸载&lt;/li&gt;
 &lt;/ul&gt;
 &lt;blockquote&gt;
-&lt;p&gt;rpm -e &amp;ndash;nodeps 软件名&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;rpm -e &amp;ndash;nodeps 软件名&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;查找mysql文件，并将其删除&lt;/li&gt;
 &lt;/ul&gt;
 &lt;blockquote&gt;
 &lt;p&gt;find / -name mysql
-whereis mysql&lt;/p&gt;&lt;/blockquote&gt;
+whereis mysql&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;  将&lt;code&gt;find&lt;/code&gt;命令和&lt;code&gt;whereis&lt;/code&gt;命令查询到的mysql文件全部删除&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;rm -rf 查询到的mysql路径&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;rm -rf 查询到的mysql路径&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;  删除mysql配置文件&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;rm /etc/my.cnf&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;rm /etc/my.cnf&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;确认是否全部删除mysql&lt;/li&gt;
 &lt;/ul&gt;
 &lt;blockquote&gt;
-&lt;p&gt;rpm -qa | grep -i mysql&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;rpm -qa | grep -i mysql&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;6、&lt;strong&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.mysql.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;MySQL官网&lt;/a&gt;下载适用于centos7的mysql安装包&lt;/strong&gt;
 &lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/da834284b8bd4a5ebcc8a85623c84f7c.png&#34;
@@ -9884,7 +9894,8 @@ whereis mysql&lt;/p&gt;&lt;/blockquote&gt;
 &lt;p&gt;uname -m
 或者是
 arch
-# 我的服务器是x86_64的&lt;/p&gt;&lt;/blockquote&gt;
+# 我的服务器是x86_64的&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/8f55107c93e14828b386f9e418344008.png&#34;
 	width=&#34;979&#34;
 	height=&#34;288&#34;
@@ -9932,11 +9943,13 @@ arch
 &lt;li&gt;或者是复制这个&lt;code&gt;tar&lt;/code&gt;包的链接，然后通过&lt;code&gt;wget&lt;/code&gt;命令下载，操作如下&lt;/li&gt;
 &lt;/ul&gt;
 &lt;blockquote&gt;
-&lt;p&gt;wget  文件的网络地址&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;wget  文件的网络地址&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;比如我这里下载的地址是&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;wget  &lt;a class=&#34;link&#34; href=&#34;https://cdn.mysql.com//Downloads/MySQL-8.0/mysql-8.0.26-1.el7.x86_64.rpm-bundle.tar&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;https://cdn.mysql.com//Downloads/MySQL-8.0/mysql-8.0.26-1.el7.x86_64.rpm-bundle.tar&lt;/a&gt;&lt;/p&gt;&lt;/blockquote&gt;
+    &gt;https://cdn.mysql.com//Downloads/MySQL-8.0/mysql-8.0.26-1.el7.x86_64.rpm-bundle.tar&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/4bd9695e6fb743b0987af3c82bf696b0.png&#34;
 	width=&#34;1547&#34;
 	height=&#34;578&#34;
@@ -9999,12 +10012,14 @@ arch
 		data-flex-grow=&#34;304&#34;
 		data-flex-basis=&#34;731px&#34;
 	
-&gt;&lt;/p&gt;&lt;/blockquote&gt;
+&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;解压该tar包&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;tar -xvf mysql的tar包全名  -C 解压到指定目录
 # 说明：-C参数，后面跟的是目录，意思是将压缩包解压缩后存放到指定的目录下。&lt;/p&gt;
-&lt;p&gt;# 这里就指定到刚才创建的mysql目录下&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;# 这里就指定到刚才创建的mysql目录下&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/7e1ec434fb4243d2907e93de5cb3ff75.png&#34;
 	width=&#34;1784&#34;
 	height=&#34;536&#34;
@@ -10038,7 +10053,8 @@ arch
 &lt;li&gt;rpm安装命令&lt;/li&gt;
 &lt;/ul&gt;
 &lt;blockquote&gt;
-&lt;p&gt;rpm -ivh xxx.rpm&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;rpm -ivh xxx.rpm&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;blockquote&gt;
 &lt;p&gt;# 这里选择的是全部安装
 # 安装顺序如下，否则会出现依赖问题
@@ -10050,7 +10066,8 @@ mysql-community-libs-compat-8.0.26-1.el7.x86_64.rpm
 mysql-community-devel-8.0.26-1.el7.x86_64.rpm
 mysql-community-client-8.0.26-1.el7.x86_64.rpm
 mysql-community-server-8.0.26-1.el7.x86_64.rpm
-mysql-community-test-8.0.26-1.el7.x86_64.rpm&lt;/p&gt;&lt;/blockquote&gt;
+mysql-community-test-8.0.26-1.el7.x86_64.rpm&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;以上安装rpm时可能会出现centos的动态库缺失等情况，这里记录下几种错误情况&lt;/li&gt;
 &lt;/ul&gt;
@@ -10125,25 +10142,31 @@ perl(Test::More) is needed by mysql-community-test-8.0.26-1.el7.x86_64&lt;/font&
     &gt;https://pkgs.org/download/perl(Test::More)&lt;/a&gt;，打开centos7的下拉框，找到CentOS x86_64下对应的rpm，然后打开这个rpm连接，在&lt;code&gt;Download&lt;/code&gt;对应的部分找&lt;code&gt;Binary Package&lt;/code&gt;，后面有对应的rpm下载连接，下载下来进行安装即可&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;/ul&gt;&lt;/blockquote&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;9、&lt;strong&gt;初始化数据库&lt;/strong&gt;&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;mysqld &amp;ndash;initialize &amp;ndash;console&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;mysqld &amp;ndash;initialize &amp;ndash;console&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;10、&lt;strong&gt;目录授权，否则可能会启动失败&lt;/strong&gt;&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;chown -R mysql:mysql /var/lib/mysql/&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;chown -R mysql:mysql /var/lib/mysql/&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;11、&lt;strong&gt;启动mysql&lt;/strong&gt;&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;systemctl start mysqld&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;systemctl start mysqld&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;对应的重启、关闭mysql命令如下&lt;/li&gt;
 &lt;/ul&gt;
 &lt;blockquote&gt;
 &lt;p&gt;systemctl stop mysqld
-systemctl restart mysqld&lt;/p&gt;&lt;/blockquote&gt;
+systemctl restart mysqld&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;12、&lt;strong&gt;查询mysql状态&lt;/strong&gt;&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;systemctl status mysqld&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;systemctl status mysqld&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/dc9dd40507424492bc07103110d06e42.png&#34;
 	width=&#34;1919&#34;
 	height=&#34;607&#34;
@@ -10160,7 +10183,8 @@ systemctl restart mysqld&lt;/p&gt;&lt;/blockquote&gt;
 &gt;&lt;/p&gt;
 &lt;p&gt;13、&lt;strong&gt;查询mysql的临时密码&lt;/strong&gt;&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;cat /var/log/mysqld.log | grep password&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;cat /var/log/mysqld.log | grep password&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/0195743babce4169a3cb3bfde6320f99.png&#34;
 	width=&#34;1900&#34;
 	height=&#34;357&#34;
@@ -10177,7 +10201,8 @@ systemctl restart mysqld&lt;/p&gt;&lt;/blockquote&gt;
 &gt;
 14、&lt;strong&gt;使用临时密码登录mysql&lt;/strong&gt;&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;mysql  -u root -p&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;mysql  -u root -p&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;注意：linux下输入密码是不会回显（不是电脑坏了！），输入完毕后直接回车即可&lt;/li&gt;
 &lt;/ul&gt;
@@ -10214,18 +10239,21 @@ systemctl restart mysqld&lt;/p&gt;&lt;/blockquote&gt;
 &gt;&lt;/p&gt;
 &lt;p&gt;15、&lt;strong&gt;修改mysql的登录密码&lt;/strong&gt;&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;alter user &amp;lsquo;root&amp;rsquo;@&amp;rsquo;localhost&amp;rsquo; identified  with mysql_native_password by &amp;lsquo;你的密码&amp;rsquo; ;&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;alter user &amp;lsquo;root&amp;rsquo;@&amp;rsquo;localhost&amp;rsquo; identified  with mysql_native_password by &amp;lsquo;你的密码&amp;rsquo; ;&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;注：mysql8对密码的强度有很高的要求，具体密码要求可使用以下命令查询&lt;/li&gt;
 &lt;/ul&gt;
 &lt;blockquote&gt;
-&lt;p&gt;SHOW VARIABLES LIKE &amp;lsquo;validate_password%&amp;rsquo;;&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;SHOW VARIABLES LIKE &amp;lsquo;validate_password%&amp;rsquo;;&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;最后重启下mysql即可&lt;/p&gt;
 &lt;p&gt;16、&lt;strong&gt;mysql设置远程连接&lt;/strong&gt;
 注：这个步骤根据实际需求而设定&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;show databases ;
-use mysql ;&lt;/p&gt;&lt;/blockquote&gt;
+use mysql ;&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/fd72829896684bed97e6399f130b6541.png&#34;
 	width=&#34;1501&#34;
 	height=&#34;732&#34;
@@ -10242,7 +10270,8 @@ use mysql ;&lt;/p&gt;&lt;/blockquote&gt;
 &gt;
 查看可登录mysql的host&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;select host, user from user;&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;select host, user from user;&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;&lt;code&gt;host&lt;/code&gt;部分全部都是&lt;code&gt;localhost&lt;/code&gt;，说明用户只能本地连接msyql服务
 &lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/ec197732dcd24d5f843b0f35772406cd.png&#34;
 	width=&#34;1066&#34;
@@ -10263,7 +10292,8 @@ use mysql ;&lt;/p&gt;&lt;/blockquote&gt;
 &lt;/ul&gt;
 &lt;blockquote&gt;
 &lt;p&gt;update user set user.host=&amp;rsquo;%&amp;rsquo; where user.user=&amp;lsquo;root&amp;rsquo;;
-flush privileges;&lt;/p&gt;&lt;/blockquote&gt;
+flush privileges;&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;&lt;img src=&#34;https://dxjxpr.github.io/p/centos7%E5%AE%89%E8%A3%85mysql8%E6%95%99%E7%A8%8B/5df7adbe22224823ada00da9c6815fbb.png&#34;
 	width=&#34;1367&#34;
 	height=&#34;799&#34;
@@ -10317,40 +10347,54 @@ flush privileges;&lt;/p&gt;&lt;/blockquote&gt;
         
         <guid>https://dxjxpr.github.io/p/%E4%BA%BA%E7%94%9F%E8%AF%AD%E5%BD%95%E4%B8%93%E8%BE%91/</guid>
         <description>&lt;img src="https://dxjxpr.github.io/p/%E4%BA%BA%E7%94%9F%E8%AF%AD%E5%BD%95%E4%B8%93%E8%BE%91/cover.jpg" alt="Featured image of post 人生语录专辑" /&gt;&lt;blockquote&gt;
-&lt;p&gt;短短几十年的人生，痛苦并非来自生活本身，而是源于我们的执着和不舍。人间暂坐，何必苦苦执着&lt;/p&gt;&lt;/blockquote&gt;
-&lt;blockquote&gt;
 &lt;p&gt;本是修行之人，却因红尘中的浊酒而流连忘返。世间情感难以割舍，真心付出，望穿秋水。碎银几两，虽能解万千忧愁，却让人跪地捡拾，起早贪黑，如同牛马。
-然而到头来，金钱带不走，情感留不住。一切的一切，都归结为造化弄人&lt;/p&gt;&lt;/blockquote&gt;
+然而到头来，金钱带不走，情感留不住。一切的一切，都归结为造化弄人&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;blockquote&gt;
-&lt;p&gt;缘分来了就相聚，缘分尽了就散场。不强求他人，不为难自己。一切早有定数，当那天到来时，我们只需平静接受便好&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;缘分来了就相聚，缘分尽了就散场。不强求他人，不为难自己。一切早有定数，当那天到来时，我们只需平静接受便好&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;blockquote&gt;
-&lt;p&gt;在这漫长的旅程中，我们会遇见形形色色的人。有的人，如流星划过天际，短暂而耀眼；有的人，如久旱逢甘露，给予我们无尽的温暖和力量。无论遇见谁，都是生命中不可或缺的章节，他们教会我们成长，教会我们爱&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;在这漫长的旅程中，我们会遇见形形色色的人。有的人，如流星划过天际，短暂而耀眼；有的人，如久旱逢甘露，给予我们无尽的温暖和力量。无论遇见谁，都是生命中不可或缺的章节，他们教会我们成长，教会我们爱&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;blockquote&gt;
-&lt;p&gt;爱情，是人生中最美妙的奇迹。它让我们在茫茫人海中找到了彼此，愿意为对方付出一切。但请记住，爱情不是生活的全部，我们还有亲情、友情和自我。在追求爱情的同时，也不要忘了关爱自己，珍惜身边的每一个人&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;爱情，是人生中最美妙的奇迹。它让我们在茫茫人海中找到了彼此，愿意为对方付出一切。但请记住，爱情不是生活的全部，我们还有亲情、友情和自我。在追求爱情的同时，也不要忘了关爱自己，珍惜身边的每一个人&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;blockquote&gt;
-&lt;p&gt;随着岁月的流逝，我们会逐渐明白，人生最宝贵的财富并非金钱和地位，而是那些无法用金钱衡量的东西：健康的身体、和睦的家庭、真挚的友谊以及内心的平静和满足。当我们拥有这些时，即使生活再平凡，也能感受到幸福和温暖&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;随着岁月的流逝，我们会逐渐明白，人生最宝贵的财富并非金钱和地位，而是那些无法用金钱衡量的东西：健康的身体、和睦的家庭、真挚的友谊以及内心的平静和满足。当我们拥有这些时，即使生活再平凡，也能感受到幸福和温暖&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;blockquote&gt;
-&lt;p&gt;在未来的日子里，愿我们都能珍惜当下，拥抱生活，用一颗感恩的去面对一切。无论前方有多少困难和挑战，只要我们心中有爱，就有勇气去迎接每一个新的黎明&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;在未来的日子里，愿我们都能珍惜当下，拥抱生活，用一颗感恩的去面对一切。无论前方有多少困难和挑战，只要我们心中有爱，就有勇气去迎接每一个新的黎明&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;blockquote&gt;
-&lt;p&gt;事当快意处须转，言到快意处须往&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;事当快意处须转，言到快意处须往&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;blockquote&gt;
-&lt;p&gt;临事须替别人想，论人先将自己想&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;临事须替别人想，论人先将自己想&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;blockquote&gt;
-&lt;p&gt;人褊急，我受之以宽宏；人险仄，我待之以坦荡&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;人褊急，我受之以宽宏；人险仄，我待之以坦荡&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;blockquote&gt;
-&lt;p&gt;不尽人情，举足尽是危机；不体物情，一生俱成梦境&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;不尽人情，举足尽是危机；不体物情，一生俱成梦境&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;blockquote&gt;
-&lt;p&gt;一念疏忽是错起头，一念决裂是错到底&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;一念疏忽是错起头，一念决裂是错到底&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;blockquote&gt;
-&lt;p&gt;世界是个回音谷，念念不忘必有回响，你大声喊唱，山谷雷响，音传千里&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;世界是个回音谷，念念不忘必有回响，你大声喊唱，山谷雷响，音传千里&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;blockquote&gt;
-&lt;p&gt;凡是劝不动的，拦不住的，那就是命&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;凡是劝不动的，拦不住的，那就是命&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;blockquote&gt;
-&lt;p&gt;我不认识你，因为我没有眼睛。然而，如果你损害我的幸福，我将永远不让你亲近我的内心&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;我不认识你，因为我没有眼睛。然而，如果你损害我的幸福，我将永远不让你亲近我的内心&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;blockquote&gt;
-&lt;p&gt;长亭外，古道边，芳草碧连天。问君此去几时还，来时莫徘徊&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;长亭外，古道边，芳草碧连天。问君此去几时还，来时莫徘徊&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;blockquote&gt;
-&lt;p&gt;人生最忌讳的就是圆满，求缺不求满&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;人生最忌讳的就是圆满，求缺不求满&lt;/p&gt;
+&lt;/blockquote&gt;
 </description>
         </item>
         <item>
@@ -10376,11 +10420,13 @@ flush privileges;&lt;/p&gt;&lt;/blockquote&gt;
 &lt;h4 id=&#34;blockquote-without-attribution&#34;&gt;Blockquote without attribution
 &lt;/h4&gt;&lt;blockquote&gt;
 &lt;p&gt;Tiam, ad mint andaepu dandae nostion secatur sequo quae.
-&lt;strong&gt;Note&lt;/strong&gt; that you can use &lt;em&gt;Markdown syntax&lt;/em&gt; within a blockquote.&lt;/p&gt;&lt;/blockquote&gt;
+&lt;strong&gt;Note&lt;/strong&gt; that you can use &lt;em&gt;Markdown syntax&lt;/em&gt; within a blockquote.&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;h4 id=&#34;blockquote-with-attribution&#34;&gt;Blockquote with attribution
 &lt;/h4&gt;&lt;blockquote&gt;
 &lt;p&gt;Don&amp;rsquo;t communicate by sharing memory, share memory by communicating.&lt;br&gt;
-— &lt;cite&gt;Rob Pike&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/cite&gt;&lt;/p&gt;&lt;/blockquote&gt;
+— &lt;cite&gt;Rob Pike&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/cite&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;h2 id=&#34;tables&#34;&gt;Tables
 &lt;/h2&gt;&lt;p&gt;Tables aren&amp;rsquo;t part of the core Markdown spec, but Hugo supports supports them out-of-the-box.&lt;/p&gt;
 &lt;table&gt;

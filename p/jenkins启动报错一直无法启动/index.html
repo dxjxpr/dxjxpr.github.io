@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://dxjxpr.github.io/p/jenkins%E5%90%AF%E5%8A%A8%E6%8A%A5%E9%94%99%E4%B8%80%E7%9B%B4%E6%97%A0%E6%B3%95%E5%90%AF%E5%8A%A8/'>
 
-<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="jenkins启动报错，一直无法启动">
+<link rel="stylesheet" href="/scss/style.min.6a692fd055deae459f2a9767f57f3855ba80cafd5041317f24f7360f6ca47cdf.css"><meta property='og:title' content="jenkins启动报错，一直无法启动">
 <meta property='og:description' content="jenkins启动报错，一直无法启动 问题背景 服务器：阿里云ECS\n操作系统：Centos7\nJenkins版本：2.405\n通过添加jenkins仓库进行安装，安装成功，但是未能启动成功，一直处于失败状态\n解决方式 1、检查用户权限\n1 2 3 sudo passwd -S jenkins # 提示信息如下，说明jenkins用户被锁定了 jenkins LK 2024-09-13 -1 -1 -1 -1 (Password locked.) 2、检查/etc/passwd中jenkins用户的shell是否有效:grep jenkins /etc/passwd，结果如下\n1 jenkins:x:997:995:Jenkins Automation Server:/var/lib/jenkins:/bin/false /bin/false表示jenkins用户的登陆shell是一个无效的shell，用户无法通过终端登录，使用以下指令进行授权\n1 2 3 4 5 6 7 8 # 1、设置用户密码 sudo passwd jenkins # 2、解锁用户 sudo passwd -u jenkins # 3、更改登录 shell sudo usermod -s /bin/bash jenkins 3、为了使jenkins用户能够使用sudo指令，在&rsquo;/etc/sudoers&rsquo;文件中赋予相关权限\n1 jenkins ALL=(ALL) NOPASSWD: ALL 4、完成上面的配置后，启动jenkins\n">
 <meta property='og:url' content='https://dxjxpr.github.io/p/jenkins%E5%90%AF%E5%8A%A8%E6%8A%A5%E9%94%99%E4%B8%80%E7%9B%B4%E6%97%A0%E6%B3%95%E5%90%AF%E5%8A%A8/'>
 <meta property='og:site_name' content='I&#39;m Mr.Liu'>

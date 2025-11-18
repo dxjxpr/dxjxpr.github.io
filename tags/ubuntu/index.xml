@@ -707,7 +707,8 @@ Zabbix前端需要Apache和PHP模块，步骤3已安装部分依赖，确认安�
 &lt;/div&gt;&lt;p&gt;3、Windows与Linux看待BIOS里时间的方式不一样&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Linux时钟分为系统时钟（System Clock）和硬件时钟（RTC）。Linux把硬件时间当作UTC，系统时间是UTC时间经过换算过来的（就是东几区：加时间，西几区：减时间）。比如北京时间，就是GMT+8,在windows里是凌晨00:00，那么在Linux中就是08:00，多八个小时，这是与所在的地理位置有关，此处就请科普下地理知识，经度纬度，以及地球公转自转，太阳照射时间等知识信息
-Windows系统就直接读取了系统硬件时间（RTC），当作本地时间（Local time），因此windows系统时间和BIOS中显示的时间（RTC）是一样的&lt;/p&gt;&lt;/blockquote&gt;
+Windows系统就直接读取了系统硬件时间（RTC），当作本地时间（Local time），因此windows系统时间和BIOS中显示的时间（RTC）是一样的&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;4、解决方法，在ubuntu，打开终端，执行以下命令&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
